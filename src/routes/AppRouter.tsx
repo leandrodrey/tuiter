@@ -14,19 +14,31 @@ import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute.tsx";
 const AppRouter = () => {
     return (
         <>
-            <Navbar />
+            <Navbar/>
 
             <Routes>
-                <Route path="/" element={<HomePage/>}/>
-                <Route path="/login" element={<LoginPage/>}/>
-                <Route path="/feed" element={<FeedPage/>}/>
+                <Route path="/" element={
+                    <HomePage/>
+                }/>
+                <Route path="/login" element={
+                    <LoginPage/>
+                }/>
+                <Route path="/feed" element={
+                    <FeedPage/>
+                }/>
                 <Route path="/posts/create" element={
                     <ProtectedRoute>
                         <CreatePostPage/>
                     </ProtectedRoute>
                 }/>
-                <Route path="/posts/:postId/reply" element={<PostReplyPage/>}/>
-                <Route path="/users/register" element={<UserRegistrationPage/>}/>
+                <Route path="/posts/:postId/reply" element={
+                    <ProtectedRoute>
+                        <PostReplyPage/>
+                    </ProtectedRoute>
+                }/>
+                <Route path="/users/register" element={
+                    <UserRegistrationPage/>
+                }/>
                 <Route path="/users/edit" element={
                     <ProtectedRoute>
                         <UserEditPage/>
@@ -37,8 +49,14 @@ const AppRouter = () => {
                         <UserEditPage/>
                     </ProtectedRoute>
                 }/>
-                <Route path="/users/favorites" element={<UserFavoritesPage/>}/>
-                <Route path="*" element={<NotFoundPage/>}/>
+                <Route path="/users/favorites" element={
+                    <ProtectedRoute>
+                        <UserFavoritesPage/>
+                    </ProtectedRoute>
+                }/>
+                <Route path="*" element={
+                    <NotFoundPage/>
+                }/>
             </Routes>
         </>
     );
