@@ -9,7 +9,7 @@ import UserFavoritesPage from "../pages/UserFavoritesPage.tsx";
 import PostReplyPage from "../pages/PostReplyPage.tsx";
 import LoginPage from "../pages/LoginPage.tsx";
 import Navbar from "../components/Navbar/Navbar.tsx";
-import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute.tsx";
+import AuthGuard from "./AuthGuard.tsx";
 
 const AppRouter = () => {
     return (
@@ -27,32 +27,32 @@ const AppRouter = () => {
                     <FeedPage/>
                 }/>
                 <Route path="/posts/create" element={
-                    <ProtectedRoute>
+                    <AuthGuard>
                         <CreatePostPage/>
-                    </ProtectedRoute>
+                    </AuthGuard>
                 }/>
                 <Route path="/posts/:postId/reply" element={
-                    <ProtectedRoute>
+                    <AuthGuard>
                         <PostReplyPage/>
-                    </ProtectedRoute>
+                    </AuthGuard>
                 }/>
                 <Route path="/users/register" element={
                     <UserRegistrationPage/>
                 }/>
                 <Route path="/users/edit" element={
-                    <ProtectedRoute>
+                    <AuthGuard>
                         <UserEditPage/>
-                    </ProtectedRoute>
+                    </AuthGuard>
                 }/>
                 <Route path="/users/edit/:userId" element={
-                    <ProtectedRoute>
+                    <AuthGuard>
                         <UserEditPage/>
-                    </ProtectedRoute>
+                    </AuthGuard>
                 }/>
                 <Route path="/users/favorites" element={
-                    <ProtectedRoute>
+                    <AuthGuard>
                         <UserFavoritesPage/>
-                    </ProtectedRoute>
+                    </AuthGuard>
                 }/>
                 <Route path="*" element={
                     <NotFoundPage/>
