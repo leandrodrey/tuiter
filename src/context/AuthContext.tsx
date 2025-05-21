@@ -1,71 +1,32 @@
 import {
-    createContext,
     useState,
-    useContext,
     useEffect,
-    type ReactNode,
-    type Dispatch, // Importado para el tipo de login
-    type SetStateAction // Importado para el tipo de login
+    type ReactNode
 } from "react";
-import { setHttpAuthToken } from '../utils/authUtils'; // Ajusta la ruta según tu estructura
-
-// --- Constants ---
-export const USER_TOKEN_KEY = "user_token";
-export const USER_DATA_KEY = "user_data";
-
-// --- Types ---
-interface UserInformation {
-    name?: string;
-    email?: string;
-    // Agrega otras propiedades del usuario que necesites
-    [key: string]: any; // Para permitir otras propiedades si es necesario
-}
-
-interface AuthState {
-    isLoadingAuth: boolean;
-    isAuthenticated: boolean;
-    userToken: string | null;
-    userInformation: UserInformation | null;
-}
-
-interface AuthContextType extends AuthState {
-    isLoggedIn: () => boolean;
-    getUserInformationAPI: () => Promise<UserInformation | null>; // Renombrado para claridad
-    login: (token: string, userData: UserInformation) => void;
-    logout: () => void;
-    // Si necesitas exponer los setters directamente (menos común para login/logout)
-    // setUserToken: Dispatch<SetStateAction<string | null>>;
-    // setUserInformation: Dispatch<SetStateAction<UserInformation | null>>;
-}
+import {setHttpAuthToken} from '../utils/authUtils';
+import {
+    USER_TOKEN_KEY,
+    USER_DATA_KEY,
+    type UserInformation,
+    type AuthState,
+    type AuthContextType
+} from '../constants/authConstants.ts';
+import {AuthContext} from './useAuthContext';
 
 // --- Initial State ---
 const initialToken = localStorage.getItem(USER_TOKEN_KEY);
 const initialUserData = JSON.parse(localStorage.getItem(USER_DATA_KEY) || 'null') as UserInformation | null;
 
-// Establece el token global para Axios al cargar la aplicación por primera vez
 setHttpAuthToken(initialToken);
 
 const initialAuthState: AuthState = {
-    isLoadingAuth: true, // Empezar en true hasta que se verifique el token/usuario
+    isLoadingAuth: true,
     isAuthenticated: !!initialToken,
     userToken: initialToken,
     userInformation: initialUserData,
 };
 
-// --- Context Creation ---
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-// --- Custom Hook to use AuthContext ---
-export const useAuthContext = () => {
-    const context = useContext(AuthContext);
-    if (!context) {
-        throw new Error('useAuthContext must be used within an AuthProvider');
-    }
-    return context;
-};
-
-// --- AuthProvider Component ---
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
+export const AuthProvider = ({children}: { children: ReactNode }) => {
     const [isLoadingAuth, setIsLoadingAuth] = useState<boolean>(initialAuthState.isLoadingAuth);
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(initialAuthState.isAuthenticated);
     const [userToken, setUserTokenState] = useState<string | null>(initialAuthState.userToken);

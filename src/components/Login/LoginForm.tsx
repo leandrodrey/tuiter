@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {Formik, Form, Field, ErrorMessage} from 'formik';
+import {Formik, Form, Field, ErrorMessage, type FormikHelpers} from 'formik';
 import * as Yup from 'yup';
-import {apiLogin} from '../../services/UserService';
-import {useAuthContext} from '../../context/AuthContext';
+import {apiLogin, type UserData} from '../../services/UserService';
+import {useAuthContext} from '../../context/useAuthContext';
 import './LoginForm.css';
 
 // Define validation schema using Yup
@@ -17,10 +17,12 @@ const validationSchema = Yup.object({
 interface LoginFormData {
     email: string;
     password: string;
+
+    [key: string]: string;
 }
 
 const LoginForm: React.FC = () => {
-    const { isAuthenticated, userInformation, login, logout } = useAuthContext();
+    const {isAuthenticated, userInformation, login, logout} = useAuthContext();
     const [error, setError] = useState<string | null>(null);
     const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
 
@@ -29,15 +31,12 @@ const LoginForm: React.FC = () => {
         password: '',
     };
 
-    const handleSubmit = async (values: LoginFormData, {setSubmitting, resetForm}: any) => {
+    const handleSubmit = async (values: LoginFormData, {setSubmitting, resetForm}: FormikHelpers<LoginFormData>) => {
         try {
             setError(null);
-            const response = await apiLogin(values);
+            const response = await apiLogin(values as Omit<UserData, 'name'>);
 
-            // Get the token from the response
-            // The API returns the user ID as the token
-            const token = response.id;
-
+            const token = response.token;
             // Store the user data and token in the context
             login(token, {
                 name: response.name,
@@ -46,9 +45,14 @@ const LoginForm: React.FC = () => {
 
             setIsLoginFormVisible(false);
             resetForm();
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error('Login error:', err);
-            setError(err.response?.data?.message || 'Login failed. Please try again.');
+            const errorMessage = err instanceof Error
+                ? err.message
+                : (err as {
+                response?: { data?: { message?: string } }
+            })?.response?.data?.message || 'Login failed. Please try again.';
+            setError(errorMessage);
         } finally {
             setSubmitting(false);
         }
