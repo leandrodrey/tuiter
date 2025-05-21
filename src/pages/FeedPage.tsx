@@ -81,7 +81,7 @@ const FeedPage: React.FC = () => {
     }
   };
 
-  const handleAddToFavorites = (author: string, avatarUrl: string) => {
+  const handleAddToFavorites = (author: string | undefined, avatarUrl: string | undefined) => {
     // Get existing favorites from localStorage
     const existingFavorites = JSON.parse(localStorage.getItem('favoriteUsers') || '[]');
 
