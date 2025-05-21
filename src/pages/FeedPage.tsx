@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { apiGetFeed } from '../services/FeedService';
 import { apiAddLikeToTuit, apiRemoveLikeFromTuit } from '../services/TuitsService';
-import type { TuitResponse } from '../services/TuitsService';
 
 interface Post {
   id: string;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage, type FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { apiCreateTuit } from '../services/TuitsService';
 
@@ -35,13 +35,13 @@ const CreatePostPage: React.FC = () => {
     alert('Draft saved successfully!');
   };
 
-  const handleClearDraft = (resetForm: any) => {
+  const handleClearDraft = (resetForm: (nextState?: { values: PostFormData }) => void) => {
     localStorage.removeItem(DRAFT_STORAGE_KEY);
     resetForm({ values: { message: '' } });
     alert('Draft cleared!');
   };
 
-  const handleSubmit = async (values: PostFormData, { setSubmitting, resetForm }: any) => {
+  const handleSubmit = async (values: PostFormData, { setSubmitting, resetForm }: FormikHelpers<PostFormData>) => {
     try {
       setError(null);
 
@@ -54,9 +54,12 @@ const CreatePostPage: React.FC = () => {
       // Redirect to feed page
       alert('Post created successfully!');
       navigate('/feed');
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error creating post:', err);
-      setError(err.response?.data?.message || 'Failed to create post. Please try again.');
+      const errorMessage = err instanceof Error
+          ? err.message
+          : (err as { response?: { data?: { message?: string } } })?.response?.data?.message || 'Failed to create post. Please try again.';
+      setError(errorMessage);
     } finally {
       setSubmitting(false);
     }

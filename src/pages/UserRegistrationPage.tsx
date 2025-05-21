@@ -47,6 +47,7 @@ const UserRegistrationPage: React.FC = () => {
         try {
             setGeneralError(null);
 
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const {confirmPassword, username, ...rest} = values;
 
             const userData: UserData = {
@@ -58,9 +59,12 @@ const UserRegistrationPage: React.FC = () => {
 
             alert('Registration successful! Please log in.');
             navigate('/login');
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error('Registration error:', err);
-            setGeneralError(err.response?.data?.message || 'Registration failed. Please try again.');
+            const errorMessage = err instanceof Error
+                ? err.message
+                : (err as { response?: { data?: { message?: string } } })?.response?.data?.message || 'Registration failed. Please try again.';
+            setGeneralError(errorMessage);
         } finally {
             setSubmitting(false);
         }

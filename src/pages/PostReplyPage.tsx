@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage, type FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { apiGetTuit, apiAddReplyToTuit } from '../services/TuitsService';
 import type { TuitResponse } from '../services/TuitsService';
@@ -61,7 +61,7 @@ const PostReplyPage: React.FC = () => {
     fetchPost();
   }, [postId]);
 
-  const handleSubmit = async (values: ReplyFormData, { setSubmitting }: any) => {
+  const handleSubmit = async (values: ReplyFormData, { setSubmitting }: FormikHelpers<ReplyFormData>) => {
     if (!postId) {
       setError('Cannot reply: original post ID is missing');
       setSubmitting(false);
@@ -75,9 +75,12 @@ const PostReplyPage: React.FC = () => {
 
       alert('Reply posted successfully!');
       navigate(`/posts/${postId}`); // Navigate to the original post with replies
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error posting reply:', err);
-      setError(err.response?.data?.message || 'Failed to post reply. Please try again.');
+      const errorMessage = err instanceof Error
+          ? err.message
+          : (err as { response?: { data?: { message?: string } } })?.response?.data?.message || 'Failed to post reply. Please try again.';
+      setError(errorMessage);
     } finally {
       setSubmitting(false);
     }
