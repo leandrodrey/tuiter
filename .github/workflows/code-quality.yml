@@ -6,16 +6,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [ 22.x ]
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Yarn
-        uses: threeal/setup-yarn-action@v2.0.0
+      - uses: actions/setup-node@v4
         with:
+          node-version: '22'
           cache: 'yarn'
-
-      - run: yarn install
-      - run: yarn build
+      - run: yarn install --frozen-lockfile # optional, --immutable
       - run: yarn test
