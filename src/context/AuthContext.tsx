@@ -13,7 +13,6 @@ import {
 } from '../constants/authConstants.ts';
 import {AuthContext} from './useAuthContext';
 
-// --- Initial State ---
 const initialToken = localStorage.getItem(USER_TOKEN_KEY);
 const initialUserData = JSON.parse(localStorage.getItem(USER_DATA_KEY) || 'null') as UserInformation | null;
 
@@ -32,38 +31,31 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
     const [userToken, setUserTokenState] = useState<string | null>(initialAuthState.userToken);
     const [userInformation, setUserInformationState] = useState<UserInformation | null>(initialAuthState.userInformation);
 
-    const isLoggedIn = (): boolean => {
-        return !!userToken;
-    };
-
-    // Simulación de una llamada API para obtener información del usuario
-    // Deberías reemplazar esto con tu lógica real de API
+    // Obtiene la información del usuario desde la API
     const getUserInformationAPI = async (): Promise<UserInformation | null> => {
-        if (!userToken) { // Usa el userToken del estado de React
+        if (!userToken) {
             console.warn("No user token available to fetch user information.");
             return null;
         }
 
         setIsLoadingAuth(true);
         try {
-            // Aquí harías tu llamada real a la API, ej:
-            // const response = await api.get('/me', { headers: { Authorization: userToken } });
-            // const userData = response.data;
+            const { apiGetProfile } = await import('../services/ProfileService');
+            const profileData = await apiGetProfile();
 
-            // Simulación:
-            await new Promise(resolve => setTimeout(resolve, 500)); // Simula delay de red
-            const simulatedUserData: UserInformation = userInformation || { // Usa la info ya cargada o datos de ejemplo
-                name: "Usuario Ejemplo",
-                email: "usuario@ejemplo.com"
+            const userData: UserInformation = {
+                name: profileData.name,
+                ...(profileData.avatar_url && { avatar_url: profileData.avatar_url })
             };
 
-            setUserInformationState(simulatedUserData);
-            localStorage.setItem(USER_DATA_KEY, JSON.stringify(simulatedUserData));
-            return simulatedUserData;
+            setUserInformationState(userData);
+            localStorage.setItem(USER_DATA_KEY, JSON.stringify(userData));
+            return userData;
         } catch (error) {
             console.error("Error loading user information from API:", error);
-            // Considera desloguear al usuario si la obtención de datos falla debido a token inválido
-            // logout();
+            if ((error as any)?.response?.status === 401) {
+                logout();
+            }
             return null;
         } finally {
             setIsLoadingAuth(false);
@@ -77,8 +69,8 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
 
         localStorage.setItem(USER_TOKEN_KEY, token);
         localStorage.setItem(USER_DATA_KEY, JSON.stringify(userData));
-        setHttpAuthToken(token); // <-- ACTUALIZA EL TOKEN GLOBAL PARA AXIOS
-        setIsLoadingAuth(false); // Puede que quieras quitar esto si getUserInformationAPI se llama después
+        setHttpAuthToken(token);
+        setIsLoadingAuth(false);
     };
 
     const logout = (): void => {
@@ -88,26 +80,21 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
 
         localStorage.removeItem(USER_TOKEN_KEY);
         localStorage.removeItem(USER_DATA_KEY);
-        setHttpAuthToken(null); // <-- LIMPIA EL TOKEN GLOBAL PARA AXIOS
+        setHttpAuthToken(null);
         setIsLoadingAuth(false);
     };
 
     useEffect(() => {
         const loadInitialData = async () => {
-            // Si hay un token pero no información del usuario, intenta cargarla
-            // Esto es útil si cierras y abres la pestaña y el token sigue siendo válido
             if (userToken && !userInformation) {
-                // console.log("AuthContext: Token found, attempting to load user info.");
                 await getUserInformationAPI();
             } else {
-                // console.log("AuthContext: No token or user info already present, setting loading to false.");
                 setIsLoadingAuth(false);
             }
         };
 
         loadInitialData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []); // Se ejecuta solo una vez al montar el AuthProvider
+    }, []);
 
     // Context value
     const contextValue: AuthContextType = {
@@ -115,8 +102,6 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
         isAuthenticated,
         userToken,
         userInformation,
-        isLoggedIn,
-        getUserInformationAPI, // Expone la función renombrada
         login,
         logout,
     };

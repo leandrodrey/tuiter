@@ -18,8 +18,6 @@ export interface AuthState {
 }
 
 export interface AuthContextType extends AuthState {
-    isLoggedIn: () => boolean;
-    getUserInformationAPI: () => Promise<UserInformation | null>;
     login: (token: string, userData: UserInformation) => void;
     logout: () => void;
 }
