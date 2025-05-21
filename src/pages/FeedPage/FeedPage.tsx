@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { apiGetFeed } from '../services/FeedService';
-import { apiAddLikeToTuit, apiRemoveLikeFromTuit } from '../services/TuitsService';
+import { apiGetFeed } from '../../services/FeedService.ts';
+import { apiAddLikeToTuit, apiRemoveLikeFromTuit } from '../../services/TuitsService.ts';
 
 interface Post {
   id: string;

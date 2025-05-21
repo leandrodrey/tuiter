@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Formik, Form, Field, ErrorMessage, type FormikHelpers} from 'formik';
 import * as Yup from 'yup';
-import {apiCreateUser, type UserData} from '../services/UserService';
+import {apiCreateUser, type UserData} from '../../services/UserService.ts';
 
 interface RegistrationFormData {
     username: string;

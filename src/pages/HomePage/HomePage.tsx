@@ -1,5 +1,5 @@
 import type {JSX} from "react";
-import LoginForm from "../components/Login/LoginForm";
+import LoginForm from "../../components/Login/LoginForm.tsx";
 import "./HomePage.css";
 
 const HomePage = (): JSX.Element => {

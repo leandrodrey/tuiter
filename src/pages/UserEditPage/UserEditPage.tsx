@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {Formik, Form, Field, ErrorMessage, type FormikHelpers} from 'formik';
 import * as Yup from 'yup';
-import {apiGetProfile, apiUpdateProfile} from '../services/ProfileService';
-import type {ProfileData} from '../services/ProfileService';
+import {apiGetProfile, apiUpdateProfile} from '../../services/ProfileService.ts';
+import type {ProfileData} from '../../services/ProfileService.ts';
 
 // Define validation schema using Yup
 const validationSchema = Yup.object({

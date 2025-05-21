@@ -1,7 +1,7 @@
 import {type JSX, useEffect} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
-import LoginForm from '../components/Login/LoginForm';
-import {useAuthContext} from "../context/useAuthContext.ts";
+import LoginForm from '../../components/Login/LoginForm.tsx';
+import {useAuthContext} from "../../context/useAuthContext.ts";
 import './LoginPage.css';
 
 const LoginPage = (): JSX.Element => {

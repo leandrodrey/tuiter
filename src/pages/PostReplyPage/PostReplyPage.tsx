@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage, type FormikHelpers } from 'formik';
 import * as Yup from 'yup';
-import { apiGetTuit, apiAddReplyToTuit } from '../services/TuitsService';
-import type { TuitResponse } from '../services/TuitsService';
+import { apiGetTuit, apiAddReplyToTuit } from '../../services/TuitsService.ts';
+import type { TuitResponse } from '../../services/TuitsService.ts';
 
 // Define validation schema using Yup
 const validationSchema = Yup.object({
