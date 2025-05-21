@@ -1,10 +1,16 @@
 import type { InternalAxiosRequestConfig } from 'axios'
+import appConfig from "../../configs/app.config.ts";
 
 const AxiosRequestIntrceptorConfigCallback = (
     config: InternalAxiosRequestConfig,
 ) => {
-    /** handle config mutatation here before request to server */
-    return config
+    // Add authentication token to headers if available
+    if (appConfig.authToken) {
+        config.headers = config.headers || {};
+        config.headers['Authorization'] = `Bearer ${appConfig.authToken}`;
+    }
+
+    return config;
 }
 
 export default AxiosRequestIntrceptorConfigCallback

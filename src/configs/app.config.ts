@@ -1,17 +1,11 @@
 export type AppConfig = {
     apiPrefix: string
-    authenticatedEntryPath: string
-    unAuthenticatedEntryPath: string
-    locale: string
-    activeNavTranslation: boolean
+    authToken: string
 }
 
 const appConfig: AppConfig = {
-    apiPrefix: '/api',
-    authenticatedEntryPath: '/home',
-    unAuthenticatedEntryPath: '/sign-in',
-    locale: 'en',
-    activeNavTranslation: false,
+    apiPrefix: import.meta.env.VITE_API_BASE_URL || 'https://tuiter.fragua.com.ar/api/v1',
+    authToken: import.meta.env.VITE_AUTH_TOKEN || '',
 }
 
 export default appConfig
