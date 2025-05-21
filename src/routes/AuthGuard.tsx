@@ -1,6 +1,6 @@
 import React from 'react';
 import {Navigate, useLocation} from 'react-router-dom';
-import {useAuthContext} from '../context/useAuthContext';
+import {useAuthContext} from '../hooks/useAuthContext.ts';
 
 interface AuthGuardProps {
     children: React.ReactNode;

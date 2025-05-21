@@ -2,7 +2,8 @@ import React, {useState} from 'react';
 import {Formik, Form, Field, ErrorMessage, type FormikHelpers} from 'formik';
 import * as Yup from 'yup';
 import {apiLogin, type UserData} from '../../services/UserService';
-import {useAuthContext} from '../../context/useAuthContext';
+import {useAuthContext} from '../../hooks/useAuthContext.ts';
+import {useToast} from '../../context/ToastContext';
 import './LoginForm.css';
 
 // Define validation schema using Yup
@@ -23,7 +24,7 @@ interface LoginFormData {
 
 const LoginForm: React.FC = () => {
     const {isAuthenticated, userInformation, login, logout} = useAuthContext();
-    const [error, setError] = useState<string | null>(null);
+    const toast = useToast();
     const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
 
     const initialValues: LoginFormData = {
@@ -33,7 +34,6 @@ const LoginForm: React.FC = () => {
 
     const handleSubmit = async (values: LoginFormData, {setSubmitting, resetForm}: FormikHelpers<LoginFormData>) => {
         try {
-            setError(null);
             const response = await apiLogin(values as Omit<UserData, 'name'>);
 
             const token = response.token;
@@ -42,6 +42,9 @@ const LoginForm: React.FC = () => {
                 name: response.name,
                 email: response.email
             });
+
+            // Show success toast notification
+            toast.success(`Welcome back, ${response.name}!`);
 
             setIsLoginFormVisible(false);
             resetForm();
@@ -52,7 +55,9 @@ const LoginForm: React.FC = () => {
                 : (err as {
                 response?: { data?: { message?: string } }
             })?.response?.data?.message || 'Login failed. Please try again.';
-            setError(errorMessage);
+
+            // Show error toast notification
+            toast.error(errorMessage);
         } finally {
             setSubmitting(false);
         }
@@ -60,11 +65,11 @@ const LoginForm: React.FC = () => {
 
     const handleLogout = () => {
         logout();
+        toast.info('You have been logged out successfully');
     };
 
     const toggleLoginForm = () => {
         setIsLoginFormVisible(!isLoginFormVisible);
-        setError(null);
     };
 
     return (
@@ -82,8 +87,6 @@ const LoginForm: React.FC = () => {
 
                     {isLoginFormVisible && (
                         <div className="login-form-container">
-                            {error && <div className="error-message">{error}</div>}
-
                             <Formik
                                 initialValues={initialValues}
                                 validationSchema={validationSchema}

@@ -1,7 +1,7 @@
 import {
     useState,
     useEffect,
-    type ReactNode
+    type ReactNode, createContext
 } from "react";
 import {setHttpAuthToken} from '../utils/authUtils';
 import {
@@ -11,7 +11,6 @@ import {
     type AuthState,
     type AuthContextType
 } from '../constants/authConstants.ts';
-import {AuthContext} from './useAuthContext';
 
 const initialToken = localStorage.getItem(USER_TOKEN_KEY);
 const initialUserData = JSON.parse(localStorage.getItem(USER_DATA_KEY) || 'null') as UserInformation | null;
@@ -24,6 +23,8 @@ const initialAuthState: AuthState = {
     userToken: initialToken,
     userInformation: initialUserData,
 };
+
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({children}: { children: ReactNode }) => {
     const [isLoadingAuth, setIsLoadingAuth] = useState<boolean>(initialAuthState.isLoadingAuth);
@@ -40,12 +41,12 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
 
         setIsLoadingAuth(true);
         try {
-            const { apiGetProfile } = await import('../services/ProfileService');
+            const {apiGetProfile} = await import('../services/ProfileService');
             const profileData = await apiGetProfile();
 
             const userData: UserInformation = {
                 name: profileData.name,
-                ...(profileData.avatar_url && { avatar_url: profileData.avatar_url })
+                ...(profileData.avatar_url && {avatar_url: profileData.avatar_url})
             };
 
             setUserInformationState(userData);
