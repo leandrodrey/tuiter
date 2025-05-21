@@ -1,12 +1,12 @@
 import type {JSX} from "react";
-import LoginComponent from "../components/Login/LoginComponent";
+import LoginForm from "../components/Login/LoginForm";
 import "./HomePage.css";
 
 const HomePage = (): JSX.Element => {
     return (
         <div className="home-container">
             <div className="login-wrapper">
-                <LoginComponent />
+                <LoginForm />
             </div>
             <div className="content">
                 <h1>Bienvenido a Tuiter</h1>

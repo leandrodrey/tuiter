@@ -1,16 +1,17 @@
 import ApiService from './ApiService';
-import { getAuthHeaders } from './AuthUtils';
 
 export interface ProfileData {
-  name?: string;
-  avatar_url?: string;
-  password?: string;
+    name?: string;
+    avatar_url?: string;
+    password?: string;
+
+    [key: string]: string | undefined | unknown;
 }
 
 export interface ProfileResponse {
-  id: string;
-  name: string;
-  avatar_url?: string;
+    id: string;
+    name: string;
+    avatar_url?: string;
 }
 
 // --- Get Profile ---
@@ -19,11 +20,10 @@ export interface ProfileResponse {
  * @returns A promise that resolves with the user profile response from the API.
  */
 export async function apiGetProfile() {
-  return ApiService.fetchDataWithAxios<ProfileResponse>({
-    url: '/me/profile',
-    method: 'get',
-    headers: getAuthHeaders()
-  });
+    return ApiService.fetchDataWithAxios<ProfileResponse>({
+        url: '/me/profile',
+        method: 'get'
+    });
 }
 
 // --- Update Profile ---
@@ -33,10 +33,9 @@ export async function apiGetProfile() {
  * @returns A promise that resolves with the profile update response from the API.
  */
 export async function apiUpdateProfile(data: ProfileData) {
-  return ApiService.fetchDataWithAxios<ProfileResponse>({
-    url: '/me/profile',
-    method: 'put',
-    data,
-    headers: getAuthHeaders()
-  });
+    return ApiService.fetchDataWithAxios<ProfileResponse>({
+        url: '/me/profile',
+        method: 'put',
+        data
+    });
 }

@@ -7,7 +7,9 @@ import UserRegistrationPage from "../pages/UserRegistrationPage.tsx";
 import UserEditPage from "../pages/UserEditPage.tsx";
 import UserFavoritesPage from "../pages/UserFavoritesPage.tsx";
 import PostReplyPage from "../pages/PostReplyPage.tsx";
+import LoginPage from "../pages/LoginPage.tsx";
 import Navbar from "../components/Navbar/Navbar.tsx";
+import ProtectedRoute from "../components/ProtectedRoute/ProtectedRoute.tsx";
 
 const AppRouter = () => {
     return (
@@ -16,12 +18,25 @@ const AppRouter = () => {
 
             <Routes>
                 <Route path="/" element={<HomePage/>}/>
+                <Route path="/login" element={<LoginPage/>}/>
                 <Route path="/feed" element={<FeedPage/>}/>
-                <Route path="/posts/create" element={<CreatePostPage/>}/>
+                <Route path="/posts/create" element={
+                    <ProtectedRoute>
+                        <CreatePostPage/>
+                    </ProtectedRoute>
+                }/>
                 <Route path="/posts/:postId/reply" element={<PostReplyPage/>}/>
                 <Route path="/users/register" element={<UserRegistrationPage/>}/>
-                <Route path="/users/edit" element={<UserEditPage/>}/>
-                <Route path="/users/edit/:userId" element={<UserEditPage/>}/>
+                <Route path="/users/edit" element={
+                    <ProtectedRoute>
+                        <UserEditPage/>
+                    </ProtectedRoute>
+                }/>
+                <Route path="/users/edit/:userId" element={
+                    <ProtectedRoute>
+                        <UserEditPage/>
+                    </ProtectedRoute>
+                }/>
                 <Route path="/users/favorites" element={<UserFavoritesPage/>}/>
                 <Route path="*" element={<NotFoundPage/>}/>
             </Routes>

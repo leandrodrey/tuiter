@@ -1,8 +1,8 @@
 import ApiService from './ApiService';
-import { getAuthHeaders } from './AuthUtils';
 
 export interface TuitData {
   message: string;
+  [key: string]: string | unknown;
 }
 
 export interface TuitResponse {
@@ -22,8 +22,7 @@ export async function apiCreateTuit(data: TuitData) {
   return ApiService.fetchDataWithAxios<TuitResponse>({
     url: '/me/tuits',
     method: 'post',
-    data,
-    headers: getAuthHeaders()
+    data
   });
 }
 
@@ -36,8 +35,7 @@ export async function apiCreateTuit(data: TuitData) {
 export async function apiGetTuit(tuitId: string) {
   return ApiService.fetchDataWithAxios<TuitResponse>({
     url: `/me/tuits/${tuitId}`,
-    method: 'get',
-    headers: getAuthHeaders()
+    method: 'get'
   });
 }
 
@@ -50,8 +48,7 @@ export async function apiGetTuit(tuitId: string) {
 export async function apiAddLikeToTuit(tuitId: string) {
   return ApiService.fetchDataWithAxios<{ success: boolean }>({
     url: `/me/tuits/${tuitId}/likes`,
-    method: 'post',
-    headers: getAuthHeaders()
+    method: 'post'
   });
 }
 
@@ -64,8 +61,7 @@ export async function apiAddLikeToTuit(tuitId: string) {
 export async function apiRemoveLikeFromTuit(tuitId: string) {
   return ApiService.fetchDataWithAxios<{ success: boolean }>({
     url: `/me/tuits/${tuitId}/likes`,
-    method: 'delete',
-    headers: getAuthHeaders()
+    method: 'delete'
   });
 }
 
@@ -78,8 +74,7 @@ export async function apiRemoveLikeFromTuit(tuitId: string) {
 export async function apiGetTuitReplies(tuitId: string) {
   return ApiService.fetchDataWithAxios<TuitResponse[]>({
     url: `/me/tuits/${tuitId}/replies`,
-    method: 'get',
-    headers: getAuthHeaders()
+    method: 'get'
   });
 }
 
@@ -94,7 +89,6 @@ export async function apiAddReplyToTuit(tuitId: string, data: TuitData) {
   return ApiService.fetchDataWithAxios<TuitResponse>({
     url: `/me/tuits/${tuitId}/replies`,
     method: 'post',
-    data,
-    headers: getAuthHeaders()
+    data
   });
 }

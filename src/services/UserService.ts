@@ -1,16 +1,17 @@
 import ApiService from './ApiService';
 
 export interface UserData {
-  name?: string;
-  email: string;
-  password: string;
-  [key: string]: string | undefined;
+    name?: string;
+    email: string;
+    password: string;
+
+    [key: string]: string | undefined;
 }
 
 export interface UserResponse {
-  id: string;
-  name: string;
-  email: string;
+    id: string;
+    name: string;
+    email: string;
 }
 
 // --- Create User ---
@@ -20,14 +21,11 @@ export interface UserResponse {
  * @returns A promise that resolves with the user creation response from the API.
  */
 export async function apiCreateUser(data: UserData) {
-  return ApiService.fetchDataWithAxios<UserResponse>({
-    url: '/users',
-    method: 'post',
-    data,
-    headers: {
-      'Application-Token': import.meta.env.VITE_AUTH_TOKEN || ''
-    }
-  });
+    return ApiService.fetchDataWithAxios<UserResponse>({
+        url: '/users',
+        method: 'post',
+        data
+    });
 }
 
 // --- Login ---
@@ -37,12 +35,9 @@ export async function apiCreateUser(data: UserData) {
  * @returns A promise that resolves with the login response from the API.
  */
 export async function apiLogin(data: Omit<UserData, 'name'>) {
-  return ApiService.fetchDataWithAxios<UserResponse>({
-    url: '/login',
-    method: 'post',
-    data,
-    headers: {
-      'Application-Token': import.meta.env.VITE_AUTH_TOKEN || ''
-    }
-  });
+    return ApiService.fetchDataWithAxios<UserResponse>({
+        url: '/login',
+        method: 'post',
+        data
+    });
 }

@@ -1,6 +1,5 @@
 import ApiService from './ApiService';
 import type {TuitResponse} from './TuitsService';
-import {getAuthHeaders} from './AuthUtils';
 
 export interface FeedParams {
     page?: number;
@@ -17,7 +16,6 @@ export async function apiGetFeed(params?: FeedParams) {
     return ApiService.fetchDataWithAxios<TuitResponse[]>({
         url: '/me/feed',
         method: 'get',
-        params,
-        headers: getAuthHeaders()
+        params
     });
 }
