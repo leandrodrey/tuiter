@@ -1,5 +1,5 @@
 import { type JSX } from 'react';
-import Spinner from './Spinner';
+import Spinner from './Spinner.tsx';
 
 interface LoaderProps {
   fullScreen?: boolean;
