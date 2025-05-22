@@ -1,26 +1,10 @@
 import {useState, useEffect, type JSX} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {Formik, Form, Field, ErrorMessage, type FormikHelpers} from 'formik';
-import * as Yup from 'yup';
 import {apiGetTuit, apiAddReplyToTuit} from '../../services/TuitsService.ts';
-import type {TuitResponse} from '../../services/TuitsService.ts';
-
-// Define validation schema using Yup
-const validationSchema = Yup.object({
-    message: Yup.string()
-        .required('Reply content cannot be empty')
-        .max(280, 'Reply cannot exceed 280 characters')
-});
-
-interface ReplyFormData {
-    message: string;
-}
-
-interface Post extends TuitResponse {
-    // Additional properties we'll add to the TuitResponse
-    author?: string;
-    avatar_url?: string;
-}
+import {replyValidationSchema as validationSchema, replyInitialValues as initialValues} from '../../validations/postSchemas';
+import type {Post} from '../../types/postTypes';
+import type { ReplyFormData } from '../../types/formTypes.ts';
 
 const PostReplyPage = (): JSX.Element => {
     const [originalPost, setOriginalPost] = useState<Post | null>(null);
@@ -126,7 +110,7 @@ const PostReplyPage = (): JSX.Element => {
                 {error && <div className="error-message">{error}</div>}
 
                 <Formik
-                    initialValues={{message: ''}}
+                    initialValues={initialValues}
                     validationSchema={validationSchema}
                     onSubmit={handleSubmit}
                 >
@@ -147,7 +131,7 @@ const PostReplyPage = (): JSX.Element => {
                             <div className="button-group">
                                 <button
                                     type="button"
-                                    onClick={() => navigate(-1)} // Go back to previous page
+                                    onClick={() => navigate(-1)}
                                     disabled={isSubmitting}
                                     className="cancel-button"
                                 >

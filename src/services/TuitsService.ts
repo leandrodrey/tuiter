@@ -1,17 +1,5 @@
 import ApiService from './ApiService';
-
-export interface TuitData {
-    message: string;
-
-    [key: string]: string | unknown;
-}
-
-export interface TuitResponse {
-    id: string;
-    message: string;
-    user_id: string;
-    created_at: string;
-}
+import type {TuitData, TuitResponse} from '../types/apiTypes';
 
 // --- Create Tuit ---
 /**

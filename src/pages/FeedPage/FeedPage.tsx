@@ -2,18 +2,8 @@ import {useEffect, useState, type JSX} from 'react';
 import {apiGetFeed} from '../../services/FeedService.ts';
 import {apiAddLikeToTuit, apiRemoveLikeFromTuit} from '../../services/TuitsService.ts';
 import {FAVORITE_USERS_KEY} from '../../constants/storageConstants';
-
-interface Post {
-    id: string;
-    message: string;
-    user_id: string;
-    created_at: string;
-    // Additional properties we'll add to the TuitResponse
-    author?: string;
-    avatar_url?: string;
-    likes_count?: number;
-    is_liked?: boolean;
-}
+import type {Post} from '../../types/postTypes';
+import type {FavoriteUser} from '../../types/userTypes';
 
 const FeedPage = (): JSX.Element => {
     const [posts, setPosts] = useState<Post[]>([]);

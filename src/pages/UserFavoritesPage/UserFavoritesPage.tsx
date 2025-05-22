@@ -1,10 +1,6 @@
 import {useState, useEffect, type JSX} from 'react';
 import {FAVORITE_USERS_KEY} from '../../constants/storageConstants';
-
-interface FavoriteUser {
-    author: string;
-    avatar_url: string;
-}
+import type {FavoriteUser} from '../../types/userTypes';
 
 const UserFavoritesPage = (): JSX.Element => {
     const [favorites, setFavorites] = useState<FavoriteUser[]>([]);

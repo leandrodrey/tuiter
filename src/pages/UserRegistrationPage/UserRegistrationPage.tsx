@@ -1,45 +1,13 @@
 import {type JSX} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Formik, Form, Field, ErrorMessage, type FormikHelpers} from 'formik';
-import * as Yup from 'yup';
 import {apiCreateUser, type UserData} from '../../services/UserService.ts';
 import {useToast} from "../../hooks/useToast.ts";
-
-interface RegistrationFormData {
-    username: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    avatar_url?: string;
-}
-
-const validationSchema = Yup.object({
-    username: Yup.string()
-        .trim()
-        .required('Username is required'),
-    email: Yup.string()
-        .email('Email is invalid')
-        .required('Email is required'),
-    password: Yup.string()
-        .min(6, 'Password must be at least 6 characters')
-        .required('Password is required'),
-    confirmPassword: Yup.string()
-        .oneOf([Yup.ref('password')], 'Passwords do not match')
-        .required('Confirm password is required'),
-    avatar_url: Yup.string()
-});
+import {registrationValidationSchema as validationSchema, type RegistrationFormData, registrationInitialValues as initialValues} from '../../validations/userSchemas';
 
 const UserRegistrationPage = (): JSX.Element => {
     const navigate = useNavigate();
     const toast = useToast();
-
-    const initialValues: RegistrationFormData = {
-        username: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        avatar_url: '',
-    };
 
     const handleSubmit = async (
         values: RegistrationFormData,

@@ -1,45 +1,12 @@
 import {useState, useEffect, type JSX} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {Formik, Form, Field, ErrorMessage, type FormikHelpers} from 'formik';
-import * as Yup from 'yup';
 import {apiGetProfile, apiUpdateProfile} from '../../services/ProfileService.ts';
 import type {ProfileData} from '../../services/ProfileService.ts';
-
-// Define validation schema using Yup
-const validationSchema = Yup.object({
-    name: Yup.string()
-        .required('Username is required'),
-    email: Yup.string()
-        .email('Email is invalid')
-        .required('Email is required'),
-    password: Yup.string()
-        .min(6, 'Password must be at least 6 characters')
-        .nullable(),
-    confirmPassword: Yup.string()
-        .oneOf([Yup.ref('password')], 'Passwords do not match')
-        .when('password', {
-            is: (val: string) => val && val.length > 0,
-            then: Yup.string().required('Confirm password is required')
-        })
-        .nullable(),
-    avatar_url: Yup.string()
-        .url('Avatar URL must be a valid URL')
-        .nullable()
-});
-
-interface UserFormData extends ProfileData {
-    email: string;
-    confirmPassword?: string;
-}
+import {userEditValidationSchema as validationSchema, type UserFormData, userEditEmptyValues as emptyValues} from '../../validations/userSchemas';
 
 const UserEditPage = (): JSX.Element => {
-    const [initialValues, setInitialValues] = useState<UserFormData>({
-        name: '',
-        email: '',
-        avatar_url: '',
-        password: '',
-        confirmPassword: ''
-    });
+    const [initialValues, setInitialValues] = useState<UserFormData>(emptyValues);
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 

@@ -1,36 +1,15 @@
 import {useState, type JSX} from 'react';
 import {Formik, Form, Field, ErrorMessage, type FormikHelpers} from 'formik';
-import * as Yup from 'yup';
 import {apiLogin, type UserData} from '../../services/UserService';
 import {useAuthContext} from '../../hooks/useAuthContext.ts';
 import './LoginForm.css';
 import {useToast} from "../../hooks/useToast.ts";
-
-// Define validation schema using Yup
-const validationSchema = Yup.object({
-    email: Yup.string()
-        .email('Email is invalid')
-        .required('Email is required'),
-    password: Yup.string()
-        .required('Password is required'),
-});
-
-interface LoginFormData {
-    email: string;
-    password: string;
-
-    [key: string]: string;
-}
+import {loginValidationSchema as validationSchema, type LoginFormData, loginInitialValues as initialValues} from '../../validations/userSchemas';
 
 const LoginForm = (): JSX.Element => {
     const {isAuthenticated, userInformation, login, logout} = useAuthContext();
     const toast = useToast();
     const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
-
-    const initialValues: LoginFormData = {
-        email: '',
-        password: '',
-    };
 
     const handleSubmit = async (values: LoginFormData, {setSubmitting, resetForm}: FormikHelpers<LoginFormData>) => {
         try {

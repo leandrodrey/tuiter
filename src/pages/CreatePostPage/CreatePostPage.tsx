@@ -1,24 +1,13 @@
 import {useState, useEffect, type JSX} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Formik, Form, Field, ErrorMessage, type FormikHelpers} from 'formik';
-import * as Yup from 'yup';
 import {apiCreateTuit} from '../../services/TuitsService.ts';
 import {useToast} from "../../hooks/useToast.ts";
 import {DRAFT_STORAGE_KEY} from '../../constants/storageConstants';
-
-// Define validation schema using Yup
-const validationSchema = Yup.object({
-    message: Yup.string()
-        .required('Post content cannot be empty')
-        .max(280, 'Post content cannot exceed 280 characters')
-});
-
-interface PostFormData {
-    message: string;
-}
+import {createPostValidationSchema as validationSchema, type PostFormData, createPostEmptyValues as emptyValues} from '../../validations/postSchemas';
 
 const CreatePostPage = (): JSX.Element => {
-    const [initialValues, setInitialValues] = useState<PostFormData>({message: ''});
+    const [initialValues, setInitialValues] = useState<PostFormData>(emptyValues);
     const navigate = useNavigate();
     const toast = useToast();
 
@@ -37,7 +26,7 @@ const CreatePostPage = (): JSX.Element => {
 
     const handleClearDraft = (resetForm: (nextState?: { values: PostFormData }) => void) => {
         localStorage.removeItem(DRAFT_STORAGE_KEY);
-        resetForm({values: {message: ''}});
+        resetForm({values: emptyValues});
         toast.info('Draft cleared!');
     };
 
