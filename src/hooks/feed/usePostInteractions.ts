@@ -63,7 +63,8 @@ export const usePostInteractions = (
                                     ...pwr.post,
                                     likes: (pwr.post.likes || 0) - 1,
                                     liked: false
-                                }
+                                },
+                                key: pwr.post.id.toString()
                             };
                         } else if (isReply && pwr.post.id === parentPostId) {
                             // Update reply
@@ -71,12 +72,13 @@ export const usePostInteractions = (
                                 ...pwr,
                                 replies: pwr.replies.map(reply =>
                                     reply.id === postId
-                                        ? {...reply, likes: (reply.likes || 0) - 1, liked: false}
-                                        : reply
-                                )
+                                        ? {...reply, likes: (reply.likes || 0) - 1, liked: false, key: reply.id.toString()}
+                                        : {...reply, key: reply.id.toString()}
+                                ),
+                                key: pwr.post.id.toString()
                             };
                         }
-                        return pwr;
+                        return {...pwr, key: pwr.post.id.toString()};
                     })
                 );
             } else {
@@ -92,7 +94,8 @@ export const usePostInteractions = (
                                     ...pwr.post,
                                     likes: (pwr.post.likes || 0) + 1,
                                     liked: true
-                                }
+                                },
+                                key: pwr.post.id.toString()
                             };
                         } else if (isReply && pwr.post.id === parentPostId) {
                             // Update reply
@@ -100,12 +103,13 @@ export const usePostInteractions = (
                                 ...pwr,
                                 replies: pwr.replies.map(reply =>
                                     reply.id === postId
-                                        ? {...reply, likes: (reply.likes || 0) + 1, liked: true}
-                                        : reply
-                                )
+                                        ? {...reply, likes: (reply.likes || 0) + 1, liked: true, key: reply.id.toString()}
+                                        : {...reply, key: reply.id.toString()}
+                                ),
+                                key: pwr.post.id.toString()
                             };
                         }
-                        return pwr;
+                        return {...pwr, key: pwr.post.id.toString()};
                     })
                 );
             }

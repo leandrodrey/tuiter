@@ -19,7 +19,7 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(initialAuthState.isAuthenticated);
     const [userToken, setUserTokenState] = useState<string | null>(initialAuthState.userToken);
     const [userInformation, setUserInformationState] = useState<UserInformation | null>(initialAuthState.userInformation);
-
+    console.log(userInformation);
     const logout = useCallback((): void => {
         setUserTokenState(null);
         setUserInformationState(null);

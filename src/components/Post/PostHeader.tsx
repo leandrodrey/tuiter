@@ -13,8 +13,6 @@ const PostHeader = ({post, onAddToFavorites}: PostHeaderProps): JSX.Element => {
         onAddToFavorites(post.author, post.avatar_url);
     };
 
-    const authorTextSize = "font-bold";
-
     return (
         <div className="flex items-start mb-3">
             <Avatar
@@ -25,7 +23,7 @@ const PostHeader = ({post, onAddToFavorites}: PostHeaderProps): JSX.Element => {
             />
             <div className="flex-1">
                 <div className="flex items-center">
-                    <h3 className={`${authorTextSize} text-gray-900 dark:text-white`}>{post.author}</h3>
+                    <h3 className={`font-bold text-gray-900 dark:text-white`}>{post.author}</h3>
                     <span className="text-sm text-gray-500 ml-2">
                         {new Date(post.date).toLocaleString()}
                     </span>

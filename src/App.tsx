@@ -12,7 +12,10 @@ function App() {
                     <header className="bg-white dark:bg-black border-b border-gray-200 dark:border-gray-800 sticky top-0 z-10">
                         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                             <div className="flex justify-between items-center">
-                                <TuiterLogo className="flex items-center" />
+                                <div className="flex items-center">
+                                    <TuiterLogo className="flex items-center" />
+                                    <h1 className="ml-3 text-3xl font-bold text-center text-gray-900 dark:text-white">Tuiter Application</h1>
+                                </div>
                                 <Navbar />
                             </div>
                         </div>

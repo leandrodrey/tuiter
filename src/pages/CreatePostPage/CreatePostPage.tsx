@@ -43,7 +43,7 @@ const CreatePostPage = (): JSX.Element => {
             resetForm();
 
             toast.success('Post created successfully!');
-            navigate('/feed');
+            navigate('/');
         } catch (err: unknown) {
             console.error('Error creating post:', err);
             const errorMessage = err instanceof Error

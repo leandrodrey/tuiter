@@ -14,13 +14,13 @@ const PageHeader = ({
     children
 }: PageHeaderProps): JSX.Element => {
     return (
-        <div className={`mb-8 ${className}`}>
-            <h1 className="text-3xl font-bold text-center text-gray-900 dark:text-white">
+        <div className={`mb-8 text-center ${className}`}>
+            <h2 className="text-3xl font-bold  text-gray-900 dark:text-white">
                 {title}
-            </h1>
+            </h2>
 
             {subtitle && (
-                <p className="mt-2 text-center text-gray-600 dark:text-gray-400">
+                <p className="mt-2 text-gray-600 dark:text-gray-400">
                     {subtitle}
                 </p>
             )}

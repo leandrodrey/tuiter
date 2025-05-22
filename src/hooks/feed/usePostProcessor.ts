@@ -37,7 +37,8 @@ export const usePostProcessor = () => {
         // Second pass: create PostWithReplies objects
         return parentPosts.map(post => ({
             post,
-            replies: repliesByParentId[post.id] || []
+            replies: repliesByParentId[post.id] || [],
+            key: post.id.toString()
         }));
     }, []);
 

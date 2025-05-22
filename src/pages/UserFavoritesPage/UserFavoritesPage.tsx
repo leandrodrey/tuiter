@@ -1,14 +1,13 @@
 import {useState, useEffect, type JSX} from 'react';
 import {FAVORITE_USERS_KEY} from '../../constants/storageConstants';
 import type {FavoriteUser} from '../../types/userTypes';
-import { Loader, Avatar, PageHeader } from '../../components/UI';
+import {Loader, Avatar, PageHeader} from '../../components/UI';
 
 const UserFavoritesPage = (): JSX.Element => {
     const [favorites, setFavorites] = useState<FavoriteUser[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        // Load favorites from localStorage
         const loadFavorites = () => {
             try {
                 setIsLoading(true);
@@ -27,23 +26,18 @@ const UserFavoritesPage = (): JSX.Element => {
     }, []);
 
     const handleRemoveFavorite = (author: string) => {
-        // Filter out the user to be removed
         const updatedFavorites = favorites.filter(favorite => favorite.author !== author);
-
-        // Update state
         setFavorites(updatedFavorites);
-
-        // Update localStorage
         localStorage.setItem(FAVORITE_USERS_KEY, JSON.stringify(updatedFavorites));
     };
 
     if (isLoading) {
-        return <Loader text="Loading favorites..." fullScreen={true} />;
+        return <Loader text="Loading favorites..." fullScreen={true}/>;
     }
 
     return (
         <div>
-            <PageHeader title="Favorite Users" />
+            <PageHeader title="Favorite Users" subtitle="Users you have added to your favorites"/>
 
             <div className="max-w-2xl mx-auto">
                 {favorites.length === 0 ? (

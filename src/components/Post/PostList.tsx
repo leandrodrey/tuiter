@@ -17,7 +17,7 @@ const PostList = ({postsWithReplies, onLike, onAddToFavorites}: PostListProps): 
         <div className="space-y-4 w-full max-w-2xl mx-auto">
             {postsWithReplies.map(({post, replies}, index) => (
                 <div
-                    key={post.id}
+                    key={post.id.toString()}
                     className="animate-fadeIn transition-all duration-300 ease-in-out"
                     style={{animationDelay: `${index * 100}ms`}}
                 >

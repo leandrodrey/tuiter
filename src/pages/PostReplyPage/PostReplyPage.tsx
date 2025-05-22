@@ -1,5 +1,5 @@
 import React, {useState, useEffect, type JSX} from 'react';
-import {useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import {type FormikHelpers} from 'formik';
 import {apiGetTuit, apiGetTuitReplies, apiAddReplyToTuit} from '../../services/TuitsService.ts';
 import {
@@ -20,6 +20,7 @@ const PostReplyPage = (): JSX.Element => {
     const [replies, setReplies] = useState<Post[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const navigate = useNavigate();
     const toast = useToast();
 
     const {postId} = useParams<{ postId: string }>();
@@ -74,6 +75,7 @@ const PostReplyPage = (): JSX.Element => {
             resetForm();
 
             toast.success('Reply posted successfully!');
+            navigate('/feed');
         } catch (err: unknown) {
             console.error('Error posting reply:', err);
             const errorMessage = err instanceof Error
@@ -127,7 +129,7 @@ const PostReplyPage = (): JSX.Element => {
 
     const { handleLikePost } = usePostInteractions(
         // Convert replies to the format expected by usePostInteractions
-        replies.map(reply => ({ post: reply, replies: [] })),
+        replies.map(reply => ({ post: reply, replies: [], key: reply.id.toString() })),
         setPostsWithRepliesWrapper
     );
 
