@@ -6,6 +6,7 @@ import type {Post} from '../../types/postTypes';
 import PostList from '../../components/Post/PostList';
 import {useToast} from "../../hooks/useToast.ts";
 import Loader from '../../components/UI/Loader';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 interface PostWithReplies {
     post: Post;
@@ -14,8 +15,12 @@ interface PostWithReplies {
 
 const FeedPage = (): JSX.Element => {
     const [postsWithReplies, setPostsWithReplies] = useState<PostWithReplies[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [loadingMore, setLoadingMore] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
+    const [page, setPage] = useState<number>(1);
+    const [hasMore, setHasMore] = useState<boolean>(true);
+    const [initialLoading, setInitialLoading] = useState<boolean>(true);
     const toast = useToast();
 
     const processPostsResponse = (response: Post[]): PostWithReplies[] => {
@@ -39,11 +44,107 @@ const FeedPage = (): JSX.Element => {
         }));
     };
 
+    const fetchMorePosts = async () => {
+        // Prevent concurrent fetches and don't fetch if there are no more posts
+        if (!hasMore || loadingMore || loading) return;
+
+        try {
+            // Clear any previous errors
+            setError(null);
+            setLoadingMore(true);
+
+            const nextPage = page + 1;
+            const response = await apiGetFeed({ page: nextPage });
+
+            // If no more posts are returned or fewer than expected, set hasMore to false
+            if (response.length === 0) {
+                setHasMore(false);
+                return;
+            }
+
+            // Assuming the API returns a fixed number of posts per page (e.g., 10)
+            // If fewer posts are returned, it likely means we've reached the end
+            const POSTS_PER_PAGE = 10;
+            if (response.length < POSTS_PER_PAGE) {
+                setHasMore(false);
+            }
+
+            // Process the response to organize posts
+            const newPostsWithReplies = processPostsResponse(response);
+
+            // Append new posts to existing posts
+            setPostsWithReplies(prevPosts => [...prevPosts, ...newPostsWithReplies]);
+            setPage(nextPage);
+        } catch (err) {
+            console.error('Error fetching more posts:', err);
+            toast.error('Failed to load more posts. Please try again.');
+            // Don't set hasMore to false on error, so user can try again
+        } finally {
+            setLoadingMore(false);
+        }
+    };
+
+    const refreshFeed = async () => {
+        // Prevent concurrent refreshes
+        if (loading || loadingMore) return;
+
+        try {
+            // Clear any previous errors
+            setError(null);
+            setLoading(true);
+            setPage(1);
+            setHasMore(true);
+
+            const response = await apiGetFeed({ page: 1 });
+
+            // If no posts are returned, set hasMore to false but still clear the current posts
+            if (response.length === 0) {
+                setHasMore(false);
+                setPostsWithReplies([]);
+                toast.info('No posts available at the moment.');
+                return;
+            }
+
+            // Assuming the API returns a fixed number of posts per page (e.g., 10)
+            // If fewer posts are returned, it likely means we've reached the end
+            const POSTS_PER_PAGE = 10;
+            if (response.length < POSTS_PER_PAGE) {
+                setHasMore(false);
+            }
+
+            // Process the response to organize posts
+            const postsWithRepliesArray = processPostsResponse(response);
+            setPostsWithReplies(postsWithRepliesArray);
+
+            toast.success('Feed refreshed successfully!');
+        } catch (err) {
+            console.error('Error refreshing feed:', err);
+            toast.error('Failed to refresh feed. Please try again.');
+            // Don't clear current posts on error
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        const fetchPosts = async () => {
+        const fetchInitialPosts = async () => {
             try {
-                setLoading(true);
-                const response = await apiGetFeed({page: 1});
+                setInitialLoading(true);
+                const response = await apiGetFeed({ page: 1 });
+
+                // If no posts are returned, set hasMore to false
+                if (response.length === 0) {
+                    setHasMore(false);
+                    setError('No posts available at the moment.');
+                    return;
+                }
+
+                // Assuming the API returns a fixed number of posts per page (e.g., 10)
+                // If fewer posts are returned, it likely means we've reached the end
+                const POSTS_PER_PAGE = 10;
+                if (response.length < POSTS_PER_PAGE) {
+                    setHasMore(false);
+                }
 
                 // Process the response to organize posts
                 const postsWithRepliesArray = processPostsResponse(response);
@@ -52,11 +153,11 @@ const FeedPage = (): JSX.Element => {
                 setError('Failed to load posts. Please try again later.');
                 console.error('Error fetching posts:', err);
             } finally {
-                setLoading(false);
+                setInitialLoading(false);
             }
         };
 
-        fetchPosts();
+        fetchInitialPosts();
     }, []);
 
     const handleLikePost = async (postId: number) => {
@@ -172,18 +273,63 @@ const FeedPage = (): JSX.Element => {
         }
     };
 
-    if (loading) return <Loader text="Loading posts..." fullScreen={true} />;
-    if (error) return <div className="p-4 text-red-500 dark:text-red-400 text-center">{error}</div>;
+    if (initialLoading) return <Loader text="Loading posts..." fullScreen={true} />;
+
+    if (error) {
+        return (
+            <div className="p-4 text-center">
+                <p className="text-red-500 dark:text-red-400 mb-4">{error}</p>
+                <button
+                    onClick={refreshFeed}
+                    className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md transition-colors"
+                    disabled={loading}
+                >
+                    {loading ? 'Retrying...' : 'Retry'}
+                </button>
+            </div>
+        );
+    }
 
     return (
         <div>
             <h1 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">Post Feed</h1>
-            <PostList
-                posts={[]} // Empty array as we're using postsWithReplies
-                postsWithReplies={postsWithReplies}
-                onLike={handleLikePost}
-                onAddToFavorites={handleAddToFavorites}
-            />
+
+            <InfiniteScroll
+                dataLength={postsWithReplies.length} // This is important field to render the next data
+                next={fetchMorePosts}
+                hasMore={hasMore}
+                loader={
+                    <div className="text-center py-4">
+                        <Loader text="Loading more posts..." spinnerSize="sm" />
+                    </div>
+                }
+                endMessage={
+                    <p className="text-center text-gray-500 dark:text-gray-400 my-8">
+                        <b>You've seen all posts!</b>
+                    </p>
+                }
+                scrollThreshold={0.9}
+                pullDownToRefresh
+                pullDownToRefreshThreshold={50}
+                pullDownToRefreshContent={
+                    <h3 className="text-center text-gray-500 dark:text-gray-400 my-4">
+                        &#8595; Pull down to refresh
+                    </h3>
+                }
+                releaseToRefreshContent={
+                    <h3 className="text-center text-gray-500 dark:text-gray-400 my-4">
+                        &#8593; Release to refresh
+                    </h3>
+                }
+                refreshFunction={refreshFeed}
+            >
+                <PostList
+                    posts={[]} // Empty array as we're using postsWithReplies
+                    postsWithReplies={postsWithReplies}
+                    onLike={handleLikePost}
+                    onAddToFavorites={handleAddToFavorites}
+                />
+            </InfiniteScroll>
         </div>
     );
 };
