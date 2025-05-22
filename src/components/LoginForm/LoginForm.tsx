@@ -4,7 +4,8 @@ import {apiLogin, type UserData} from '../../services/UserService';
 import {useAuthContext} from '../../hooks/useAuthContext.ts';
 import './LoginForm.css';
 import {useToast} from "../../hooks/useToast.ts";
-import {loginValidationSchema as validationSchema, type LoginFormData, loginInitialValues as initialValues} from '../../validations/userSchemas';
+import {loginValidationSchema as validationSchema, loginInitialValues as initialValues} from '../../validations/userSchemas';
+import type {LoginFormData} from "../../types/formTypes.ts";
 
 const LoginForm = (): JSX.Element => {
     const {isAuthenticated, userInformation, login, logout} = useAuthContext();
