@@ -33,7 +33,6 @@ const PostCard = ({post, onLike, onAddToFavorites, replies = []}: PostCardProps)
                 <PostReplies
                     replies={replies}
                     onLike={onLike}
-                    onAddToFavorites={onAddToFavorites}
                 />
             )}
         </div>

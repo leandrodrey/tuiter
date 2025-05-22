@@ -1,7 +1,7 @@
 import {useState, useEffect, type JSX} from 'react';
 import {FAVORITE_USERS_KEY} from '../../constants/storageConstants';
 import type {FavoriteUser} from '../../types/userTypes';
-import Loader from '../../components/UI/Loader';
+import { Loader, Avatar } from '../../components/UI';
 
 const UserFavoritesPage = (): JSX.Element => {
     const [favorites, setFavorites] = useState<FavoriteUser[]>([]);
@@ -53,10 +53,11 @@ const UserFavoritesPage = (): JSX.Element => {
                         {favorites.map((favorite, index) => (
                             <div key={index} className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors">
                                 <div className="flex items-center">
-                                    <img
-                                        src={favorite.avatar_url || '/images/default-profile.png'}
-                                        alt={`${favorite.author}'s avatar`}
-                                        className="w-10 h-10 rounded-full mr-3"
+                                    <Avatar
+                                        username={favorite.author}
+                                        avatarUrl={favorite.avatar_url}
+                                        size="md"
+                                        className="mr-3"
                                     />
                                     <h3 className="font-medium text-gray-900 dark:text-white">{favorite.author}</h3>
                                 </div>

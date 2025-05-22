@@ -1,6 +1,6 @@
 import {type JSX, useState} from 'react';
 import type {PostFormData} from '../../validations/postSchemas';
-import Spinner from '../../components/UI/Spinner';
+import Spinner from '../UI/Loader/Spinner.tsx';
 
 interface PostFormActionsProps {
     isSubmitting: boolean;

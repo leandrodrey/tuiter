@@ -1,6 +1,6 @@
 import {type JSX} from 'react';
 import PostList from '../../components/Post/PostList';
-import Loader from '../../components/UI/Loader';
+import Loader from '../../components/UI/Loader/Loader.tsx';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useFeedPosts } from '../../hooks/feed/useFeedPosts.ts';
 import { usePostInteractions } from '../../hooks/feed/usePostInteractions.ts';

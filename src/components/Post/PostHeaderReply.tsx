@@ -1,5 +1,6 @@
 import {type JSX} from 'react';
 import type {Post} from '../../types/postTypes';
+import { Avatar } from '../../components/UI';
 
 interface PostHeaderReplyProps {
     post: Post;
@@ -7,15 +8,15 @@ interface PostHeaderReplyProps {
 
 const PostHeaderReply = ({post}: PostHeaderReplyProps): JSX.Element => {
     // Styles specific for replies
-    const avatarSize = "w-8 h-8";
     const authorTextSize = "text-sm";
 
     return (
         <div className="flex items-start mb-3">
-            <img
-                src={post.avatar_url}
-                alt={`${post.author}'s avatar`}
-                className={`${avatarSize} rounded-full mr-3`}
+            <Avatar
+                username={post.author}
+                avatarUrl={post.avatar_url}
+                size="sm"
+                className="mr-3"
             />
             <div className="flex-1">
                 <div className="flex items-center">

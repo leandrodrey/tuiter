@@ -1,5 +1,5 @@
 import {type JSX} from 'react';
-import Spinner from '../../components/UI/Spinner';
+import Spinner from '../UI/Loader/Spinner.tsx';
 
 interface RegistrationActionsProps {
     isSubmitting: boolean;

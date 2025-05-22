@@ -1,5 +1,6 @@
 import {type JSX} from 'react';
 import type {Post} from '../../types/postTypes';
+import { Avatar } from '../../components/UI';
 
 interface PostHeaderProps {
     post: Post;
@@ -12,16 +13,15 @@ const PostHeader = ({post, onAddToFavorites}: PostHeaderProps): JSX.Element => {
         onAddToFavorites(post.author, post.avatar_url);
     };
 
-    // Styles for parent posts
-    const avatarSize = "w-10 h-10";
     const authorTextSize = "font-bold";
 
     return (
         <div className="flex items-start mb-3">
-            <img
-                src={post.avatar_url}
-                alt={`${post.author}'s avatar`}
-                className={`${avatarSize} rounded-full mr-3`}
+            <Avatar
+                username={post.author}
+                avatarUrl={post.avatar_url}
+                size="md"
+                className="mr-3"
             />
             <div className="flex-1">
                 <div className="flex items-center">

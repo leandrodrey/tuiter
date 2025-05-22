@@ -4,7 +4,7 @@ import {Formik, Form, Field, ErrorMessage, type FormikHelpers} from 'formik';
 import {apiGetProfile, apiUpdateProfile} from '../../services/ProfileService.ts';
 import type {ProfileData} from '../../services/ProfileService.ts';
 import {userEditValidationSchema as validationSchema, type UserFormData, userEditEmptyValues as emptyValues} from '../../validations/userSchemas';
-import Loader from '../../components/UI/Loader';
+import Loader from '../../components/UI/Loader/Loader.tsx';
 
 const UserEditPage = (): JSX.Element => {
     const [initialValues, setInitialValues] = useState<UserFormData>(emptyValues);

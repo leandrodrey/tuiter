@@ -11,7 +11,7 @@ import type {PostFormData} from '../../types/formTypes.ts';
 import {useToast} from "../../hooks/context/useToast.ts";
 import {usePostInteractions} from "../../hooks/feed/usePostInteractions.ts";
 import type {PostWithReplies} from "../../hooks/feed/usePostProcessor.ts";
-import Loader from '../../components/UI/Loader';
+import { Loader, Avatar } from '../../components/UI';
 import PostForm from '../../components/PostForm/PostForm';
 import PostReplies from '../../components/Post/PostReplies';
 
@@ -158,10 +158,11 @@ const PostReplyPage = (): JSX.Element => {
             {originalPost && (
                 <div className="border-b border-gray-200 dark:border-gray-800 pb-4 mb-4">
                     <div className="flex items-start mb-3">
-                        <img
-                            src={originalPost.avatar_url}
-                            alt={`${originalPost.author}'s avatar`}
-                            className="w-12 h-12 rounded-full mr-3"
+                        <Avatar
+                            username={originalPost.author}
+                            avatarUrl={originalPost.avatar_url}
+                            size="lg"
+                            className="mr-3"
                         />
                         <div className="flex-1">
                             <div className="flex items-center">
@@ -209,10 +210,10 @@ const PostReplyPage = (): JSX.Element => {
             {/* Reply form */}
             <div className="border-b border-gray-200 dark:border-gray-800 pb-6 mb-4">
                 <div className="flex">
-                    <img
-                        src="https://via.placeholder.com/40"
-                        alt="Your avatar"
-                        className="w-12 h-12 rounded-full mr-3"
+                    <Avatar
+                        username="You"
+                        size="lg"
+                        className="mr-3"
                     />
                     <div className="flex-1">
                         {error && <div className="p-3 mb-4 text-red-500 dark:text-red-400 bg-red-50 dark:bg-red-900/10 rounded">{error}</div>}
