@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import {Formik, Form, Field, ErrorMessage, type FormikHelpers} from 'formik';
 import * as Yup from 'yup';
 import {apiCreateUser, type UserData} from '../../services/UserService.ts';
-import {useToast} from '../../context/ToastContext';
+import {useToast} from "../../hooks/useToast.ts";
 
 interface RegistrationFormData {
     username: string;

@@ -3,8 +3,8 @@ import {Formik, Form, Field, ErrorMessage, type FormikHelpers} from 'formik';
 import * as Yup from 'yup';
 import {apiLogin, type UserData} from '../../services/UserService';
 import {useAuthContext} from '../../hooks/useAuthContext.ts';
-import {useToast} from '../../context/ToastContext';
 import './LoginForm.css';
+import {useToast} from "../../hooks/useToast.ts";
 
 // Define validation schema using Yup
 const validationSchema = Yup.object({
