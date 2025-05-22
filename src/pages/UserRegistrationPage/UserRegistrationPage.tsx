@@ -1,9 +1,10 @@
 import {type JSX} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {Formik, Form, Field, ErrorMessage, type FormikHelpers} from 'formik';
+import {type FormikHelpers} from 'formik';
 import {apiCreateUser, type UserData} from '../../services/UserService.ts';
 import {useToast} from "../../hooks/useToast.ts";
-import {registrationValidationSchema as validationSchema, type RegistrationFormData, registrationInitialValues as initialValues} from '../../validations/userSchemas';
+import type {RegistrationFormData} from "../../types/formTypes.ts";
+import RegistrationForm from '../../components/Registration/RegistrationForm';
 
 const UserRegistrationPage = (): JSX.Element => {
     const navigate = useNavigate();
@@ -40,82 +41,9 @@ const UserRegistrationPage = (): JSX.Element => {
     };
 
     return (
-        <div className="registration-container">
-            <h1>Create an Account</h1>
-
-            <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={handleSubmit}
-            >
-                {({isSubmitting}) => (
-                    <Form>
-                        <div className="form-group">
-                            <label htmlFor="username">Username</label>
-                            <Field
-                                type="text"
-                                id="username"
-                                name="username"
-                                disabled={isSubmitting}
-                            />
-                            <ErrorMessage name="username" component="div" className="error-message"/>
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="email">Email</label>
-                            <Field
-                                type="email"
-                                id="email"
-                                name="email"
-                                disabled={isSubmitting}
-                            />
-                            <ErrorMessage name="email" component="div" className="error-message"/>
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="password">Password</label>
-                            <Field
-                                type="password"
-                                id="password"
-                                name="password"
-                                disabled={isSubmitting}
-                            />
-                            <ErrorMessage name="password" component="div" className="error-message"/>
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="confirmPassword">Confirm Password</label>
-                            <Field
-                                type="password"
-                                id="confirmPassword"
-                                name="confirmPassword"
-                                disabled={isSubmitting}
-                            />
-                            <ErrorMessage name="confirmPassword" component="div" className="error-message"/>
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="avatar_url">Avatar URL (optional)</label>
-                            <Field
-                                type="text"
-                                id="avatar_url"
-                                name="avatar_url"
-                                disabled={isSubmitting}
-                                placeholder="https://example.com/avatar.jpg"
-                            />
-                            <ErrorMessage name="avatar_url" component="div" className="error-message"/>
-                        </div>
-
-                        <button
-                            type="submit"
-                            disabled={isSubmitting}
-                            className="submit-button"
-                        >
-                            {isSubmitting ? 'Registering...' : 'Register'}
-                        </button>
-                    </Form>
-                )}
-            </Formik>
+        <div>
+            <h1 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">Create an Account</h1>
+            <RegistrationForm onSubmit={handleSubmit} />
         </div>
     );
 };

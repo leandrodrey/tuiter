@@ -92,7 +92,7 @@ const FeedPage = (): JSX.Element => {
     if (error) return <div className="p-4 text-red-500 dark:text-red-400 text-center">{error}</div>;
 
     return (
-        <div className="container mx-auto px-4 py-8">
+        <div>
             <h1 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">Post Feed</h1>
             <PostList
                 posts={posts}

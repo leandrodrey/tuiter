@@ -77,91 +77,100 @@ const UserEditPage = (): JSX.Element => {
     };
 
     if (isLoading) {
-        return <div>Loading user data...</div>;
+        return <div className="flex justify-center items-center min-h-screen text-gray-500 dark:text-gray-400">Loading user data...</div>;
     }
 
     return (
-        <div className="edit-profile-container">
-            <h1>Edit Profile</h1>
+        <div>
+            <h1 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">Edit Profile</h1>
 
-            {error && (
-                <div className="error-message general">{error}</div>
-            )}
-
-            <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={handleSubmit}
-                enableReinitialize
-            >
-                {({isSubmitting, values}) => (
-                    <Form>
-                        <div className="form-group">
-                            <label htmlFor="name">Username</label>
-                            <Field
-                                type="text"
-                                id="name"
-                                name="name"
-                                disabled={isSubmitting}
-                            />
-                            <ErrorMessage name="name" component="div" className="error-message"/>
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="email">Email</label>
-                            <Field
-                                type="email"
-                                id="email"
-                                name="email"
-                                disabled={isSubmitting}
-                            />
-                            <ErrorMessage name="email" component="div" className="error-message"/>
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="avatar_url">Avatar URL</label>
-                            <Field
-                                type="text"
-                                id="avatar_url"
-                                name="avatar_url"
-                                disabled={isSubmitting}
-                                placeholder="https://example.com/avatar.jpg"
-                            />
-                            <ErrorMessage name="avatar_url" component="div" className="error-message"/>
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="password">New Password (leave blank to keep current)</label>
-                            <Field
-                                type="password"
-                                id="password"
-                                name="password"
-                                disabled={isSubmitting}
-                            />
-                            <ErrorMessage name="password" component="div" className="error-message"/>
-                        </div>
-
-                        <div className="form-group">
-                            <label htmlFor="confirmPassword">Confirm New Password</label>
-                            <Field
-                                type="password"
-                                id="confirmPassword"
-                                name="confirmPassword"
-                                disabled={isSubmitting || !values.password}
-                            />
-                            <ErrorMessage name="confirmPassword" component="div" className="error-message"/>
-                        </div>
-
-                        <button
-                            type="submit"
-                            disabled={isSubmitting}
-                            className="submit-button"
-                        >
-                            {isSubmitting ? 'Updating...' : 'Update Profile'}
-                        </button>
-                    </Form>
+            <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+                {error && (
+                    <div className="p-3 mb-4 text-red-500 dark:text-red-400 bg-red-50 dark:bg-red-900/10 rounded">{error}</div>
                 )}
-            </Formik>
+
+                <Formik
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={handleSubmit}
+                    enableReinitialize
+                >
+                    {({isSubmitting, values}) => (
+                        <Form className="space-y-4">
+                            <div>
+                                <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Username</label>
+                                <Field
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    disabled={isSubmitting}
+                                    className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                                />
+                                <ErrorMessage name="name" component="div" className="mt-1 text-red-500 dark:text-red-400 text-sm"/>
+                            </div>
+
+                            <div>
+                                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                                <Field
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    disabled={isSubmitting}
+                                    className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                                />
+                                <ErrorMessage name="email" component="div" className="mt-1 text-red-500 dark:text-red-400 text-sm"/>
+                            </div>
+
+                            <div>
+                                <label htmlFor="avatar_url" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Avatar URL</label>
+                                <Field
+                                    type="text"
+                                    id="avatar_url"
+                                    name="avatar_url"
+                                    disabled={isSubmitting}
+                                    placeholder="https://example.com/avatar.jpg"
+                                    className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                                />
+                                <ErrorMessage name="avatar_url" component="div" className="mt-1 text-red-500 dark:text-red-400 text-sm"/>
+                            </div>
+
+                            <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+                                <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">New Password (leave blank to keep current)</label>
+                                <Field
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    disabled={isSubmitting}
+                                    className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                                />
+                                <ErrorMessage name="password" component="div" className="mt-1 text-red-500 dark:text-red-400 text-sm"/>
+                            </div>
+
+                            <div>
+                                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Confirm New Password</label>
+                                <Field
+                                    type="password"
+                                    id="confirmPassword"
+                                    name="confirmPassword"
+                                    disabled={isSubmitting || !values.password}
+                                    className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                                />
+                                <ErrorMessage name="confirmPassword" component="div" className="mt-1 text-red-500 dark:text-red-400 text-sm"/>
+                            </div>
+
+                            <div className="pt-4">
+                                <button
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                    className="w-full px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    {isSubmitting ? 'Updating...' : 'Update Profile'}
+                                </button>
+                            </div>
+                        </Form>
+                    )}
+                </Formik>
+            </div>
         </div>
     );
 };

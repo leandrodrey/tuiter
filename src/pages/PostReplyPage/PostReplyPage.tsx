@@ -73,82 +73,85 @@ const PostReplyPage = (): JSX.Element => {
     };
 
     if (isLoading) {
-        return <div>Loading post...</div>;
+        return <div className="flex justify-center items-center min-h-screen text-gray-500 dark:text-gray-400">Loading post...</div>;
     }
 
     if (error && !originalPost) {
-        return <div className="error-message">{error}</div>;
+        return <div className="p-4 text-red-500 dark:text-red-400 text-center">{error}</div>;
     }
 
     return (
-        <div className="reply-container">
-            <h1>Reply to Post</h1>
+        <div>
+            <h1 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">Reply to Post</h1>
 
-            {originalPost && (
-                <div className="original-post">
-                    <div className="post-header">
-                        <img
-                            src={originalPost.avatar_url || 'https://via.placeholder.com/50'}
-                            alt={`${originalPost.author}'s avatar`}
-                            className="avatar"
-                        />
-                        <div className="author-info">
-                            <h3>{originalPost.author}</h3>
-                            <span>{new Date(originalPost.created_at).toLocaleString()}</span>
+            <div className="max-w-2xl mx-auto">
+                {originalPost && (
+                    <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 mb-6 bg-gray-50 dark:bg-gray-900">
+                        <div className="flex items-start mb-3">
+                            <img
+                                src={originalPost.avatar_url || 'https://via.placeholder.com/50'}
+                                alt={`${originalPost.author}'s avatar`}
+                                className="w-10 h-10 rounded-full mr-3"
+                            />
+                            <div>
+                                <h3 className="font-medium text-gray-900 dark:text-white">{originalPost.author}</h3>
+                                <span className="text-sm text-gray-500">{new Date(originalPost.created_at).toLocaleString()}</span>
+                            </div>
+                        </div>
+
+                        <div className="mb-3">
+                            <p className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap break-words">{originalPost.message}</p>
                         </div>
                     </div>
+                )}
 
-                    <div className="post-content">
-                        <p>{originalPost.message}</p>
-                    </div>
+                <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+                    <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Your Reply</h2>
+
+                    {error && <div className="p-3 mb-4 text-red-500 dark:text-red-400 bg-red-50 dark:bg-red-900/10 rounded">{error}</div>}
+
+                    <Formik
+                        initialValues={initialValues}
+                        validationSchema={validationSchema}
+                        onSubmit={handleSubmit}
+                    >
+                        {({isSubmitting, values}) => (
+                            <Form>
+                                <div className="mb-4">
+                                    <Field
+                                        as="textarea"
+                                        id="message"
+                                        name="message"
+                                        rows={4}
+                                        placeholder="Write your reply here..."
+                                        disabled={isSubmitting}
+                                        className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                                    />
+                                    <ErrorMessage name="message" component="div" className="mt-1 text-red-500 dark:text-red-400"/>
+                                </div>
+
+                                <div className="flex justify-end space-x-3">
+                                    <button
+                                        type="button"
+                                        onClick={() => navigate(-1)}
+                                        disabled={isSubmitting}
+                                        className="px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-md transition-colors"
+                                    >
+                                        Cancel
+                                    </button>
+
+                                    <button
+                                        type="submit"
+                                        disabled={isSubmitting || !values.message.trim()}
+                                        className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                        {isSubmitting ? 'Posting...' : 'Post Reply'}
+                                    </button>
+                                </div>
+                            </Form>
+                        )}
+                    </Formik>
                 </div>
-            )}
-
-            <div className="reply-form">
-                <h2>Your Reply</h2>
-
-                {error && <div className="error-message">{error}</div>}
-
-                <Formik
-                    initialValues={initialValues}
-                    validationSchema={validationSchema}
-                    onSubmit={handleSubmit}
-                >
-                    {({isSubmitting, values}) => (
-                        <Form>
-                            <div className="form-group">
-                                <Field
-                                    as="textarea"
-                                    id="message"
-                                    name="message"
-                                    rows={4}
-                                    placeholder="Write your reply here..."
-                                    disabled={isSubmitting}
-                                />
-                                <ErrorMessage name="message" component="div" className="error-message"/>
-                            </div>
-
-                            <div className="button-group">
-                                <button
-                                    type="button"
-                                    onClick={() => navigate(-1)}
-                                    disabled={isSubmitting}
-                                    className="cancel-button"
-                                >
-                                    Cancel
-                                </button>
-
-                                <button
-                                    type="submit"
-                                    disabled={isSubmitting || !values.message.trim()}
-                                    className="submit-button"
-                                >
-                                    {isSubmitting ? 'Posting...' : 'Post Reply'}
-                                </button>
-                            </div>
-                        </Form>
-                    )}
-                </Formik>
             </div>
         </div>
     );

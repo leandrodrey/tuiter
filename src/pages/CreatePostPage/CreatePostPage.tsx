@@ -57,16 +57,18 @@ const CreatePostPage = (): JSX.Element => {
     };
 
     return (
-        <div className="create-post-container">
-            <h1>Create New Post</h1>
+        <div>
+            <h1 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">Create New Post</h1>
 
-            <PostForm
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={handleSubmit}
-                onSaveDraft={handleSaveDraft}
-                onClearDraft={handleClearDraft}
-            />
+            <div className="max-w-2xl mx-auto">
+                <PostForm
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={handleSubmit}
+                    onSaveDraft={handleSaveDraft}
+                    onClearDraft={handleClearDraft}
+                />
+            </div>
         </div>
     );
 };

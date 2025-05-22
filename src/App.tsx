@@ -6,17 +6,23 @@ function App() {
     return (
         <AuthProvider>
             <ToastProvider>
-                <div className="app-container">
-                    <header className="app-header">
-                        <h1>Tuiter App</h1>
+                <div className="min-h-screen flex flex-col">
+                    <header className="bg-white dark:bg-gray-800 shadow-sm">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Tuiter App</h1>
+                        </div>
                     </header>
 
-                    <main className="app-content">
-                        <AppRouter/>
+                    <main className="flex-grow">
+                        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                            <AppRouter/>
+                        </div>
                     </main>
 
-                    <footer className="app-footer">
-                        <p>&copy; {new Date().getFullYear()} Tuiter App - A social media platform</p>
+                    <footer className="bg-white dark:bg-gray-800 shadow-sm mt-auto">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 text-center text-gray-600 dark:text-gray-400">
+                            <p>&copy; {new Date().getFullYear()} Tuiter App - A social media platform</p>
+                        </div>
                     </footer>
                 </div>
             </ToastProvider>
