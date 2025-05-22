@@ -35,7 +35,6 @@ export const usePostInteractions = (
                     break;
                 }
 
-                // Search in replies
                 const reply = postWithReplies.replies.find(r => r.id === postId);
                 if (reply) {
                     targetPost = reply;
@@ -81,7 +80,6 @@ export const usePostInteractions = (
                     })
                 );
             } else {
-                // Like the post
                 await apiAddLikeToTuit(postId);
 
                 setPostsWithReplies(prevPostsWithReplies =>

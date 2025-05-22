@@ -1,7 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { apiGetFeed } from '../../services/FeedService.ts';
 import { useToast } from '../context/useToast.ts';
 import { usePostProcessor, type PostWithReplies } from './usePostProcessor.ts';
+import type { Post } from '../../types/postTypes';
+
+// Constants
+const POSTS_PER_PAGE = 10;
 
 /**
  * Hook for managing feed posts, including fetching, pagination, and error handling
@@ -20,107 +24,138 @@ export const useFeedPosts = () => {
     const { processPostsResponse } = usePostProcessor();
 
     /**
-     * Fetches more posts when the user scrolls to the bottom
+     * Handles the API response and updates state accordingly
+     * @param response The API response
+     * @param isInitialLoad Whether this is the initial load
+     * @param isRefresh Whether this is a refresh operation
+     * @returns Processed posts with replies
      */
-    const fetchMorePosts = async () => {
-        if (!hasMore || loadingMore || loading) return;
+    const handleApiResponse = useCallback((
+        response: Post[],
+        isInitialLoad = false,
+        isRefresh = false
+    ): PostWithReplies[] => {
+        // Check if there are no posts
+        if (response.length === 0) {
+            setHasMore(false);
+
+            if (isInitialLoad) {
+                setError('No posts available at the moment.');
+            } else if (isRefresh) {
+                setPostsWithReplies([]);
+                toast.info('No posts available at the moment.');
+            }
+            return [];
+        }
+
+        // (end of list)
+        if (response.length < POSTS_PER_PAGE) {
+            setHasMore(false);
+        }
+
+        // Process the response
+        return processPostsResponse(response);
+    }, [processPostsResponse]);
+
+    /**
+     * Common function to fetch posts with error handling
+     * @param pageNumber The page number to fetch
+     * @param options Additional options for the fetch operation
+     * @returns The processed posts or null on error
+     */
+    const fetchPosts = useCallback(async (
+        pageNumber: number,
+        options: {
+            isLoadingMore?: boolean;
+            isRefresh?: boolean;
+            isInitialLoad?: boolean;
+        } = {}
+    ) => {
+        const { isLoadingMore = false, isRefresh = false, isInitialLoad = false } = options;
+
+        // Set appropriate loading state
+        if (isInitialLoad) {
+            setInitialLoading(true);
+        } else if (isLoadingMore) {
+            setLoadingMore(true);
+        } else if (isRefresh) {
+            setLoading(true);
+        }
 
         try {
             setError(null);
-            setLoadingMore(true);
-
-            const nextPage = page + 1;
-            const response = await apiGetFeed({page: nextPage});
-
-            if (response.length === 0) {
-                setHasMore(false);
-                return;
+            const response = await apiGetFeed({ page: pageNumber });
+            const processedPosts = handleApiResponse(response, isInitialLoad, isRefresh);
+            if (isRefresh && processedPosts.length > 0) {
+                toast.success('Feed refreshed successfully!');
             }
-
-            const POSTS_PER_PAGE = 10;
-            if (response.length < POSTS_PER_PAGE) {
-                setHasMore(false);
-            }
-
-            const newPostsWithReplies = processPostsResponse(response);
-
-            setPostsWithReplies(prevPosts => [...prevPosts, ...newPostsWithReplies]);
-            setPage(nextPage);
+            return processedPosts;
         } catch (err) {
-            console.error('Error fetching more posts:', err);
-            toast.error('Failed to load more posts. Please try again.');
+            console.error(`Error ${isLoadingMore ? 'fetching more posts' : isRefresh ? 'refreshing feed' : 'fetching posts'}:`, err);
+
+            if (isInitialLoad) {
+                setError('Failed to load posts. Please try again later.');
+            } else if (isLoadingMore) {
+                toast.error('Failed to load more posts. Please try again.');
+            } else if (isRefresh) {
+                toast.error('Failed to refresh feed. Please try again.');
+            }
+            return null;
         } finally {
-            setLoadingMore(false);
+            if (isInitialLoad) {
+                setInitialLoading(false);
+            } else if (isLoadingMore) {
+                setLoadingMore(false);
+            } else if (isRefresh) {
+                setLoading(false);
+            }
         }
-    };
+    }, [handleApiResponse, toast]);
+
+    /**
+     * Fetches more posts when the user scrolls to the bottom
+     */
+    const fetchMorePosts = useCallback(async () => {
+        // Prevent concurrent fetches and don't fetch if there are no more posts
+        if (!hasMore || loadingMore || loading) return;
+
+        const nextPage = page + 1;
+        const newPosts = await fetchPosts(nextPage, { isLoadingMore: true });
+
+        if (newPosts) {
+            setPostsWithReplies(prevPosts => [...prevPosts, ...newPosts]);
+            setPage(nextPage);
+        }
+    }, [fetchPosts, hasMore, loadingMore, loading, page]);
 
     /**
      * Refreshes the feed by fetching the first page of posts
      */
-    const refreshFeed = async () => {
+    const refreshFeed = useCallback(async () => {
+        // Prevent concurrent refreshes
         if (loading || loadingMore) return;
 
-        try {
-            setError(null);
-            setLoading(true);
-            setPage(1);
-            setHasMore(true);
+        setPage(1);
+        setHasMore(true);
 
-            const response = await apiGetFeed({page: 1});
+        const refreshedPosts = await fetchPosts(1, { isRefresh: true });
 
-            if (response.length === 0) {
-                setHasMore(false);
-                setPostsWithReplies([]);
-                toast.info('No posts available at the moment.');
-                return;
-            }
-
-            const POSTS_PER_PAGE = 10;
-            if (response.length < POSTS_PER_PAGE) {
-                setHasMore(false);
-            }
-
-            const postsWithRepliesArray = processPostsResponse(response);
-            setPostsWithReplies(postsWithRepliesArray);
-
-            toast.success('Feed refreshed successfully!');
-        } catch (err) {
-            console.error('Error refreshing feed:', err);
-            toast.error('Failed to refresh feed. Please try again.');
-        } finally {
-            setLoading(false);
+        if (refreshedPosts) {
+            setPostsWithReplies(refreshedPosts);
         }
-    };
+    }, [fetchPosts, loading, loadingMore]);
 
     useEffect(() => {
         const fetchInitialPosts = async () => {
-            try {
-                setInitialLoading(true);
-                const response = await apiGetFeed({page: 1});
+            const initialPosts = await fetchPosts(1, { isInitialLoad: true });
 
-                if (response.length === 0) {
-                    setHasMore(false);
-                    setError('No posts available at the moment.');
-                    return;
-                }
-
-                const POSTS_PER_PAGE = 10;
-                if (response.length < POSTS_PER_PAGE) {
-                    setHasMore(false);
-                }
-
-                const postsWithRepliesArray = processPostsResponse(response);
-                setPostsWithReplies(postsWithRepliesArray);
-            } catch (err) {
-                setError('Failed to load posts. Please try again later.');
-                console.error('Error fetching posts:', err);
-            } finally {
-                setInitialLoading(false);
+            if (initialPosts) {
+                setPostsWithReplies(initialPosts);
             }
         };
 
         fetchInitialPosts();
-    }, [processPostsResponse]);
+    }, [fetchPosts]);
 
     return {
         postsWithReplies,
