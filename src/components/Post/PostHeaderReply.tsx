@@ -1,20 +1,14 @@
 import {type JSX} from 'react';
 import type {Post} from '../../types/postTypes';
 
-interface PostHeaderProps {
+interface PostHeaderReplyProps {
     post: Post;
-    onAddToFavorites: (author: string, avatarUrl: string) => void;
 }
 
-const PostHeader = ({post, onAddToFavorites}: PostHeaderProps): JSX.Element => {
-
-    const handleAddToFavorites = () => {
-        onAddToFavorites(post.author, post.avatar_url);
-    };
-
-    // Styles for parent posts
-    const avatarSize = "w-10 h-10";
-    const authorTextSize = "font-bold";
+const PostHeaderReply = ({post}: PostHeaderReplyProps): JSX.Element => {
+    // Styles specific for replies
+    const avatarSize = "w-8 h-8";
+    const authorTextSize = "text-sm";
 
     return (
         <div className="flex items-start mb-3">
@@ -29,16 +23,14 @@ const PostHeader = ({post, onAddToFavorites}: PostHeaderProps): JSX.Element => {
                     <span className="text-sm text-gray-500 ml-2">
                         {new Date(post.date).toLocaleString()}
                     </span>
+                    <span className="text-xs text-blue-500 ml-2">
+                        Reply
+                    </span>
                 </div>
             </div>
-            <button
-                onClick={handleAddToFavorites}
-                className="text-sm text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 ml-2"
-            >
-                Add to Favorites
-            </button>
+            {/* No "Add to Favorites" button for replies */}
         </div>
     );
 };
 
-export default PostHeader;
+export default PostHeaderReply;

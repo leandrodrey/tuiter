@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { apiGetFeed } from '../services/FeedService';
-import { useToast } from './useToast';
-import { usePostProcessor, type PostWithReplies } from './usePostProcessor';
+import { apiGetFeed } from '../../services/FeedService.ts';
+import { useToast } from '../context/useToast.ts';
+import { usePostProcessor, type PostWithReplies } from './usePostProcessor.ts';
 
 /**
  * Hook for managing feed posts, including fetching, pagination, and error handling
@@ -23,34 +23,27 @@ export const useFeedPosts = () => {
      * Fetches more posts when the user scrolls to the bottom
      */
     const fetchMorePosts = async () => {
-        // Prevent concurrent fetches and don't fetch if there are no more posts
         if (!hasMore || loadingMore || loading) return;
 
         try {
-            // Clear any previous errors
             setError(null);
             setLoadingMore(true);
 
             const nextPage = page + 1;
             const response = await apiGetFeed({page: nextPage});
 
-            // If no more posts are returned or fewer than expected, set hasMore to false
             if (response.length === 0) {
                 setHasMore(false);
                 return;
             }
 
-            // Assuming the API returns a fixed number of posts per page (e.g., 10)
-            // If fewer posts are returned, it likely means we've reached the end
             const POSTS_PER_PAGE = 10;
             if (response.length < POSTS_PER_PAGE) {
                 setHasMore(false);
             }
 
-            // Process the response to organize posts
             const newPostsWithReplies = processPostsResponse(response);
 
-            // Append new posts to existing posts
             setPostsWithReplies(prevPosts => [...prevPosts, ...newPostsWithReplies]);
             setPage(nextPage);
         } catch (err) {
@@ -87,7 +80,6 @@ export const useFeedPosts = () => {
                 setHasMore(false);
             }
 
-            // Process the response to organize posts
             const postsWithRepliesArray = processPostsResponse(response);
             setPostsWithReplies(postsWithRepliesArray);
 
@@ -95,7 +87,6 @@ export const useFeedPosts = () => {
         } catch (err) {
             console.error('Error refreshing feed:', err);
             toast.error('Failed to refresh feed. Please try again.');
-            // Don't clear current posts on error
         } finally {
             setLoading(false);
         }
@@ -107,7 +98,6 @@ export const useFeedPosts = () => {
                 setInitialLoading(true);
                 const response = await apiGetFeed({page: 1});
 
-                // If no posts are returned, set hasMore to false
                 if (response.length === 0) {
                     setHasMore(false);
                     setError('No posts available at the moment.');
@@ -119,7 +109,6 @@ export const useFeedPosts = () => {
                     setHasMore(false);
                 }
 
-                // Process the response to organize posts
                 const postsWithRepliesArray = processPostsResponse(response);
                 setPostsWithReplies(postsWithRepliesArray);
             } catch (err) {

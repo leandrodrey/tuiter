@@ -1,5 +1,5 @@
 import {type JSX} from 'react';
-import {useToast} from "../../hooks/useToast.ts";
+import {useToast} from "../../hooks/context/useToast.ts";
 import type {UserInformation} from "../../types/userTypes";
 
 interface UserInfoProps {

@@ -2,7 +2,7 @@ import {type JSX} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {type FormikHelpers} from 'formik';
 import {apiCreateUser, type UserData} from '../../services/UserService.ts';
-import {useToast} from "../../hooks/useToast.ts";
+import {useToast} from "../../hooks/context/useToast.ts";
 import type {RegistrationFormData} from "../../types/formTypes.ts";
 import RegistrationForm from '../../components/Registration/RegistrationForm';
 

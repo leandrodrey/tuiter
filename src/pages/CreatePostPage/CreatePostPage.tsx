@@ -2,7 +2,7 @@ import {useState, useEffect, type JSX} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {type FormikHelpers} from 'formik';
 import {apiCreateTuit} from '../../services/TuitsService.ts';
-import {useToast} from "../../hooks/useToast.ts";
+import {useToast} from "../../hooks/context/useToast.ts";
 import {
     createPostValidationSchema as validationSchema,
     createPostEmptyValues as emptyValues

@@ -1,5 +1,5 @@
 import {Link, useLocation} from 'react-router-dom';
-import {useAuthContext} from '../../hooks/useAuthContext.ts';
+import {useAuthContext} from '../../hooks/context/useAuthContext.ts';
 import './Navbar.css';
 
 const Navbar = () => {

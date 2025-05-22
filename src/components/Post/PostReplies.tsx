@@ -1,6 +1,6 @@
 import {type JSX} from 'react';
 import type {Post} from '../../types/postTypes';
-import PostCard from './PostCard';
+import PostCardReply from './PostCardReply';
 
 interface PostRepliesProps {
     replies: Post[];
@@ -16,12 +16,11 @@ const PostReplies = ({replies, onLike, onAddToFavorites}: PostRepliesProps): JSX
     return (
         <div className="ml-8 mt-2 space-y-3 border-l-2 border-gray-200 dark:border-gray-700 pl-4">
             {replies.map(reply => (
-                <PostCard
+                <PostCardReply
                     key={reply.id}
                     post={reply}
                     onLike={onLike}
                     onAddToFavorites={onAddToFavorites}
-                    isReply={true}
                 />
             ))}
         </div>

@@ -1,9 +1,9 @@
 import {useState, type JSX} from 'react';
 import {type FormikHelpers} from 'formik';
 import {apiLogin, type UserData} from '../../services/UserService';
-import {useAuthContext} from '../../hooks/useAuthContext.ts';
+import {useAuthContext} from '../../hooks/context/useAuthContext.ts';
 import './LoginForm.css';
-import {useToast} from "../../hooks/useToast.ts";
+import {useToast} from "../../hooks/context/useToast.ts";
 import type {LoginFormData} from "../../types/formTypes.ts";
 import UserInfo from './UserInfo';
 import LoginFormFields from './LoginFormFields';

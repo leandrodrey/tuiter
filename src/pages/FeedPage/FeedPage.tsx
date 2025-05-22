@@ -2,8 +2,8 @@ import {type JSX} from 'react';
 import PostList from '../../components/Post/PostList';
 import Loader from '../../components/UI/Loader';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { useFeedPosts } from '../../hooks/useFeedPosts';
-import { usePostInteractions } from '../../hooks/usePostInteractions';
+import { useFeedPosts } from '../../hooks/feed/useFeedPosts.ts';
+import { usePostInteractions } from '../../hooks/feed/usePostInteractions.ts';
 
 const FeedPage = (): JSX.Element => {
 
@@ -76,7 +76,6 @@ const FeedPage = (): JSX.Element => {
                 refreshFunction={refreshFeed}
             >
                 <PostList
-                    posts={[]}
                     postsWithReplies={postsWithReplies}
                     onLike={handleLikePost}
                     onAddToFavorites={handleAddToFavorites}

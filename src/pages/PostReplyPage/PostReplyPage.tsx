@@ -5,7 +5,7 @@ import {apiGetTuit, apiAddReplyToTuit} from '../../services/TuitsService.ts';
 import {replyValidationSchema as validationSchema, replyInitialValues as initialValues} from '../../validations/postSchemas';
 import type {Post} from '../../types/postTypes';
 import type { ReplyFormData } from '../../types/formTypes.ts';
-import {useToast} from "../../hooks/useToast.ts";
+import {useToast} from "../../hooks/context/useToast.ts";
 import Loader from '../../components/UI/Loader';
 
 const PostReplyPage = (): JSX.Element => {

@@ -1,8 +1,8 @@
-import { apiAddLikeToTuit, apiRemoveLikeFromTuit } from '../services/TuitsService';
-import { FAVORITE_USERS_KEY } from '../constants/storageConstants';
-import { useToast } from './useToast';
-import type { Post } from '../types/postTypes';
-import type { PostWithReplies } from './usePostProcessor';
+import { apiAddLikeToTuit, apiRemoveLikeFromTuit } from '../../services/TuitsService.ts';
+import { FAVORITE_USERS_KEY } from '../../constants/storageConstants.ts';
+import { useToast } from '../context/useToast.ts';
+import type { Post } from '../../types/postTypes.ts';
+import type { PostWithReplies } from './usePostProcessor.ts';
 import type { Dispatch, SetStateAction } from 'react';
 
 /**
