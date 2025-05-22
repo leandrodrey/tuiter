@@ -1,6 +1,7 @@
 import {
     useState,
     useEffect,
+    useCallback,
     type ReactNode
 } from "react";
 import {setHttpAuthToken} from '../utils/authUtils';
@@ -20,7 +21,18 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
     const [userToken, setUserTokenState] = useState<string | null>(initialAuthState.userToken);
     const [userInformation, setUserInformationState] = useState<UserInformation | null>(initialAuthState.userInformation);
 
-    const getUserInformationAPI = async (): Promise<UserInformation | null> => {
+    const logout = useCallback((): void => {
+        setUserTokenState(null);
+        setUserInformationState(null);
+        setIsAuthenticated(false);
+
+        localStorage.removeItem(USER_TOKEN_KEY);
+        localStorage.removeItem(USER_DATA_KEY);
+        setHttpAuthToken(null);
+        setIsLoadingAuth(false);
+    }, [setUserTokenState, setUserInformationState, setIsAuthenticated, setIsLoadingAuth]);
+
+    const getUserInformationAPI = useCallback(async (): Promise<UserInformation | null> => {
         if (!userToken) {
             console.warn("No user token available to fetch user information.");
             return null;
@@ -55,7 +67,7 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
         } finally {
             setIsLoadingAuth(false);
         }
-    };
+    }, [userToken, logout, setIsLoadingAuth, setUserInformationState]);
 
     const login = (token: string, userData: UserInformation): void => {
         setUserTokenState(token);
@@ -65,17 +77,6 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
         localStorage.setItem(USER_TOKEN_KEY, token);
         localStorage.setItem(USER_DATA_KEY, JSON.stringify(userData));
         setHttpAuthToken(token);
-        setIsLoadingAuth(false);
-    };
-
-    const logout = (): void => {
-        setUserTokenState(null);
-        setUserInformationState(null);
-        setIsAuthenticated(false);
-
-        localStorage.removeItem(USER_TOKEN_KEY);
-        localStorage.removeItem(USER_DATA_KEY);
-        setHttpAuthToken(null);
         setIsLoadingAuth(false);
     };
 
