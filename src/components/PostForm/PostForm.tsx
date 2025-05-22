@@ -1,8 +1,8 @@
 import {type JSX} from 'react';
 import {Formik, Form, type FormikHelpers} from 'formik';
-import type {PostFormData} from '../../validations/postSchemas';
 import PostFormFields from './PostFormFields';
 import PostFormActions from './PostFormActions';
+import type {PostFormData} from "../../types/formTypes.ts";
 
 interface PostFormProps {
     initialValues: PostFormData;

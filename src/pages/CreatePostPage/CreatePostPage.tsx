@@ -38,12 +38,9 @@ const CreatePostPage = (): JSX.Element => {
     const handleSubmit = async (values: PostFormData, {setSubmitting, resetForm}: FormikHelpers<PostFormData>) => {
         try {
             await apiCreateTuit({message: values.message});
-
-            // Clear draft after successful submission
             clearDraft();
             resetForm();
 
-            // Show success notification and redirect to feed page
             toast.success('Post created successfully!');
             navigate('/feed');
         } catch (err: unknown) {
