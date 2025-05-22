@@ -15,7 +15,6 @@ const PostActions = ({post, onLike}: PostActionsProps): JSX.Element => {
         <div className="flex items-center space-x-4 text-gray-500 dark:text-gray-400">
             <button
                 onClick={handleLike}
-                disabled={post.liked}
                 className={`flex items-center hover:text-blue-500 transition-colors ${
                     post.liked
                         ? 'text-blue-500 dark:text-blue-400'
