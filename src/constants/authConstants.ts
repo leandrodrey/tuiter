@@ -6,6 +6,7 @@ export const USER_DATA_KEY = "user_data";
 export interface UserInformation {
     name?: string;
     email?: string;
+
     [key: string]: string | number | boolean | null | undefined;
 }
 

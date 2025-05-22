@@ -1,4 +1,4 @@
-import type { AxiosError } from 'axios'
+import type {AxiosError} from 'axios'
 
 const AxiosResponseIntrceptorErrorCallback = (error: AxiosError) => {
     /** handle response error here */

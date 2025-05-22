@@ -1,15 +1,16 @@
 import ApiService from './ApiService';
 
 export interface TuitData {
-  message: string;
-  [key: string]: string | unknown;
+    message: string;
+
+    [key: string]: string | unknown;
 }
 
 export interface TuitResponse {
-  id: string;
-  message: string;
-  user_id: string;
-  created_at: string;
+    id: string;
+    message: string;
+    user_id: string;
+    created_at: string;
 }
 
 // --- Create Tuit ---
@@ -19,11 +20,11 @@ export interface TuitResponse {
  * @returns A promise that resolves with the tuit creation response from the API.
  */
 export async function apiCreateTuit(data: TuitData) {
-  return ApiService.fetchDataWithAxios<TuitResponse>({
-    url: '/me/tuits',
-    method: 'post',
-    data
-  });
+    return ApiService.fetchDataWithAxios<TuitResponse>({
+        url: '/me/tuits',
+        method: 'post',
+        data
+    });
 }
 
 // --- Get Tuit ---
@@ -33,10 +34,10 @@ export async function apiCreateTuit(data: TuitData) {
  * @returns A promise that resolves with the tuit response from the API.
  */
 export async function apiGetTuit(tuitId: string) {
-  return ApiService.fetchDataWithAxios<TuitResponse>({
-    url: `/me/tuits/${tuitId}`,
-    method: 'get'
-  });
+    return ApiService.fetchDataWithAxios<TuitResponse>({
+        url: `/me/tuits/${tuitId}`,
+        method: 'get'
+    });
 }
 
 // --- Add Like to Tuit ---
@@ -46,10 +47,10 @@ export async function apiGetTuit(tuitId: string) {
  * @returns A promise that resolves with the like addition response from the API.
  */
 export async function apiAddLikeToTuit(tuitId: string) {
-  return ApiService.fetchDataWithAxios<{ success: boolean }>({
-    url: `/me/tuits/${tuitId}/likes`,
-    method: 'post'
-  });
+    return ApiService.fetchDataWithAxios<{ success: boolean }>({
+        url: `/me/tuits/${tuitId}/likes`,
+        method: 'post'
+    });
 }
 
 // --- Remove Like from Tuit ---
@@ -59,10 +60,10 @@ export async function apiAddLikeToTuit(tuitId: string) {
  * @returns A promise that resolves with the like removal response from the API.
  */
 export async function apiRemoveLikeFromTuit(tuitId: string) {
-  return ApiService.fetchDataWithAxios<{ success: boolean }>({
-    url: `/me/tuits/${tuitId}/likes`,
-    method: 'delete'
-  });
+    return ApiService.fetchDataWithAxios<{ success: boolean }>({
+        url: `/me/tuits/${tuitId}/likes`,
+        method: 'delete'
+    });
 }
 
 // --- Get Tuit Replies ---
@@ -72,10 +73,10 @@ export async function apiRemoveLikeFromTuit(tuitId: string) {
  * @returns A promise that resolves with the tuit replies response from the API.
  */
 export async function apiGetTuitReplies(tuitId: string) {
-  return ApiService.fetchDataWithAxios<TuitResponse[]>({
-    url: `/me/tuits/${tuitId}/replies`,
-    method: 'get'
-  });
+    return ApiService.fetchDataWithAxios<TuitResponse[]>({
+        url: `/me/tuits/${tuitId}/replies`,
+        method: 'get'
+    });
 }
 
 // --- Add Reply to Tuit ---
@@ -86,9 +87,9 @@ export async function apiGetTuitReplies(tuitId: string) {
  * @returns A promise that resolves with the reply creation response from the API.
  */
 export async function apiAddReplyToTuit(tuitId: string, data: TuitData) {
-  return ApiService.fetchDataWithAxios<TuitResponse>({
-    url: `/me/tuits/${tuitId}/replies`,
-    method: 'post',
-    data
-  });
+    return ApiService.fetchDataWithAxios<TuitResponse>({
+        url: `/me/tuits/${tuitId}/replies`,
+        method: 'post',
+        data
+    });
 }
