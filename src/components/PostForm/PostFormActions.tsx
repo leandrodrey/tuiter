@@ -78,7 +78,7 @@ const PostFormActions = ({
                     >
                         {isSubmitting ? (
                             <span className="flex items-center justify-center">
-                                <Spinner size="sm" color="white" />
+                                <Spinner size="sm" color="white"/>
                                 <span className="ml-2">Posting...</span>
                             </span>
                         ) : 'Post'}

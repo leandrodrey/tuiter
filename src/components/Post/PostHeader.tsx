@@ -1,6 +1,6 @@
 import {type JSX} from 'react';
 import type {Post} from '../../types/postTypes';
-import { Avatar } from '../../components/UI';
+import {Avatar} from '../../components/UI';
 
 interface PostHeaderProps {
     post: Post;

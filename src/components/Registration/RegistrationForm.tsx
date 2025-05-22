@@ -1,6 +1,9 @@
 import {type JSX} from 'react';
 import {Formik, Form, type FormikHelpers} from 'formik';
-import {registrationValidationSchema as validationSchema, registrationInitialValues as initialValues} from '../../validations/userSchemas';
+import {
+    registrationValidationSchema as validationSchema,
+    registrationInitialValues as initialValues
+} from '../../validations/userSchemas';
 import type {RegistrationFormData} from "../../types/formTypes.ts";
 import RegistrationFormFields from './RegistrationFormFields';
 import RegistrationActions from './RegistrationActions';
@@ -19,8 +22,8 @@ const RegistrationForm = ({onSubmit}: RegistrationFormProps): JSX.Element => {
             >
                 {({isSubmitting}) => (
                     <Form className="space-y-4">
-                        <RegistrationFormFields isSubmitting={isSubmitting} />
-                        <RegistrationActions isSubmitting={isSubmitting} />
+                        <RegistrationFormFields isSubmitting={isSubmitting}/>
+                        <RegistrationActions isSubmitting={isSubmitting}/>
                     </Form>
                 )}
             </Formik>

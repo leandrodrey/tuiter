@@ -69,10 +69,10 @@ const PostFormFields = ({isSubmitting}: PostFormFieldsProps): JSX.Element => {
 
                     <span
                         className={`text-xs font-medium ${
-                            isOverLimit 
-                                ? 'text-red-600 dark:text-red-400' 
-                                : isNearLimit 
-                                    ? 'text-yellow-600 dark:text-yellow-400' 
+                            isOverLimit
+                                ? 'text-red-600 dark:text-red-400'
+                                : isNearLimit
+                                    ? 'text-yellow-600 dark:text-yellow-400'
                                     : 'text-gray-500 dark:text-gray-400'
                         }`}
                     >
@@ -90,8 +90,8 @@ const PostFormFields = ({isSubmitting}: PostFormFieldsProps): JSX.Element => {
                     placeholder="Write your post here..."
                     disabled={isSubmitting}
                     className={`w-full px-4 py-3 border ${
-                        isOverLimit 
-                            ? 'border-red-500 dark:border-red-600' 
+                        isOverLimit
+                            ? 'border-red-500 dark:border-red-600'
                             : 'border-gray-300 dark:border-gray-600'
                     } rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 transition duration-200 ease-in-out resize-none`}
                 />
@@ -103,7 +103,7 @@ const PostFormFields = ({isSubmitting}: PostFormFieldsProps): JSX.Element => {
                     className="absolute right-3 bottom-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-7.536 5.879a1 1 0 001.415 0 3 3 0 014.242 0 1 1 0 001.415-1.415 5 5 0 00-7.072 0 1 1 0 000 1.415z" clipRule="evenodd" />
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-7.536 5.879a1 1 0 001.415 0 3 3 0 014.242 0 1 1 0 001.415-1.415 5 5 0 00-7.072 0 1 1 0 000 1.415z" clipRule="evenodd"/>
                     </svg>
                 </button>
 
