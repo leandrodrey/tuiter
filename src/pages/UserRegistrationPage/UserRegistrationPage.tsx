@@ -1,52 +1,19 @@
-import React, {useState} from 'react';
+import {type JSX} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Formik, Form, Field, ErrorMessage, type FormikHelpers} from 'formik';
-import * as Yup from 'yup';
-import {apiCreateUser, type UserData} from '../services/UserService';
+import {apiCreateUser, type UserData} from '../../services/UserService.ts';
+import {useToast} from "../../hooks/useToast.ts";
+import {registrationValidationSchema as validationSchema, type RegistrationFormData, registrationInitialValues as initialValues} from '../../validations/userSchemas';
 
-interface RegistrationFormData {
-    username: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    avatar_url?: string;
-}
-
-const validationSchema = Yup.object({
-    username: Yup.string()
-        .trim()
-        .required('Username is required'),
-    email: Yup.string()
-        .email('Email is invalid')
-        .required('Email is required'),
-    password: Yup.string()
-        .min(6, 'Password must be at least 6 characters')
-        .required('Password is required'),
-    confirmPassword: Yup.string()
-        .oneOf([Yup.ref('password')], 'Passwords do not match')
-        .required('Confirm password is required'),
-    avatar_url: Yup.string()
-});
-
-const UserRegistrationPage: React.FC = () => {
-    const [generalError, setGeneralError] = useState<string | null>(null);
+const UserRegistrationPage = (): JSX.Element => {
     const navigate = useNavigate();
-
-    const initialValues: RegistrationFormData = {
-        username: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        avatar_url: '',
-    };
+    const toast = useToast();
 
     const handleSubmit = async (
         values: RegistrationFormData,
         {setSubmitting}: FormikHelpers<RegistrationFormData>
     ) => {
         try {
-            setGeneralError(null);
-
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const {confirmPassword, username, ...rest} = values;
 
@@ -57,14 +24,16 @@ const UserRegistrationPage: React.FC = () => {
 
             await apiCreateUser(userData);
 
-            alert('Registration successful! Please log in.');
+            toast.success('Registration successful! Please log in.');
             navigate('/login');
         } catch (err: unknown) {
             console.error('Registration error:', err);
             const errorMessage = err instanceof Error
                 ? err.message
-                : (err as { response?: { data?: { message?: string } } })?.response?.data?.message || 'Registration failed. Please try again.';
-            setGeneralError(errorMessage);
+                : (err as {
+                response?: { data?: { message?: string } }
+            })?.response?.data?.message || 'Registration failed. Please try again.';
+            toast.error(errorMessage);
         } finally {
             setSubmitting(false);
         }
@@ -73,10 +42,6 @@ const UserRegistrationPage: React.FC = () => {
     return (
         <div className="registration-container">
             <h1>Create an Account</h1>
-
-            {generalError && (
-                <div className="error-message general">{generalError}</div>
-            )}
 
             <Formik
                 initialValues={initialValues}
