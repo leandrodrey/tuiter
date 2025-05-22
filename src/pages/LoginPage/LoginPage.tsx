@@ -2,7 +2,6 @@ import {type JSX, useEffect} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import LoginForm from '../../components/LoginForm/LoginForm.tsx';
 import {useAuthContext} from "../../hooks/context/useAuthContext.ts";
-import './LoginPage.css';
 
 const LoginPage = (): JSX.Element => {
     const {isAuthenticated} = useAuthContext();
@@ -18,18 +17,9 @@ const LoginPage = (): JSX.Element => {
     }, [isAuthenticated, navigate, from]);
 
     return (
-        <div className="login-page-container">
-            <div className="login-page-content">
-                <h1>Login to Tuiter</h1>
-                <p>Please login to access your account and use all features.</p>
-
-                <div className="login-form-wrapper">
-                    <LoginForm/>
-                </div>
-
-                <div className="login-page-footer">
-                    <p>Don't have an account? <a href="/users/register">Register here</a></p>
-                </div>
+        <div className="min-h-[calc(100vh-200px)] flex items-center justify-center px-4 py-12">
+            <div className="w-full max-w-md">
+                <LoginForm/>
             </div>
         </div>
     );

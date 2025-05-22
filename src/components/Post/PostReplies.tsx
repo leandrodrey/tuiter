@@ -9,7 +9,6 @@ interface PostRepliesProps {
 
 const PostReplies = ({replies, onLike}: PostRepliesProps): JSX.Element => {
 
-
     return (
         <div className="ml-8 mt-2 space-y-3 border-l-2 border-gray-200 dark:border-gray-700 pl-4">
             {replies.map(reply => (

@@ -13,11 +13,9 @@ interface PostCardProps {
 }
 
 const PostCard = ({post, onLike, onAddToFavorites, replies = []}: PostCardProps): JSX.Element => {
-    // Styles for parent posts
-    const cardClasses = "border border-gray-200 dark:border-gray-800 rounded-lg p-4 mb-4 hover:bg-gray-50 dark:hover:bg-gray-900";
 
     return (
-        <div className={cardClasses}>
+        <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 mb-4 hover:bg-gray-50 dark:hover:bg-gray-900">
             <PostHeader
                 post={post}
                 onAddToFavorites={onAddToFavorites}

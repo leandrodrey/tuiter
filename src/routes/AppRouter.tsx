@@ -1,5 +1,4 @@
 import {Routes, Route} from 'react-router-dom';
-import HomePage from "../pages/HomePage/HomePage.tsx";
 import NotFoundPage from "../pages/NotFoundPage/NotFoundPage.tsx";
 import FeedPage from "../pages/FeedPage/FeedPage.tsx";
 import CreatePostPage from "../pages/CreatePostPage/CreatePostPage.tsx";
@@ -15,7 +14,7 @@ const AppRouter = () => {
         <>
             <Routes>
                 <Route path="/" element={
-                    <HomePage/>
+                    <FeedPage/>
                 }/>
                 <Route path="/login" element={
                     <LoginPage/>

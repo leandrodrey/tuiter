@@ -8,10 +8,9 @@ import {setHttpAuthToken} from '../utils/authUtils';
 import {
     USER_TOKEN_KEY,
     USER_DATA_KEY,
-    type UserInformation,
-    type AuthContextType
 } from '../constants/authConstants.ts';
 import {AuthContext, initialAuthState} from "./AuthContext.ts";
+import type {AuthContextType, UserInformation} from "../types/userTypes.ts";
 
 setHttpAuthToken(initialAuthState.userToken);
 

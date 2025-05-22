@@ -4,6 +4,7 @@
 export interface UserInformation {
     name?: string;
     email?: string;
+    avatar_url?: string;
 
     [key: string]: string | number | boolean | null | undefined;
 }
