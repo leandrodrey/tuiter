@@ -11,7 +11,8 @@ export async function apiCreateTuit(data: TuitData) {
     return ApiService.fetchDataWithAxios<TuitResponse>({
         url: '/me/tuits',
         method: 'post',
-        data
+        data,
+        params: {}
     });
 }
 
@@ -24,7 +25,8 @@ export async function apiCreateTuit(data: TuitData) {
 export async function apiGetTuit(tuitId: number) {
     return ApiService.fetchDataWithAxios<TuitResponse>({
         url: `/me/tuits/${tuitId}`,
-        method: 'get'
+        method: 'get',
+        params: {}
     });
 }
 
@@ -37,7 +39,8 @@ export async function apiGetTuit(tuitId: number) {
 export async function apiAddLikeToTuit(tuitId: number) {
     return ApiService.fetchDataWithAxios<{ success: boolean }>({
         url: `/me/tuits/${tuitId}/likes`,
-        method: 'post'
+        method: 'post',
+        params: {}
     });
 }
 
@@ -50,7 +53,8 @@ export async function apiAddLikeToTuit(tuitId: number) {
 export async function apiRemoveLikeFromTuit(tuitId: number) {
     return ApiService.fetchDataWithAxios<{ success: boolean }>({
         url: `/me/tuits/${tuitId}/likes`,
-        method: 'delete'
+        method: 'delete',
+        params: {}
     });
 }
 
@@ -63,7 +67,8 @@ export async function apiRemoveLikeFromTuit(tuitId: number) {
 export async function apiGetTuitReplies(tuitId: number) {
     return ApiService.fetchDataWithAxios<TuitResponse[]>({
         url: `/me/tuits/${tuitId}/replies`,
-        method: 'get'
+        method: 'get',
+        params: {}
     });
 }
 
@@ -78,6 +83,7 @@ export async function apiAddReplyToTuit(tuitId: number, data: TuitData) {
     return ApiService.fetchDataWithAxios<TuitResponse>({
         url: `/me/tuits/${tuitId}/replies`,
         method: 'post',
-        data
+        data,
+        params: {}
     });
 }

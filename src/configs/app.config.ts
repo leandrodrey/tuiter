@@ -4,7 +4,7 @@ export type AppConfig = {
 }
 
 const appConfig: AppConfig = {
-    apiPrefix: import.meta.env.VITE_API_BASE_URL || 'https://tuiter.fragua.com.ar/api/v1',
+    apiPrefix: import.meta.env.VITE_API_BASE_URL,
     authToken: import.meta.env.VITE_AUTH_TOKEN || '',
 }
 
