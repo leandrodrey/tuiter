@@ -3,6 +3,7 @@ import {apiGetFeed} from '../../services/FeedService.ts';
 import {apiAddLikeToTuit, apiRemoveLikeFromTuit} from '../../services/TuitsService.ts';
 import {FAVORITE_USERS_KEY} from '../../constants/storageConstants';
 import type {Post} from '../../types/postTypes';
+import PostList from '../../components/Post/PostList';
 
 const FeedPage = (): JSX.Element => {
     const [posts, setPosts] = useState<Post[]>([]);
@@ -93,51 +94,11 @@ const FeedPage = (): JSX.Element => {
     return (
         <div className="feed-container">
             <h1>Post Feed</h1>
-
-            {posts.length === 0 ? (
-                <p>No posts available.</p>
-            ) : (
-                <div className="posts-list">
-                    {posts.map(post => (
-                        <div key={post.id} className="post-card">
-                            <div className="post-header">
-                                <img
-                                    src={post.avatar_url || 'https://via.placeholder.com/50'}
-                                    alt={`${post.author}'s avatar`}
-                                    className="avatar"
-                                />
-                                <div className="author-info">
-                                    <h3>{post.author}</h3>
-                                    <span>{new Date(post.created_at).toLocaleString()}</span>
-                                </div>
-                                <button
-                                    onClick={() => handleAddToFavorites(post.author, post.avatar_url)}
-                                    className="favorite-button"
-                                >
-                                    Add to Favorites
-                                </button>
-                            </div>
-
-                            <div className="post-content">
-                                <p>{post.message}</p>
-                            </div>
-
-                            <div className="post-actions">
-                                <button
-                                    onClick={() => handleLikePost(post.id)}
-                                    disabled={post.is_liked}
-                                    className={`like-button ${post.is_liked ? 'liked' : ''}`}
-                                >
-                                    {post.is_liked ? 'Liked' : 'Like'} ({post.likes_count})
-                                </button>
-                                <a href={`/posts/${post.id}/reply`} className="reply-link">
-                                    Reply
-                                </a>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            )}
+            <PostList
+                posts={posts}
+                onLike={handleLikePost}
+                onAddToFavorites={handleAddToFavorites}
+            />
         </div>
     );
 };

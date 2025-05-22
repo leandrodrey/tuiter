@@ -1,10 +1,11 @@
 import {useState, useEffect, type JSX} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {Formik, Form, Field, ErrorMessage, type FormikHelpers} from 'formik';
+import {type FormikHelpers} from 'formik';
 import {apiCreateTuit} from '../../services/TuitsService.ts';
 import {useToast} from "../../hooks/useToast.ts";
 import {DRAFT_STORAGE_KEY} from '../../constants/storageConstants';
 import {createPostValidationSchema as validationSchema, type PostFormData, createPostEmptyValues as emptyValues} from '../../validations/postSchemas';
+import PostForm from '../../components/PostForm/PostForm';
 
 const CreatePostPage = (): JSX.Element => {
     const [initialValues, setInitialValues] = useState<PostFormData>(emptyValues);
@@ -58,57 +59,13 @@ const CreatePostPage = (): JSX.Element => {
         <div className="create-post-container">
             <h1>Create New Post</h1>
 
-            <Formik
+            <PostForm
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
-                enableReinitialize
-            >
-                {({isSubmitting, values, resetForm}) => (
-                    <Form>
-                        <div className="form-group">
-                            <label htmlFor="message">What's on your mind?</label>
-                            <Field
-                                as="textarea"
-                                id="message"
-                                name="message"
-                                rows={6}
-                                placeholder="Write your post here..."
-                                disabled={isSubmitting}
-                            />
-                            <ErrorMessage name="message" component="div" className="error-message"/>
-                        </div>
-
-                        <div className="button-group">
-                            <button
-                                type="button"
-                                onClick={() => handleSaveDraft(values)}
-                                disabled={isSubmitting || !values.message.trim()}
-                                className="save-draft-button"
-                            >
-                                Save Draft
-                            </button>
-
-                            <button
-                                type="button"
-                                onClick={() => handleClearDraft(resetForm)}
-                                disabled={isSubmitting || !values.message.trim()}
-                                className="clear-draft-button"
-                            >
-                                Clear Draft
-                            </button>
-
-                            <button
-                                type="submit"
-                                disabled={isSubmitting || !values.message.trim()}
-                                className="submit-button"
-                            >
-                                {isSubmitting ? 'Posting...' : 'Post'}
-                            </button>
-                        </div>
-                    </Form>
-                )}
-            </Formik>
+                onSaveDraft={handleSaveDraft}
+                onClearDraft={handleClearDraft}
+            />
         </div>
     );
 };
