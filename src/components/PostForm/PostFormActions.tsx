@@ -1,5 +1,6 @@
 import {type JSX} from 'react';
 import type {PostFormData} from '../../validations/postSchemas';
+import Spinner from '../../components/UI/Spinner';
 
 interface PostFormActionsProps {
     isSubmitting: boolean;
@@ -43,7 +44,12 @@ const PostFormActions = ({
                 disabled={isSubmitting || isMessageEmpty}
                 className="submit-button"
             >
-                {isSubmitting ? 'Posting...' : 'Post'}
+                {isSubmitting ? (
+                    <span className="flex items-center justify-center">
+                        <Spinner size="sm" color="white" />
+                        <span className="ml-2">Posting...</span>
+                    </span>
+                ) : 'Post'}
             </button>
         </div>
     );
