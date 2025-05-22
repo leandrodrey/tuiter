@@ -10,11 +10,11 @@ interface PostListProps {
 
 const PostList = ({posts, onLike, onAddToFavorites}: PostListProps): JSX.Element => {
     if (posts.length === 0) {
-        return <p>No posts available.</p>;
+        return <p className="text-center text-gray-500 dark:text-gray-400 my-8">No posts available.</p>;
     }
 
     return (
-        <div className="posts-list">
+        <div className="space-y-4 w-full max-w-2xl mx-auto">
             {posts.map(post => (
                 <PostCard
                     key={post.id}

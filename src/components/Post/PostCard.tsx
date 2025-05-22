@@ -12,7 +12,7 @@ interface PostCardProps {
 
 const PostCard = ({post, onLike, onAddToFavorites}: PostCardProps): JSX.Element => {
     return (
-        <div className="post-card">
+        <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 mb-4 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors">
             <PostHeader
                 post={post}
                 onAddToFavorites={onAddToFavorites}

@@ -6,8 +6,8 @@ interface PostContentProps {
 
 const PostContent = ({message}: PostContentProps): JSX.Element => {
     return (
-        <div className="post-content">
-            <p>{message}</p>
+        <div className="mb-3">
+            <p className="text-gray-800 dark:text-gray-200 whitespace-pre-wrap break-words">{message}</p>
         </div>
     );
 };

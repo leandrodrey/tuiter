@@ -1,4 +1,3 @@
-import './App.css'
 import {AuthProvider} from './context/AuthProvider.tsx';
 import {ToastProvider} from './context/ToastProvider.tsx';
 import AppRouter from "./routes/AppRouter.tsx";

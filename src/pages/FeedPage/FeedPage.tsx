@@ -88,12 +88,12 @@ const FeedPage = (): JSX.Element => {
         }
     };
 
-    if (loading) return <div>Loading posts...</div>;
-    if (error) return <div>{error}</div>;
+    if (loading) return <div className="flex justify-center items-center min-h-screen text-gray-500 dark:text-gray-400">Loading posts...</div>;
+    if (error) return <div className="p-4 text-red-500 dark:text-red-400 text-center">{error}</div>;
 
     return (
-        <div className="feed-container">
-            <h1>Post Feed</h1>
+        <div className="container mx-auto px-4 py-8">
+            <h1 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">Post Feed</h1>
             <PostList
                 posts={posts}
                 onLike={handleLikePost}
