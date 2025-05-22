@@ -7,6 +7,7 @@ interface PostHeaderProps {
 }
 
 const PostHeader = ({post, onAddToFavorites}: PostHeaderProps): JSX.Element => {
+
     const handleAddToFavorites = () => {
         onAddToFavorites(post.author, post.avatar_url);
     };
@@ -14,7 +15,7 @@ const PostHeader = ({post, onAddToFavorites}: PostHeaderProps): JSX.Element => {
     return (
         <div className="flex items-start mb-3">
             <img
-                src={post.avatar_url || 'https://via.placeholder.com/50'}
+                src={post.avatar_url || '/images/default-profile.png'}
                 alt={`${post.author}'s avatar`}
                 className="w-10 h-10 rounded-full mr-3"
             />

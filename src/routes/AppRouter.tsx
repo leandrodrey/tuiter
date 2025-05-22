@@ -8,14 +8,11 @@ import UserEditPage from "../pages/UserEditPage/UserEditPage.tsx";
 import UserFavoritesPage from "../pages/UserFavoritesPage/UserFavoritesPage.tsx";
 import PostReplyPage from "../pages/PostReplyPage/PostReplyPage.tsx";
 import LoginPage from "../pages/LoginPage/LoginPage.tsx";
-import Navbar from "../components/Navbar/Navbar.tsx";
 import AuthGuard from "./AuthGuard.tsx";
 
 const AppRouter = () => {
     return (
         <>
-            <Navbar/>
-
             <Routes>
                 <Route path="/" element={
                     <HomePage/>

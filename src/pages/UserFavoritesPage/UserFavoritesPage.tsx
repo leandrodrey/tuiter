@@ -53,7 +53,7 @@ const UserFavoritesPage = (): JSX.Element => {
                             <div key={index} className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors">
                                 <div className="flex items-center">
                                     <img
-                                        src={favorite.avatar_url || 'https://via.placeholder.com/50'}
+                                        src={favorite.avatar_url || '/images/default-profile.png'}
                                         alt={`${favorite.author}'s avatar`}
                                         className="w-10 h-10 rounded-full mr-3"
                                     />

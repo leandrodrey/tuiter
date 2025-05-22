@@ -4,23 +4,25 @@ import {apiAddLikeToTuit, apiRemoveLikeFromTuit} from '../../services/TuitsServi
 import {FAVORITE_USERS_KEY} from '../../constants/storageConstants';
 import type {Post} from '../../types/postTypes';
 import PostList from '../../components/Post/PostList';
+import {useToast} from "../../hooks/useToast.ts";
 
 const FeedPage = (): JSX.Element => {
     const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const toast = useToast();
 
     useEffect(() => {
         const fetchPosts = async () => {
             try {
                 setLoading(true);
                 const response = await apiGetFeed({page: 1});
-
+                console.log(response);
                 // Transform the response to match our Post interface with additional properties
                 const transformedPosts = response.map(tuit => ({
                     ...tuit,
                     author: `User ${tuit.user_id}`, // In a real app, you'd fetch user details
-                    avatar_url: 'https://via.placeholder.com/50',
+                    avatar_url: '/images/default-profile.png',
                     likes_count: 0, // In a real app, this would come from the API
                     is_liked: false // In a real app, this would come from the API
                 }));
@@ -82,9 +84,9 @@ const FeedPage = (): JSX.Element => {
             // Add to favorites
             const updatedFavorites = [...existingFavorites, {author, avatar_url: avatarUrl}];
             localStorage.setItem(FAVORITE_USERS_KEY, JSON.stringify(updatedFavorites));
-            alert(`${author} added to favorites!`);
+            toast.success(`${author} added to favorites!`);
         } else {
-            alert(`${author} is already in your favorites!`);
+            toast.info(`${author} is already in your favorites!`);
         }
     };
 

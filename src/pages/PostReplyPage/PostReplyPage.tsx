@@ -30,7 +30,7 @@ const PostReplyPage = (): JSX.Element => {
                 const transformedPost: Post = {
                     ...tuit,
                     author: `User ${tuit.user_id}`, // In a real app, you'd fetch user details
-                    avatar_url: 'https://via.placeholder.com/50'
+                    avatar_url: '/images/default-profile.png'
                 };
 
                 setOriginalPost(transformedPost);
@@ -89,7 +89,7 @@ const PostReplyPage = (): JSX.Element => {
                     <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 mb-6 bg-gray-50 dark:bg-gray-900">
                         <div className="flex items-start mb-3">
                             <img
-                                src={originalPost.avatar_url || 'https://via.placeholder.com/50'}
+                                src={originalPost.avatar_url || '/images/default-profile.png'}
                                 alt={`${originalPost.author}'s avatar`}
                                 className="w-10 h-10 rounded-full mr-3"
                             />
