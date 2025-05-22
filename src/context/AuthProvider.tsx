@@ -1,30 +1,18 @@
 import {
     useState,
     useEffect,
-    type ReactNode, createContext
+    type ReactNode
 } from "react";
 import {setHttpAuthToken} from '../utils/authUtils';
 import {
     USER_TOKEN_KEY,
     USER_DATA_KEY,
     type UserInformation,
-    type AuthState,
     type AuthContextType
 } from '../constants/authConstants.ts';
+import {AuthContext, initialAuthState} from "./AuthContext.ts";
 
-const initialToken = localStorage.getItem(USER_TOKEN_KEY);
-const initialUserData = JSON.parse(localStorage.getItem(USER_DATA_KEY) || 'null') as UserInformation | null;
-
-setHttpAuthToken(initialToken);
-
-const initialAuthState: AuthState = {
-    isLoadingAuth: true,
-    isAuthenticated: !!initialToken,
-    userToken: initialToken,
-    userInformation: initialUserData,
-};
-
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+setHttpAuthToken(initialAuthState.userToken);
 
 export const AuthProvider = ({children}: { children: ReactNode }) => {
     const [isLoadingAuth, setIsLoadingAuth] = useState<boolean>(initialAuthState.isLoadingAuth);
@@ -32,7 +20,6 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
     const [userToken, setUserTokenState] = useState<string | null>(initialAuthState.userToken);
     const [userInformation, setUserInformationState] = useState<UserInformation | null>(initialAuthState.userInformation);
 
-    // Obtiene la información del usuario desde la API
     const getUserInformationAPI = async (): Promise<UserInformation | null> => {
         if (!userToken) {
             console.warn("No user token available to fetch user information.");
@@ -54,7 +41,14 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
             return userData;
         } catch (error) {
             console.error("Error loading user information from API:", error);
-            if ((error as any)?.response?.status === 401) {
+
+            interface ApiError {
+                response?: {
+                    status?: number;
+                };
+            }
+
+            if ((error as ApiError)?.response?.status === 401) {
                 logout();
             }
             return null;
@@ -95,7 +89,7 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
         };
 
         loadInitialData();
-    }, []);
+    }, [getUserInformationAPI, userInformation, userToken]);
 
     // Context value
     const contextValue: AuthContextType = {
