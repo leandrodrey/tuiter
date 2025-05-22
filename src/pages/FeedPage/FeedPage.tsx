@@ -3,7 +3,6 @@ import {apiGetFeed} from '../../services/FeedService.ts';
 import {apiAddLikeToTuit, apiRemoveLikeFromTuit} from '../../services/TuitsService.ts';
 import {FAVORITE_USERS_KEY} from '../../constants/storageConstants';
 import type {Post} from '../../types/postTypes';
-import type {FavoriteUser} from '../../types/userTypes';
 
 const FeedPage = (): JSX.Element => {
     const [posts, setPosts] = useState<Post[]>([]);
@@ -46,7 +45,6 @@ const FeedPage = (): JSX.Element => {
                 // Unlike the post
                 await apiRemoveLikeFromTuit(postId);
 
-                // Update the posts state to reflect the unlike
                 setPosts(prevPosts =>
                     prevPosts.map(p =>
                         p.id === postId
@@ -58,7 +56,6 @@ const FeedPage = (): JSX.Element => {
                 // Like the post
                 await apiAddLikeToTuit(postId);
 
-                // Update the posts state to reflect the like
                 setPosts(prevPosts =>
                     prevPosts.map(p =>
                         p.id === postId
@@ -76,7 +73,6 @@ const FeedPage = (): JSX.Element => {
         // Get existing favorites from localStorage
         const existingFavorites = JSON.parse(localStorage.getItem(FAVORITE_USERS_KEY) || '[]');
 
-        // Check if user is already in favorites
         const isAlreadyFavorite = existingFavorites.some(
             (favorite: { author: string }) => favorite.author === author
         );
