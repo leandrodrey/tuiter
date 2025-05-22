@@ -3,10 +3,11 @@ import {Formik, Form, type FormikHelpers} from 'formik';
 import PostFormFields from './PostFormFields';
 import PostFormActions from './PostFormActions';
 import type {PostFormData} from "../../types/formTypes.ts";
+import type {ObjectSchema} from "yup";
 
 interface PostFormProps {
     initialValues: PostFormData;
-    validationSchema: any;
+    validationSchema: ObjectSchema<PostFormData>;
     onSubmit: (values: PostFormData, formikHelpers: FormikHelpers<PostFormData>) => Promise<void>;
     onSaveDraft: (values: PostFormData) => void;
     onClearDraft: (resetForm: (nextState?: { values: PostFormData }) => void) => void;
