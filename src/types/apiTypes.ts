@@ -8,10 +8,14 @@ export interface TuitData {
 }
 
 export interface TuitResponse {
-    id: string;
+    id: number;
     message: string;
-    user_id: string;
-    created_at: string;
+    author: string;
+    avatar_url: string;
+    date: string;
+    liked: boolean;
+    likes: number;
+    parent_id: number;
 }
 
 // --- API Error ---

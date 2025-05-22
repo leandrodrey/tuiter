@@ -1,5 +1,5 @@
 import ApiService from './ApiService';
-import type {TuitResponse} from './TuitsService';
+import type {TuitResponse} from '../types/apiTypes';
 
 export interface FeedParams {
     page?: number;

@@ -1,6 +1,7 @@
 import {useState, useEffect, type JSX} from 'react';
 import {FAVORITE_USERS_KEY} from '../../constants/storageConstants';
 import type {FavoriteUser} from '../../types/userTypes';
+import Loader from '../../components/UI/Loader';
 
 const UserFavoritesPage = (): JSX.Element => {
     const [favorites, setFavorites] = useState<FavoriteUser[]>([]);
@@ -37,7 +38,7 @@ const UserFavoritesPage = (): JSX.Element => {
     };
 
     if (isLoading) {
-        return <div className="flex justify-center items-center min-h-screen text-gray-500 dark:text-gray-400">Loading favorites...</div>;
+        return <Loader text="Loading favorites..." fullScreen={true} />;
     }
 
     return (

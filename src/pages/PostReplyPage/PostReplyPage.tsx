@@ -5,6 +5,8 @@ import {apiGetTuit, apiAddReplyToTuit} from '../../services/TuitsService.ts';
 import {replyValidationSchema as validationSchema, replyInitialValues as initialValues} from '../../validations/postSchemas';
 import type {Post} from '../../types/postTypes';
 import type { ReplyFormData } from '../../types/formTypes.ts';
+import {useToast} from "../../hooks/useToast.ts";
+import Loader from '../../components/UI/Loader';
 
 const PostReplyPage = (): JSX.Element => {
     const [originalPost, setOriginalPost] = useState<Post | null>(null);
@@ -13,6 +15,7 @@ const PostReplyPage = (): JSX.Element => {
 
     const navigate = useNavigate();
     const {postId} = useParams<{ postId: string }>();
+    const toast = useToast();
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -24,16 +27,8 @@ const PostReplyPage = (): JSX.Element => {
 
             try {
                 setIsLoading(true);
-                const tuit = await apiGetTuit(postId);
-
-                // Transform the response to match our Post interface with additional properties
-                const transformedPost: Post = {
-                    ...tuit,
-                    author: `User ${tuit.user_id}`, // In a real app, you'd fetch user details
-                    avatar_url: '/images/default-profile.png'
-                };
-
-                setOriginalPost(transformedPost);
+                const post = await apiGetTuit(parseInt(postId));
+                setOriginalPost(post);
             } catch (err) {
                 console.error('Error fetching post:', err);
                 setError('Failed to load the original post. Please try again.');
@@ -55,9 +50,9 @@ const PostReplyPage = (): JSX.Element => {
         try {
             setError(null);
 
-            await apiAddReplyToTuit(postId, {message: values.message});
+            await apiAddReplyToTuit(parseInt(postId), {message: values.message});
 
-            alert('Reply posted successfully!');
+            toast.success('Reply posted successfully!');
             navigate(`/posts/${postId}`); // Navigate to the original post with replies
         } catch (err: unknown) {
             console.error('Error posting reply:', err);
@@ -73,7 +68,7 @@ const PostReplyPage = (): JSX.Element => {
     };
 
     if (isLoading) {
-        return <div className="flex justify-center items-center min-h-screen text-gray-500 dark:text-gray-400">Loading post...</div>;
+        return <Loader text="Loading post..." fullScreen={true} />;
     }
 
     if (error && !originalPost) {
@@ -89,13 +84,13 @@ const PostReplyPage = (): JSX.Element => {
                     <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-4 mb-6 bg-gray-50 dark:bg-gray-900">
                         <div className="flex items-start mb-3">
                             <img
-                                src={originalPost.avatar_url || '/images/default-profile.png'}
+                                src={originalPost.avatar_url}
                                 alt={`${originalPost.author}'s avatar`}
                                 className="w-10 h-10 rounded-full mr-3"
                             />
                             <div>
                                 <h3 className="font-medium text-gray-900 dark:text-white">{originalPost.author}</h3>
-                                <span className="text-sm text-gray-500">{new Date(originalPost.created_at).toLocaleString()}</span>
+                                <span className="text-sm text-gray-500">{new Date(originalPost.date).toLocaleString()}</span>
                             </div>
                         </div>
 

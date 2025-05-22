@@ -21,7 +21,7 @@ export async function apiCreateTuit(data: TuitData) {
  * @param tuitId The ID of the tuit to retrieve.
  * @returns A promise that resolves with the tuit response from the API.
  */
-export async function apiGetTuit(tuitId: string) {
+export async function apiGetTuit(tuitId: number) {
     return ApiService.fetchDataWithAxios<TuitResponse>({
         url: `/me/tuits/${tuitId}`,
         method: 'get'
@@ -34,7 +34,7 @@ export async function apiGetTuit(tuitId: string) {
  * @param tuitId The ID of the tuit to like.
  * @returns A promise that resolves with the like addition response from the API.
  */
-export async function apiAddLikeToTuit(tuitId: string) {
+export async function apiAddLikeToTuit(tuitId: number) {
     return ApiService.fetchDataWithAxios<{ success: boolean }>({
         url: `/me/tuits/${tuitId}/likes`,
         method: 'post'
@@ -47,7 +47,7 @@ export async function apiAddLikeToTuit(tuitId: string) {
  * @param tuitId The ID of the tuit to unlike.
  * @returns A promise that resolves with the like removal response from the API.
  */
-export async function apiRemoveLikeFromTuit(tuitId: string) {
+export async function apiRemoveLikeFromTuit(tuitId: number) {
     return ApiService.fetchDataWithAxios<{ success: boolean }>({
         url: `/me/tuits/${tuitId}/likes`,
         method: 'delete'
@@ -60,7 +60,7 @@ export async function apiRemoveLikeFromTuit(tuitId: string) {
  * @param tuitId The ID of the tuit to get replies for.
  * @returns A promise that resolves with the tuit replies response from the API.
  */
-export async function apiGetTuitReplies(tuitId: string) {
+export async function apiGetTuitReplies(tuitId: number) {
     return ApiService.fetchDataWithAxios<TuitResponse[]>({
         url: `/me/tuits/${tuitId}/replies`,
         method: 'get'
@@ -74,7 +74,7 @@ export async function apiGetTuitReplies(tuitId: string) {
  * @param data The payload containing reply data (message).
  * @returns A promise that resolves with the reply creation response from the API.
  */
-export async function apiAddReplyToTuit(tuitId: string, data: TuitData) {
+export async function apiAddReplyToTuit(tuitId: number, data: TuitData) {
     return ApiService.fetchDataWithAxios<TuitResponse>({
         url: `/me/tuits/${tuitId}/replies`,
         method: 'post',

@@ -4,6 +4,7 @@ import {Formik, Form, Field, ErrorMessage, type FormikHelpers} from 'formik';
 import {apiGetProfile, apiUpdateProfile} from '../../services/ProfileService.ts';
 import type {ProfileData} from '../../services/ProfileService.ts';
 import {userEditValidationSchema as validationSchema, type UserFormData, userEditEmptyValues as emptyValues} from '../../validations/userSchemas';
+import Loader from '../../components/UI/Loader';
 
 const UserEditPage = (): JSX.Element => {
     const [initialValues, setInitialValues] = useState<UserFormData>(emptyValues);
@@ -77,7 +78,7 @@ const UserEditPage = (): JSX.Element => {
     };
 
     if (isLoading) {
-        return <div className="flex justify-center items-center min-h-screen text-gray-500 dark:text-gray-400">Loading user data...</div>;
+        return <Loader text="Loading user data..." fullScreen={true} />;
     }
 
     return (
