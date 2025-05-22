@@ -5,6 +5,7 @@ import {apiCreateUser, type UserData} from '../../services/UserService.ts';
 import {useToast} from "../../hooks/context/useToast.ts";
 import type {RegistrationFormData} from "../../types/formTypes.ts";
 import RegistrationForm from '../../components/Registration/RegistrationForm';
+import {PageHeader} from '../../components/UI';
 
 const UserRegistrationPage = (): JSX.Element => {
     const navigate = useNavigate();
@@ -42,7 +43,7 @@ const UserRegistrationPage = (): JSX.Element => {
 
     return (
         <div>
-            <h1 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">Create an Account</h1>
+            <PageHeader title="Create an Account" />
             <RegistrationForm onSubmit={handleSubmit} />
         </div>
     );

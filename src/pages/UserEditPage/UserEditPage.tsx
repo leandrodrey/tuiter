@@ -4,7 +4,8 @@ import {Formik, Form, Field, ErrorMessage, type FormikHelpers} from 'formik';
 import {apiGetProfile, apiUpdateProfile} from '../../services/ProfileService.ts';
 import type {ProfileData} from '../../services/ProfileService.ts';
 import {userEditValidationSchema as validationSchema, type UserFormData, userEditEmptyValues as emptyValues} from '../../validations/userSchemas';
-import Loader from '../../components/UI/Loader/Loader.tsx';
+import {Loader, PageHeader} from '../../components/UI';
+import {useToast} from "../../hooks/context/useToast.ts";
 
 const UserEditPage = (): JSX.Element => {
     const [initialValues, setInitialValues] = useState<UserFormData>(emptyValues);
@@ -13,6 +14,7 @@ const UserEditPage = (): JSX.Element => {
 
     const navigate = useNavigate();
     const {userId} = useParams<{ userId: string }>();
+    const toast = useToast();
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -62,8 +64,8 @@ const UserEditPage = (): JSX.Element => {
 
             await apiUpdateProfile(profileData);
 
-            alert('Profile updated successfully!');
-            navigate('/profile'); // Redirect to profile page
+            toast.success('Profile updated successfully!');
+            navigate('/'); // Redirect to home page
         } catch (err: unknown) {
             console.error('Update error:', err);
             const errorMessage = err instanceof Error
@@ -72,6 +74,7 @@ const UserEditPage = (): JSX.Element => {
                 response?: { data?: { message?: string } }
             })?.response?.data?.message || 'Update failed. Please try again.';
             setError(errorMessage);
+            toast.error(errorMessage);
         } finally {
             setSubmitting(false);
         }
@@ -83,7 +86,7 @@ const UserEditPage = (): JSX.Element => {
 
     return (
         <div>
-            <h1 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">Edit Profile</h1>
+            <PageHeader title="Edit Profile" />
 
             <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
                 {error && (

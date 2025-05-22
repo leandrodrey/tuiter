@@ -10,6 +10,7 @@ import {
 import PostForm from '../../components/PostForm/PostForm';
 import type {PostFormData} from "../../types/formTypes.ts";
 import {loadDraft, saveDraft, clearDraft} from '../../utils/draftUtils';
+import {PageHeader} from '../../components/UI';
 
 const CreatePostPage = (): JSX.Element => {
     const [initialValues, setInitialValues] = useState<PostFormData>(emptyValues);
@@ -58,7 +59,7 @@ const CreatePostPage = (): JSX.Element => {
 
     return (
         <div>
-            <h1 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">Create New Post</h1>
+            <PageHeader title="Create New Post" />
 
             <div className="max-w-2xl mx-auto">
                 <PostForm

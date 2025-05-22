@@ -1,6 +1,6 @@
 import {type JSX} from 'react';
 import PostList from '../../components/Post/PostList';
-import Loader from '../../components/UI/Loader/Loader.tsx';
+import {Loader, PageHeader} from '../../components/UI';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useFeedPosts } from '../../hooks/feed/useFeedPosts.ts';
 import { usePostInteractions } from '../../hooks/feed/usePostInteractions.ts';
@@ -42,7 +42,7 @@ const FeedPage = (): JSX.Element => {
 
     return (
         <div>
-            <h1 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">Post Feed</h1>
+            <PageHeader title="Post Feed" />
 
             <InfiniteScroll
                 dataLength={postsWithReplies.length}

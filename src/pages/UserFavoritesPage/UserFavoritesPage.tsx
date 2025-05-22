@@ -1,7 +1,7 @@
 import {useState, useEffect, type JSX} from 'react';
 import {FAVORITE_USERS_KEY} from '../../constants/storageConstants';
 import type {FavoriteUser} from '../../types/userTypes';
-import { Loader, Avatar } from '../../components/UI';
+import { Loader, Avatar, PageHeader } from '../../components/UI';
 
 const UserFavoritesPage = (): JSX.Element => {
     const [favorites, setFavorites] = useState<FavoriteUser[]>([]);
@@ -43,7 +43,7 @@ const UserFavoritesPage = (): JSX.Element => {
 
     return (
         <div>
-            <h1 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">Favorite Users</h1>
+            <PageHeader title="Favorite Users" />
 
             <div className="max-w-2xl mx-auto">
                 {favorites.length === 0 ? (
