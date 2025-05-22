@@ -6,8 +6,7 @@ export const USER_DATA_KEY = "user_data";
 export interface UserInformation {
     name?: string;
     email?: string;
-    // Add other user properties as needed
-    [key: string]: string | number | boolean | null | undefined; // Specific types for additional properties
+    [key: string]: string | number | boolean | null | undefined;
 }
 
 export interface AuthState {

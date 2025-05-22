@@ -1,4 +1,4 @@
-import { type JSX } from 'react';
+import {type JSX} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Formik, Form, Field, ErrorMessage, type FormikHelpers} from 'formik';
 import * as Yup from 'yup';
@@ -62,7 +62,9 @@ const UserRegistrationPage = (): JSX.Element => {
             console.error('Registration error:', err);
             const errorMessage = err instanceof Error
                 ? err.message
-                : (err as { response?: { data?: { message?: string } } })?.response?.data?.message || 'Registration failed. Please try again.';
+                : (err as {
+                response?: { data?: { message?: string } }
+            })?.response?.data?.message || 'Registration failed. Please try again.';
             toast.error(errorMessage);
         } finally {
             setSubmitting(false);
