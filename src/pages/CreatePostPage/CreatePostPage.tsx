@@ -3,9 +3,13 @@ import {useNavigate} from 'react-router-dom';
 import {type FormikHelpers} from 'formik';
 import {apiCreateTuit} from '../../services/TuitsService.ts';
 import {useToast} from "../../hooks/useToast.ts";
-import {DRAFT_STORAGE_KEY} from '../../constants/storageConstants';
-import {createPostValidationSchema as validationSchema, type PostFormData, createPostEmptyValues as emptyValues} from '../../validations/postSchemas';
+import {
+    createPostValidationSchema as validationSchema,
+    createPostEmptyValues as emptyValues
+} from '../../validations/postSchemas';
 import PostForm from '../../components/PostForm/PostForm';
+import type {PostFormData} from "../../types/formTypes.ts";
+import {loadDraft, saveDraft, clearDraft} from '../../utils/draftUtils';
 
 const CreatePostPage = (): JSX.Element => {
     const [initialValues, setInitialValues] = useState<PostFormData>(emptyValues);
@@ -14,19 +18,19 @@ const CreatePostPage = (): JSX.Element => {
 
     // Load draft on component mount
     useEffect(() => {
-        const savedDraft = localStorage.getItem(DRAFT_STORAGE_KEY);
+        const savedDraft = loadDraft();
         if (savedDraft) {
             setInitialValues({message: savedDraft});
         }
     }, []);
 
     const handleSaveDraft = (values: PostFormData) => {
-        localStorage.setItem(DRAFT_STORAGE_KEY, values.message);
+        saveDraft(values);
         toast.success('Draft saved successfully!');
     };
 
     const handleClearDraft = (resetForm: (nextState?: { values: PostFormData }) => void) => {
-        localStorage.removeItem(DRAFT_STORAGE_KEY);
+        clearDraft();
         resetForm({values: emptyValues});
         toast.info('Draft cleared!');
     };
@@ -36,7 +40,7 @@ const CreatePostPage = (): JSX.Element => {
             await apiCreateTuit({message: values.message});
 
             // Clear draft after successful submission
-            localStorage.removeItem(DRAFT_STORAGE_KEY);
+            clearDraft();
             resetForm();
 
             // Show success notification and redirect to feed page
