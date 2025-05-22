@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, type JSX } from 'react';
 
 interface FavoriteUser {
   author: string;
   avatar_url: string;
 }
 
-const UserFavoritesPage: React.FC = () => {
+const UserFavoritesPage = (): JSX.Element => {
   const [favorites, setFavorites] = useState<FavoriteUser[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 

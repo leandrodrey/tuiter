@@ -9,10 +9,8 @@ const LoginPage = (): JSX.Element => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    // Get the return URL from location state or default to home page
     const from = location.state?.from?.pathname || '/';
 
-    // If user is already authenticated, redirect to the return URL
     useEffect(() => {
         if (isAuthenticated) {
             navigate(from, {replace: true});

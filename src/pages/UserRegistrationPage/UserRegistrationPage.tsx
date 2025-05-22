@@ -1,4 +1,4 @@
-import React from 'react';
+import { type JSX } from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Formik, Form, Field, ErrorMessage, type FormikHelpers} from 'formik';
 import * as Yup from 'yup';
@@ -29,7 +29,7 @@ const validationSchema = Yup.object({
     avatar_url: Yup.string()
 });
 
-const UserRegistrationPage: React.FC = () => {
+const UserRegistrationPage = (): JSX.Element => {
     const navigate = useNavigate();
     const toast = useToast();
 

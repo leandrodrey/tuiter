@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect, type JSX} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {Formik, Form, Field, ErrorMessage, type FormikHelpers} from 'formik';
 import * as Yup from 'yup';
@@ -32,7 +32,7 @@ interface UserFormData extends ProfileData {
     confirmPassword?: string;
 }
 
-const UserEditPage: React.FC = () => {
+const UserEditPage = (): JSX.Element => {
     const [initialValues, setInitialValues] = useState<UserFormData>({
         name: '',
         email: '',

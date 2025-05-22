@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, type JSX } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage, type FormikHelpers } from 'formik';
 import * as Yup from 'yup';
@@ -18,7 +18,7 @@ interface PostFormData {
   message: string;
 }
 
-const CreatePostPage: React.FC = () => {
+const CreatePostPage = (): JSX.Element => {
   const [error, setError] = useState<string | null>(null);
   const [initialValues, setInitialValues] = useState<PostFormData>({ message: '' });
   const navigate = useNavigate();

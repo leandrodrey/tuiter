@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState, type JSX} from 'react';
 import {Formik, Form, Field, ErrorMessage, type FormikHelpers} from 'formik';
 import * as Yup from 'yup';
 import {apiLogin, type UserData} from '../../services/UserService';
@@ -22,7 +22,7 @@ interface LoginFormData {
     [key: string]: string;
 }
 
-const LoginForm: React.FC = () => {
+const LoginForm = (): JSX.Element => {
     const {isAuthenticated, userInformation, login, logout} = useAuthContext();
     const toast = useToast();
     const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);

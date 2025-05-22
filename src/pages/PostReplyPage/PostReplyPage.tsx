@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, type JSX } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage, type FormikHelpers } from 'formik';
 import * as Yup from 'yup';
@@ -22,7 +22,7 @@ interface Post extends TuitResponse {
   avatar_url?: string;
 }
 
-const PostReplyPage: React.FC = () => {
+const PostReplyPage = (): JSX.Element => {
   const [originalPost, setOriginalPost] = useState<Post | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);

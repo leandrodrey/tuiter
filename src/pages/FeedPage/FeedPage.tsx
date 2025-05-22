@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, type JSX } from 'react';
 import { apiGetFeed } from '../../services/FeedService.ts';
 import { apiAddLikeToTuit, apiRemoveLikeFromTuit } from '../../services/TuitsService.ts';
 
@@ -14,7 +14,7 @@ interface Post {
   is_liked?: boolean;
 }
 
-const FeedPage: React.FC = () => {
+const FeedPage = (): JSX.Element => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
