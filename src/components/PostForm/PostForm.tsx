@@ -2,7 +2,6 @@ import {type JSX} from 'react';
 import {Formik, Form, type FormikHelpers} from 'formik';
 import PostFormFields from './PostFormFields';
 import PostFormActions from './PostFormActions';
-import MediaButtons from '../UI/MediaButtons';
 import type {PostFormData} from "../../types/formTypes.ts";
 import type {ObjectSchema} from "yup";
 
@@ -31,7 +30,6 @@ const PostForm = ({
             {({isSubmitting, values, resetForm}) => (
                 <Form className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-4 md:p-6 transition-all">
                     <PostFormFields isSubmitting={isSubmitting}/>
-                    <MediaButtons/>
                     <PostFormActions
                         isSubmitting={isSubmitting}
                         values={values}
