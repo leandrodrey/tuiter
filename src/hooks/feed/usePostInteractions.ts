@@ -1,6 +1,7 @@
 import { apiAddLikeToTuit, apiRemoveLikeFromTuit } from '../../services/TuitsService.ts';
 import { FAVORITE_USERS_KEY } from '../../constants/storageConstants.ts';
 import { useToast } from '../context/useToast.ts';
+import { useUser } from '../context/useUser.ts';
 import type { Post } from '../../types/postTypes.ts';
 import type { PostWithReplies } from './usePostProcessor.ts';
 import type { Dispatch, SetStateAction } from 'react';
@@ -16,6 +17,21 @@ export const usePostInteractions = (
     setPostsWithReplies: Dispatch<SetStateAction<PostWithReplies[]>>
 ) => {
     const toast = useToast();
+    const { userInformation } = useUser();
+
+    /**
+     * Creates a user-specific key for storing favorites in localStorage.
+     * Uses the user's email to create a unique key for each user.
+     * Falls back to the default key if user information is not available.
+     *
+     * @returns {string} The user-specific localStorage key for favorites
+     */
+    const getUserSpecificKey = () => {
+        if (!userInformation || !userInformation.email) {
+            return FAVORITE_USERS_KEY;
+        }
+        return `${FAVORITE_USERS_KEY}_${userInformation.email}`;
+    };
 
     /**
      * Handles liking or unliking a post
@@ -124,8 +140,11 @@ export const usePostInteractions = (
      * @param avatarUrl The avatar URL of the user to add to favorites
      */
     const handleAddToFavorites = (author: string, avatarUrl: string) => {
+        // Get user-specific key for favorites
+        const userSpecificKey = getUserSpecificKey();
+
         // Get existing favorites from localStorage
-        const existingFavorites = JSON.parse(localStorage.getItem(FAVORITE_USERS_KEY) || '[]');
+        const existingFavorites = JSON.parse(localStorage.getItem(userSpecificKey) || '[]');
 
         const isAlreadyFavorite = existingFavorites.some(
             (favorite: { author: string }) => favorite.author === author
@@ -134,7 +153,7 @@ export const usePostInteractions = (
         if (!isAlreadyFavorite) {
             // Add to favorites
             const updatedFavorites = [...existingFavorites, {author, avatar_url: avatarUrl}];
-            localStorage.setItem(FAVORITE_USERS_KEY, JSON.stringify(updatedFavorites));
+            localStorage.setItem(userSpecificKey, JSON.stringify(updatedFavorites));
             toast.success(`${author} added to favorites!`);
         } else {
             toast.info(`${author} is already in your favorites!`);

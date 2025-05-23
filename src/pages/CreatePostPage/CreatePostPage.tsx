@@ -59,7 +59,7 @@ const CreatePostPage = (): JSX.Element => {
 
     return (
         <div>
-            <PageHeader title="Create New Post" />
+            <PageHeader title="Create New Post" subtitle="Create a new post and share it with the world." />
 
             <div className="max-w-2xl mx-auto">
                 <PostForm

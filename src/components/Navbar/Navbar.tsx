@@ -45,11 +45,6 @@ const Navbar = () => {
                                 </NavLink>
                             </li>
                             <li>
-                                <NavLink to="/users/edit" isActive={isActive("/users/edit")}>
-                                    Edit Profile
-                                </NavLink>
-                            </li>
-                            <li>
                                 <NavLink to="/users/favorites" isActive={isActive("/users/favorites")}>
                                     Favorites
                                 </NavLink>

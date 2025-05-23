@@ -11,7 +11,7 @@ import type {PostFormData} from '../../types/formTypes.ts';
 import {useToast} from "../../hooks/context/useToast.ts";
 import {usePostInteractions} from "../../hooks/feed/usePostInteractions.ts";
 import type {PostWithReplies} from "../../hooks/feed/usePostProcessor.ts";
-import { Loader, Avatar } from '../../components/UI';
+import {Loader, Avatar, PageHeader} from '../../components/UI';
 import PostForm from '../../components/PostForm/PostForm';
 import PostReplies from '../../components/Post/PostReplies';
 
@@ -151,10 +151,7 @@ const PostReplyPage = (): JSX.Element => {
 
     return (
         <div className="max-w-2xl mx-auto px-4 py-6">
-            {/* Thread header */}
-            <div className="mb-4">
-                <h1 className="text-xl font-bold text-gray-900 dark:text-white">Thread</h1>
-            </div>
+            <PageHeader title="Thread" subtitle="Reply to the original post" />
 
             {/* Original post */}
             {originalPost && (
