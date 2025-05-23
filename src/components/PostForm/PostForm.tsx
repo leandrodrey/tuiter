@@ -39,7 +39,7 @@ const PostForm = ({
     onSubmit,
     onSaveDraft,
     onClearDraft,
-    userAvatar = 'https://pbs.twimg.com/profile_images/1121328878142853120/e-rpjoJi_bigger.png'
+    userAvatar
 }: PostFormProps): JSX.Element => {
     return (
         <Formik

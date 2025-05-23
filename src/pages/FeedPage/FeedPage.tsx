@@ -76,7 +76,7 @@ const FeedPage = (): JSX.Element => {
                 refreshFunction={refreshFeed}
             >
                 <PostList
-                    postsWithReplies={postsWithReplies}
+                    posts={postsWithReplies}
                     onLike={handleLikePost}
                     onAddToFavorites={handleAddToFavorites}
                 />

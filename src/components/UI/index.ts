@@ -12,6 +12,7 @@ export {default as LogoutButton} from './LogoutButton/LogoutButton.tsx';
 export {default as TweetButton} from './TweetButton/TweetButton.tsx';
 export {default as SubmitButton} from './SubmitButton/SubmitButton.tsx';
 export {default as RegistrationLink} from './RegistrationLink/RegistrationLink.tsx';
+export {default as EmptyMessage} from './EmptyMessage/EmptyMessage.tsx';
 
 export {
     HomeIcon,
