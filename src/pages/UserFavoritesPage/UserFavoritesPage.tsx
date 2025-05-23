@@ -1,4 +1,4 @@
-import {useState, useEffect, type JSX} from 'react';
+import {useState, useEffect, useCallback, type JSX} from 'react';
 import {FAVORITE_USERS_KEY} from '../../constants/storageConstants';
 import type {FavoriteUser} from '../../types/userTypes';
 import {Loader, Avatar, PageHeader} from '../../components/UI';
@@ -23,12 +23,12 @@ const UserFavoritesPage = (): JSX.Element => {
      *
      * @returns {string} The user-specific localStorage key for favorites
      */
-    const getUserSpecificKey = () => {
+    const getUserSpecificKey = useCallback(() => {
         if (!userInformation || !userInformation.email) {
             return FAVORITE_USERS_KEY;
         }
         return `${FAVORITE_USERS_KEY}_${userInformation.email}`;
-    };
+    }, [userInformation]);
 
     useEffect(() => {
         const loadFavorites = () => {
@@ -49,7 +49,7 @@ const UserFavoritesPage = (): JSX.Element => {
         };
 
         loadFavorites();
-    }, [userInformation]);
+    }, [getUserSpecificKey]);
 
     /**
      * Removes a user from the favorites list.

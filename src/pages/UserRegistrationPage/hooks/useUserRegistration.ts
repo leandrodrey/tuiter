@@ -44,7 +44,8 @@ export const useUserRegistration = (
         try {
             setIsLoading(true);
             setError(null);
-            const {confirmPassword, username, ...rest} = values;
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            const {confirmPassword: _confirmPassword, username, ...rest} = values;
 
             // Explicitly include avatar_url to ensure it's sent to the API
             const userData: UserData = {

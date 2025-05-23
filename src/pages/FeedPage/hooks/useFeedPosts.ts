@@ -51,7 +51,7 @@ export const useFeedPosts = () => {
         }
 
         return processPostsResponse(response);
-    }, [processPostsResponse]);
+    }, [processPostsResponse, toast]);
 
     /**
      * Common function to fetch posts with error handling

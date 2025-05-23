@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import {FAVORITE_USERS_KEY} from '../../constants/storageConstants';
 import {useUser} from '../context/useUser';
 
@@ -13,22 +13,22 @@ export const useFavoriteStatus = (author: string): boolean => {
     const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
     // Create a user-specific key for storing favorites
-    const getUserSpecificKey = () => {
+    const getUserSpecificKey = useCallback(() => {
         if (!userInformation || !userInformation.email) {
             return FAVORITE_USERS_KEY;
         }
         return `${FAVORITE_USERS_KEY}_${userInformation.email}`;
-    };
+    }, [userInformation]);
 
     // Check if the user is in favorites
-    const checkFavoriteStatus = () => {
+    const checkFavoriteStatus = useCallback(() => {
         const userSpecificKey = getUserSpecificKey();
         const existingFavorites = JSON.parse(localStorage.getItem(userSpecificKey) || '[]');
         const isAlreadyFavorite = existingFavorites.some(
             (favorite: { author: string }) => favorite.author === author
         );
         setIsFavorite(isAlreadyFavorite);
-    };
+    }, [author, getUserSpecificKey]);
 
     // Listen for storage events to update the favorite status when it changes
     useEffect(() => {
@@ -49,7 +49,7 @@ export const useFavoriteStatus = (author: string): boolean => {
         return () => {
             window.removeEventListener('storage', handleStorageChange);
         };
-    }, [author, userInformation]);
+    }, [checkFavoriteStatus, getUserSpecificKey]);
 
     return isFavorite;
 };
