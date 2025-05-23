@@ -14,13 +14,17 @@ const AppRouter = () => {
         <>
             <Routes>
                 <Route path="/" element={
-                    <FeedPage/>
+                    <AuthGuard>
+                        <FeedPage/>
+                    </AuthGuard>
                 }/>
                 <Route path="/login" element={
                     <LoginPage/>
                 }/>
                 <Route path="/feed" element={
-                    <FeedPage/>
+                    <AuthGuard>
+                        <FeedPage/>
+                    </AuthGuard>
                 }/>
                 <Route path="/posts/create" element={
                     <AuthGuard>
