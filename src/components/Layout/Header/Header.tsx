@@ -31,9 +31,9 @@ const Header = (): JSX.Element => {
             <div className="w-14 sm:w-16 lg:w-64 transition-all duration-200">
                 <div className="lg:w-64 fixed h-screen pr-0 md:pr-3 transition-all duration-200">
                     <div className="ml-2 sm:ml-3 mt-4">
-                        <TuiterLogo className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
+                        <TuiterLogo className="h-6 w-6 sm:h-8 sm:w-8 text-white"/>
                     </div>
-                    <SidebarNav isActive={isActive} />
+                    <SidebarNav isActive={isActive}/>
                     <UserMenu
                         userInformation={userInformation}
                         onLogout={logout}

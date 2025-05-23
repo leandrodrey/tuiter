@@ -1,4 +1,4 @@
-import { type JSX } from 'react';
+import {type JSX} from 'react';
 
 /**
  * Props for the HeartIcon component
@@ -20,7 +20,7 @@ interface HeartIconProps {
  * @param {HeartIconProps} props - Component props
  * @returns {JSX.Element} The heart icon component
  */
-const HeartIcon = ({ isFavorite, isHovered = false, className = '' }: HeartIconProps): JSX.Element => {
+const HeartIcon = ({isFavorite, isHovered = false, className = ''}: HeartIconProps): JSX.Element => {
     // Determine heart color based on favorite status and hover state
     // When isFavorite=true, heart is always red
     // When isFavorite=false and isHovered=true, heart is red

@@ -15,12 +15,12 @@ const Layout = ({children}: { children: ReactNode }): JSX.Element => {
     return (
         <div className="min-h-screen flex flex-col bg-[#15202b]">
             <div className="flex flex-grow overflow-x-hidden">
-                <Header />
+                <Header/>
                 <Main>
                     {children}
                 </Main>
             </div>
-            <Footer />
+            <Footer/>
         </div>
     );
 };

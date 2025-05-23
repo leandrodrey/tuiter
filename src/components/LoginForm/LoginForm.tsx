@@ -33,7 +33,7 @@ const LoginForm = ({
             >
                 {({isSubmitting}) => (
                     <Form className="w-full flex flex-col space-y-4 sm:space-y-5">
-                        <LoginFormFields />
+                        <LoginFormFields/>
 
                         <SubmitButton
                             isSubmitting={isSubmitting}
@@ -42,7 +42,7 @@ const LoginForm = ({
                             Iniciar sesión
                         </SubmitButton>
 
-                        <RegistrationLink />
+                        <RegistrationLink/>
                     </Form>
                 )}
             </Formik>

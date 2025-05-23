@@ -1,4 +1,4 @@
-import { type JSX } from 'react';
+import {type JSX} from 'react';
 
 /**
  * Props for the PersonIcon component
@@ -18,7 +18,7 @@ interface PersonIconProps {
  * @param {PersonIconProps} props - Component props
  * @returns {JSX.Element} The person icon component
  */
-const PersonIcon = ({ isFavorite, className = '' }: PersonIconProps): JSX.Element => {
+const PersonIcon = ({isFavorite, className = ''}: PersonIconProps): JSX.Element => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
