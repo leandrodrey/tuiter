@@ -13,7 +13,18 @@ interface FavoritesIconProps {
  */
 const FavoritesIcon = ({className = ''}: FavoritesIconProps): JSX.Element => {
     return (
-        <svg className={className} fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" stroke="currentColor" viewBox="0 0 24 24">
+        <svg
+            className={className}
+            fill="none"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            role="img"
+        >
+            <title>Favorites icon</title>
             <path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
         </svg>
     );

@@ -2,7 +2,7 @@ import {DRAFT_STORAGE_KEY} from '../constants/storageConstants';
 import type {PostFormData} from '../types/formTypes';
 
 /**
- * Loads a post draft from localStorage
+ * Loads a post-draft from localStorage
  * @returns The draft message or null if no draft exists
  */
 export const loadDraft = (): string | null => {
@@ -10,7 +10,7 @@ export const loadDraft = (): string | null => {
 };
 
 /**
- * Saves a post draft to localStorage
+ * Saves a post-draft to localStorage
  * @param values The form values containing the message to save
  */
 export const saveDraft = (values: PostFormData): void => {
@@ -18,7 +18,7 @@ export const saveDraft = (values: PostFormData): void => {
 };
 
 /**
- * Clears a post draft from localStorage
+ * Clears a post-draft from localStorage
  */
 export const clearDraft = (): void => {
     localStorage.removeItem(DRAFT_STORAGE_KEY);

@@ -1,9 +1,9 @@
 import type {JSX} from 'react';
-import {TuiterLogo} from '../UI';
+import {TuiterLogo} from '../../UI';
 import {useLocation} from 'react-router-dom';
-import {useAuthContext} from '../../hooks/context/useAuthContext';
-import {useUser} from '../../hooks/context/useUser';
-import {SidebarNav, UserMenu} from '../Navbar';
+import {useAuthContext} from '../../../hooks/context/useAuthContext.ts';
+import {useUser} from '../../../hooks/context/useUser.ts';
+import {SidebarNav, UserMenu} from '../../Navbar';
 
 /**
  * Header component that displays the application header.
@@ -27,13 +27,13 @@ const Header = (): JSX.Element => {
     };
 
     return (
-        <header className="text-white h-auto">
+        <header className="text-white h-auto" role="banner" aria-label="Site header">
             <div className="w-14 sm:w-16 lg:w-64 transition-all duration-200">
                 <div className="lg:w-64 fixed h-screen pr-0 md:pr-3 transition-all duration-200">
                     <div className="ml-2 sm:ml-3 mt-4">
-                        <TuiterLogo className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
+                        <TuiterLogo className="h-6 w-6 sm:h-8 sm:w-8 text-white" aria-label="Tuiter logo"/>
                     </div>
-                    <SidebarNav isActive={isActive} />
+                    <SidebarNav isActive={isActive}/>
                     <UserMenu
                         userInformation={userInformation}
                         onLogout={logout}

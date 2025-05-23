@@ -44,7 +44,10 @@ const LogoutButton = ({
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
+                aria-hidden="true"
+                role="img"
             >
+                <title>Logout icon</title>
                 <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
