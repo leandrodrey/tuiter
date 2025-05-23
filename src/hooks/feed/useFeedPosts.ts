@@ -84,7 +84,7 @@ export const useFeedPosts = () => {
 
         try {
             setError(null);
-            const response = await apiGetFeed({page: pageNumber});
+            const response = await apiGetFeed({page: pageNumber, only_parents: true});
             const processedPosts = handleApiResponse(response, isInitialLoad, isRefresh);
             if (isRefresh && processedPosts.length > 0) {
                 toast.success('Feed refreshed successfully!');

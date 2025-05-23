@@ -16,6 +16,7 @@ export interface TuitResponse {
     liked: boolean;
     likes: number;
     parent_id: number;
+    replies_count?: number;
 }
 
 // --- API Error ---
