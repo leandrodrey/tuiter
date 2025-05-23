@@ -2,7 +2,7 @@ import {AuthProvider} from './context/AuthProvider.tsx';
 import {UserProvider} from './context/UserProvider.tsx';
 import {ToastProvider} from './context/ToastProvider.tsx';
 import AppRouter from "./routes/AppRouter.tsx";
-import Layout from "./components/Layout/Layout.tsx";
+import Layout from "./layouts/Layout.tsx";
 
 /**
  * Main application component that sets up the app structure.

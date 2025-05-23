@@ -45,7 +45,7 @@ export const UserProvider = ({children}: { children: ReactNode }) => {
             const userData: UserInformation = {
                 name: profileData.name,
                 email: profileData.email,
-                avatar_url: profileData.avatar_url
+                avatar_url: profileData.avatar_url || ''
             };
 
             setUserInformation(userData);
@@ -93,7 +93,7 @@ export const UserProvider = ({children}: { children: ReactNode }) => {
                 ...userInformation,
                 name: profileData.name,
                 email: profileData.email,
-                avatar_url: profileData.avatar_url
+                avatar_url: profileData.avatar_url || ''
             };
 
             setUserInformation(updatedUserData);

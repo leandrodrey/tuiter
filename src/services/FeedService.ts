@@ -1,10 +1,5 @@
 import ApiService from './ApiService';
-import type {TuitResponse} from '../types/apiTypes';
-
-export interface FeedParams {
-    page?: number;
-    only_parents?: boolean;
-}
+import type {TuitResponse, FeedParams} from '../types/apiTypes';
 
 /**
  * Calls the API endpoint to get the user's feed.

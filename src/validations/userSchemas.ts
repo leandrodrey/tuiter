@@ -30,6 +30,8 @@ export const registrationValidationSchema = Yup.object({
         .oneOf([Yup.ref('password')], 'Passwords do not match')
         .required('Confirm password is required'),
     avatar_url: Yup.string()
+        .url('Avatar URL must be a valid URL')
+        .nullable()
 });
 
 export const registrationInitialValues: RegistrationFormData = {

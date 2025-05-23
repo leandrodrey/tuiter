@@ -14,14 +14,14 @@ interface RegistrationFormProps {
 
 const RegistrationForm = ({onSubmit}: RegistrationFormProps): JSX.Element => {
     return (
-        <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+        <div className="max-w-2xl mx-auto bg-gray-900 border border-gray-800 rounded-2xl p-6 shadow-lg">
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={onSubmit}
             >
                 {({isSubmitting}) => (
-                    <Form className="space-y-4">
+                    <Form className="space-y-6">
                         <RegistrationFormFields isSubmitting={isSubmitting}/>
                         <RegistrationActions isSubmitting={isSubmitting}/>
                     </Form>

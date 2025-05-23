@@ -1,5 +1,5 @@
 import ApiService from './ApiService';
-import type {TuitData, TuitResponse} from '../types/apiTypes';
+import type {TuitData, TuitResponse, SuccessResponse} from '../types/apiTypes';
 
 /**
  * Calls the API endpoint to create a new tuit.
@@ -34,7 +34,7 @@ export async function apiGetTuit(tuitId: number) {
  * @returns A promise that resolves with the like addition response from the API.
  */
 export async function apiAddLikeToTuit(tuitId: number) {
-    return ApiService.fetchDataWithAxios<{ success: boolean }>({
+    return ApiService.fetchDataWithAxios<SuccessResponse>({
         url: `/me/tuits/${tuitId}/likes`,
         method: 'post',
         params: {}
@@ -47,7 +47,7 @@ export async function apiAddLikeToTuit(tuitId: number) {
  * @returns A promise that resolves with the like removal response from the API.
  */
 export async function apiRemoveLikeFromTuit(tuitId: number) {
-    return ApiService.fetchDataWithAxios<{ success: boolean }>({
+    return ApiService.fetchDataWithAxios<SuccessResponse>({
         url: `/me/tuits/${tuitId}/likes`,
         method: 'delete',
         params: {}

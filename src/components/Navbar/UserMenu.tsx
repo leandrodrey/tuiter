@@ -20,7 +20,7 @@ interface UserMenuProps {
  * @returns {JSX.Element | null} The user menu component or null if not authenticated
  */
 const UserMenu = ({userInformation, onLogout, isAuthenticated}: UserMenuProps): JSX.Element | null => {
-    // Use the custom hook for logout functionality with the provided onLogout function
+
     const handleLogout = useLogout(onLogout);
 
     if (!isAuthenticated) {

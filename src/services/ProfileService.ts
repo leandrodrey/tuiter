@@ -1,19 +1,5 @@
 import ApiService from './ApiService';
-
-export interface ProfileData {
-    name?: string;
-    avatar_url?: string;
-    password?: string;
-
-    [key: string]: string | undefined | unknown;
-}
-
-export interface ProfileResponse {
-    id: string;
-    name: string;
-    avatar_url?: string;
-    email?: string;
-}
+import type { ProfileData, ProfileResponse } from '../types/apiTypes';
 
 /**
  * Calls the API endpoint to get the user's profile.

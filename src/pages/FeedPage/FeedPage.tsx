@@ -2,26 +2,22 @@ import {type JSX} from 'react';
 import PostList from '../../components/Post/PostList';
 import {Loader, PageHeader} from '../../components/UI';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import {useFeedPosts} from '../../hooks/feed/useFeedPosts.ts';
-import {usePostInteractions} from '../../hooks/feed/usePostInteractions.ts';
+import {usePostContext} from './hooks/usePostContext.ts';
 
+/**
+ * FeedPage component that displays the post feed
+ * Uses the post context provided by FeedPageLayout
+ */
 const FeedPage = (): JSX.Element => {
-
     const {
-        postsWithReplies,
-        setPostsWithReplies,
+        posts,
         loading,
         error,
         hasMore,
         initialLoading,
         fetchMorePosts,
         refreshFeed
-    } = useFeedPosts();
-
-    const {
-        handleLikePost,
-        handleAddToFavorites
-    } = usePostInteractions(postsWithReplies, setPostsWithReplies);
+    } = usePostContext();
 
     if (initialLoading) return <Loader text="Loading posts..." fullScreen={true}/>;
 
@@ -45,7 +41,7 @@ const FeedPage = (): JSX.Element => {
             <PageHeader title="Post Feed" subtitle="See what's happening in the community"/>
 
             <InfiniteScroll
-                dataLength={postsWithReplies.length}
+                dataLength={posts.length}
                 next={fetchMorePosts}
                 hasMore={hasMore}
                 loader={
@@ -75,11 +71,7 @@ const FeedPage = (): JSX.Element => {
                 }
                 refreshFunction={refreshFeed}
             >
-                <PostList
-                    posts={postsWithReplies}
-                    onLike={handleLikePost}
-                    onAddToFavorites={handleAddToFavorites}
-                />
+                <PostList />
             </InfiniteScroll>
         </div>
     );

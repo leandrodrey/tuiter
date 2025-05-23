@@ -6,8 +6,10 @@ import UserRegistrationPage from "../pages/UserRegistrationPage/UserRegistration
 import UserEditPage from "../pages/UserEditPage/UserEditPage.tsx";
 import UserFavoritesPage from "../pages/UserFavoritesPage/UserFavoritesPage.tsx";
 import PostReplyPage from "../pages/PostReplyPage/PostReplyPage.tsx";
+import PostReplyLayout from "../pages/PostReplyPage/layouts/PostReplyLayout.tsx";
 import LoginPage from "../pages/LoginPage/LoginPage.tsx";
 import AuthGuard from "./AuthGuard.tsx";
+import FeedPageLayout from "../pages/FeedPage/layouts/FeedPageLayout.tsx";
 
 const AppRouter = () => {
     return (
@@ -15,7 +17,9 @@ const AppRouter = () => {
             <Routes>
                 <Route path="/" element={
                     <AuthGuard>
-                        <FeedPage/>
+                        <FeedPageLayout>
+                            <FeedPage/>
+                        </FeedPageLayout>
                     </AuthGuard>
                 }/>
                 <Route path="/login" element={
@@ -23,7 +27,9 @@ const AppRouter = () => {
                 }/>
                 <Route path="/feed" element={
                     <AuthGuard>
-                        <FeedPage/>
+                        <FeedPageLayout>
+                            <FeedPage/>
+                        </FeedPageLayout>
                     </AuthGuard>
                 }/>
                 <Route path="/posts/create" element={
@@ -33,7 +39,9 @@ const AppRouter = () => {
                 }/>
                 <Route path="/posts/:postId/reply" element={
                     <AuthGuard>
-                        <PostReplyPage/>
+                        <PostReplyLayout>
+                            <PostReplyPage/>
+                        </PostReplyLayout>
                     </AuthGuard>
                 }/>
                 <Route path="/users/register" element={

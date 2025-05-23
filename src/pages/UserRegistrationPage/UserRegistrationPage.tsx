@@ -2,7 +2,7 @@ import {type JSX, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useToast} from "../../hooks/context/useToast.ts";
 import {useAuthContext} from "../../hooks/context/useAuthContext.ts";
-import {useUserRegistration} from "../../hooks/user-registration/useUserRegistration";
+import {useUserRegistration} from "./hooks/useUserRegistration.ts";
 import RegistrationForm from '../../components/Registration/RegistrationForm';
 import {PageHeader} from '../../components/UI';
 
@@ -29,7 +29,9 @@ const UserRegistrationPage = (): JSX.Element => {
     return (
         <div>
             <PageHeader title="Create an Account" subtitle="It's free and always will be."/>
-            <RegistrationForm onSubmit={handleSubmit}/>
+            <div className="max-w-2xl mx-auto">
+                <RegistrationForm onSubmit={handleSubmit}/>
+            </div>
         </div>
     );
 };

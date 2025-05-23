@@ -10,7 +10,8 @@ import {
 } from '../constants/authConstants.ts';
 import {AuthContext, initialAuthState} from "./AuthContext.ts";
 import type {AuthContextType} from "../types/userTypes.ts";
-import {apiLogin, type UserData} from '../services/UserService';
+import {apiLogin} from '../services/UserService';
+import type {UserData} from '../types/apiTypes';
 import {useToast} from "../hooks/context/useToast.ts";
 
 setHttpAuthToken(initialAuthState.userToken);

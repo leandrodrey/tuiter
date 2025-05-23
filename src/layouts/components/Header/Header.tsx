@@ -1,9 +1,9 @@
 import type {JSX} from 'react';
-import {TuiterLogo} from '../../UI';
+import {TuiterLogo} from '../../../components/UI';
 import {useLocation} from 'react-router-dom';
 import {useAuthContext} from '../../../hooks/context/useAuthContext.ts';
 import {useUser} from '../../../hooks/context/useUser.ts';
-import {SidebarNav, UserMenu} from '../../Navbar';
+import {SidebarNav, UserMenu} from '../../../components/Navbar';
 
 /**
  * Header component that displays the application header.

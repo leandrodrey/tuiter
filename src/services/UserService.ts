@@ -1,19 +1,5 @@
 import ApiService from './ApiService';
-
-export interface UserData {
-    name?: string;
-    email: string;
-    password: string;
-
-    [key: string]: string | undefined;
-}
-
-export interface UserResponse {
-    id: string;
-    name: string;
-    email: string;
-    token: string;
-}
+import type { UserData, UserResponse } from '../types/apiTypes';
 
 /**
  * Calls the API endpoint to create a new user.

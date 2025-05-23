@@ -1,6 +1,6 @@
 import type {JSX} from 'react';
-import {TuiterLogo} from "../../UI";
-import Copyright from "./Copyright";
+import {TuiterLogo} from "../../../components/UI";
+import Copyright from "./Copyright.tsx";
 
 /**
  * Footer component that displays the application footer in a Twitter-like style.

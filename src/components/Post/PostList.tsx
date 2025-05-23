@@ -1,27 +1,18 @@
 import {type JSX} from 'react';
-import type {Post} from '../../types/postTypes';
 import PostCard from './PostCard';
 import {EmptyMessage} from '../../components/UI';
-
-/**
- * Interface defining the props for the PostList component.
- */
-interface PostListProps {
-    /** Array of posts with their associated replies */
-    posts: { post: Post; replies: Post[] }[];
-    /** Function to handle liking a post */
-    onLike: (postId: number) => Promise<void>;
-    /** Function to add a user to favorites */
-    onAddToFavorites: (author: string, avatarUrl: string) => void;
-}
+import {usePostContext} from '../../pages/FeedPage/hooks/usePostContext.ts';
 
 /**
  * Component that renders a list of posts with their replies.
  * Displays a message when no posts are available.
- * @param {PostListProps} props - The component props
+ * Uses the PostContext to access posts.
+ *
  * @returns A list of posts or a message indicating no posts are available
  */
-const PostList = ({posts, onLike, onAddToFavorites}: PostListProps): JSX.Element => {
+const PostList = (): JSX.Element => {
+    const {posts} = usePostContext();
+
     if (posts.length === 0) {
         return <EmptyMessage />;
     }
@@ -33,8 +24,6 @@ const PostList = ({posts, onLike, onAddToFavorites}: PostListProps): JSX.Element
                     <PostCard
                         post={post}
                         replies={replies}
-                        onLike={onLike}
-                        onAddToFavorites={onAddToFavorites}
                     />
                 </div>
             ))}

@@ -22,7 +22,8 @@ const Avatar = ({
 
     const fallbackUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(username)}`;
 
-    const imageUrl = avatarUrl || fallbackUrl;
+    // If avatarUrl is empty string, use fallback
+    const imageUrl = avatarUrl && avatarUrl.trim() !== '' ? avatarUrl : fallbackUrl;
 
     return (
         <img

@@ -1,9 +1,10 @@
 import {useCallback} from 'react';
 import type {NavigateFunction} from 'react-router-dom';
 import {type FormikHelpers} from 'formik';
-import {apiCreateUser, type UserData} from '../../services/UserService.ts';
-import type {ToastContextType} from '../../context/ToastContext.ts';
-import type {RegistrationFormData} from "../../types/formTypes.ts";
+import {apiCreateUser} from '../../../services/UserService.ts';
+import type {UserData} from '../../../types/apiTypes.ts';
+import type {ToastContextType} from '../../../context/ToastContext.ts';
+import type {RegistrationFormData} from "../../../types/formTypes.ts";
 
 /**
  * Custom hook for handling user registration form submission.
@@ -16,7 +17,7 @@ import type {RegistrationFormData} from "../../types/formTypes.ts";
 export const useUserRegistration = (
     navigate: NavigateFunction,
     toast: ToastContextType
-) => {
+): Function => {
     /**
      * Handles the registration form submission.
      * Processes form data, calls the API to create a user, and handles success/error states.

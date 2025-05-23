@@ -7,11 +7,10 @@ interface RegistrationActionsProps {
 
 const RegistrationActions = ({isSubmitting}: RegistrationActionsProps): JSX.Element => {
     return (
-        <div className="pt-4">
+        <div className="pt-6">
             <SubmitButton
                 isSubmitting={isSubmitting}
                 loadingText="Registering..."
-                className="rounded-md"
             >
                 Register
             </SubmitButton>
