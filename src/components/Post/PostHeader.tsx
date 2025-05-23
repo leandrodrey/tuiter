@@ -1,6 +1,6 @@
 import {type JSX} from 'react';
 import type {Post} from '../../types/postTypes';
-import {Avatar, FavoriteButton} from '../../components/UI';
+import {FavoriteButton, Avatar} from '../../components/UI';
 
 interface PostHeaderProps {
     post: Post;
@@ -8,33 +8,30 @@ interface PostHeaderProps {
 }
 
 const PostHeader = ({post, onAddToFavorites}: PostHeaderProps): JSX.Element => {
-
-    const handleAddToFavorites = () => {
-        onAddToFavorites(post.author, post.avatar_url);
-    };
-
     return (
-        <div className="flex items-start mb-3">
-            <Avatar
-                username={post.author}
-                avatarUrl={post.avatar_url}
-                size="md"
-                className="mr-3"
-            />
-            <div className="flex-1">
+        <div className="flex flex-shrink-0 p-2 sm:p-4 pb-0">
+            <a href="#" className="flex-shrink-0 group block">
                 <div className="flex items-center">
-                    <h3 className={`font-bold text-gray-900 dark:text-white`}>{post.author}</h3>
-                    <span className="text-sm text-gray-500 ml-2">
-                        {new Date(post.date).toLocaleString()}
-                    </span>
+                    <div>
+                        <Avatar username={post.author} avatarUrl={post.avatar_url} size="md" />
+                    </div>
+                    <div className="ml-2 sm:ml-3">
+                        <p className="text-base sm:text-xl leading-6 font-medium text-white flex flex-wrap items-center">
+                            <span className="mr-1">{post.author}</span>
+                            <span className="text-xs sm:text-sm leading-5 font-medium text-gray-400 group-hover:text-gray-300 transition ease-in-out duration-150">
+                                @{post.author.replace(/\s+/g, '')}  · {new Date(post.date).toLocaleDateString()}
+                            </span>
+                        </p>
+                    </div>
                 </div>
+            </a>
+            <div className="ml-auto">
+                <FavoriteButton
+                    author={post.author}
+                    avatarUrl={post.avatar_url}
+                    onAddToFavorites={onAddToFavorites}
+                />
             </div>
-            <FavoriteButton
-                author={post.author}
-                avatarUrl={post.avatar_url}
-                onAddToFavorites={onAddToFavorites}
-                className="ml-2"
-            />
         </div>
     );
 };

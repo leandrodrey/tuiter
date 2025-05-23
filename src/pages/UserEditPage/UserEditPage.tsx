@@ -92,9 +92,14 @@ const UserEditPage = (): JSX.Element => {
         <div>
             <PageHeader title="Edit Profile"/>
 
-            <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+            <div className="max-w-2xl mx-auto bg-gray-900 border border-gray-800 rounded-2xl p-6 shadow-lg">
                 {error && (
-                    <div className="p-3 mb-4 text-red-500 dark:text-red-400 bg-red-50 dark:bg-red-900/10 rounded">{error}</div>
+                    <div className="p-4 mb-6 text-red-400 bg-red-900/20 rounded-lg border border-red-800/50 flex items-center">
+                        <svg className="w-5 h-5 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zm-1 9a1 1 0 01-1-1v-4a1 1 0 112 0v4a1 1 0 01-1 1z" clipRule="evenodd"></path>
+                        </svg>
+                        {error}
+                    </div>
                 )}
 
                 <Formik
@@ -104,75 +109,107 @@ const UserEditPage = (): JSX.Element => {
                     enableReinitialize
                 >
                     {({isSubmitting, values}) => (
-                        <Form className="space-y-4">
-                            <div>
-                                <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Username</label>
+                        <Form className="space-y-6">
+                            <div className="relative">
+                                <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">Username</label>
                                 <Field
                                     type="text"
                                     id="name"
                                     name="name"
                                     disabled={isSubmitting}
-                                    className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                                    className="w-full p-3 bg-gray-800 border border-gray-700 rounded-md focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 text-white placeholder-gray-500 transition-colors"
                                 />
-                                <ErrorMessage name="name" component="div" className="mt-1 text-red-500 dark:text-red-400 text-sm"/>
+                                <ErrorMessage name="name">
+                                    {(msg) => (
+                                        <div className="mt-1 text-red-400 text-xs">{msg}</div>
+                                    )}
+                                </ErrorMessage>
                             </div>
 
-                            <div>
-                                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+                            <div className="relative">
+                                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">Email</label>
                                 <Field
                                     type="email"
                                     id="email"
                                     name="email"
                                     disabled={isSubmitting}
-                                    className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                                    className="w-full p-3 bg-gray-800 border border-gray-700 rounded-md focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 text-white placeholder-gray-500 transition-colors"
                                 />
-                                <ErrorMessage name="email" component="div" className="mt-1 text-red-500 dark:text-red-400 text-sm"/>
+                                <ErrorMessage name="email">
+                                    {(msg) => (
+                                        <div className="mt-1 text-red-400 text-xs">{msg}</div>
+                                    )}
+                                </ErrorMessage>
                             </div>
 
-                            <div>
-                                <label htmlFor="avatar_url" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Avatar URL</label>
+                            <div className="relative">
+                                <label htmlFor="avatar_url" className="block text-sm font-medium text-gray-300 mb-2">Avatar URL</label>
                                 <Field
                                     type="text"
                                     id="avatar_url"
                                     name="avatar_url"
                                     disabled={isSubmitting}
                                     placeholder="https://example.com/avatar.jpg"
-                                    className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                                    className="w-full p-3 bg-gray-800 border border-gray-700 rounded-md focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 text-white placeholder-gray-500 transition-colors"
                                 />
-                                <ErrorMessage name="avatar_url" component="div" className="mt-1 text-red-500 dark:text-red-400 text-sm"/>
+                                <ErrorMessage name="avatar_url">
+                                    {(msg) => (
+                                        <div className="mt-1 text-red-400 text-xs">{msg}</div>
+                                    )}
+                                </ErrorMessage>
                             </div>
 
-                            <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-                                <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">New Password (leave blank to keep current)</label>
-                                <Field
-                                    type="password"
-                                    id="password"
-                                    name="password"
-                                    disabled={isSubmitting}
-                                    className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
-                                />
-                                <ErrorMessage name="password" component="div" className="mt-1 text-red-500 dark:text-red-400 text-sm"/>
+                            <div className="pt-6 border-t border-gray-800">
+                                <h3 className="text-lg font-medium text-white mb-4">Change Password</h3>
+
+                                <div className="relative mb-4">
+                                    <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">New Password (leave blank to keep current)</label>
+                                    <Field
+                                        type="password"
+                                        id="password"
+                                        name="password"
+                                        disabled={isSubmitting}
+                                        className="w-full p-3 bg-gray-800 border border-gray-700 rounded-md focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 text-white placeholder-gray-500 transition-colors"
+                                    />
+                                    <ErrorMessage name="password">
+                                        {(msg) => (
+                                            <div className="mt-1 text-red-400 text-xs">{msg}</div>
+                                        )}
+                                    </ErrorMessage>
+                                </div>
+
+                                <div className="relative">
+                                    <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-300 mb-2">Confirm New Password</label>
+                                    <Field
+                                        type="password"
+                                        id="confirmPassword"
+                                        name="confirmPassword"
+                                        disabled={isSubmitting || !values.password}
+                                        className="w-full p-3 bg-gray-800 border border-gray-700 rounded-md focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 text-white placeholder-gray-500 transition-colors disabled:bg-gray-900 disabled:border-gray-800 disabled:text-gray-600"
+                                    />
+                                    <ErrorMessage name="confirmPassword">
+                                        {(msg) => (
+                                            <div className="mt-1 text-red-400 text-xs">{msg}</div>
+                                        )}
+                                    </ErrorMessage>
+                                </div>
                             </div>
 
-                            <div>
-                                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Confirm New Password</label>
-                                <Field
-                                    type="password"
-                                    id="confirmPassword"
-                                    name="confirmPassword"
-                                    disabled={isSubmitting || !values.password}
-                                    className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
-                                />
-                                <ErrorMessage name="confirmPassword" component="div" className="mt-1 text-red-500 dark:text-red-400 text-sm"/>
-                            </div>
-
-                            <div className="pt-4">
+                            <div className="pt-6">
                                 <button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    className="w-full px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="w-full px-4 py-3 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
-                                    {isSubmitting ? 'Updating...' : 'Update Profile'}
+                                    {isSubmitting ? (
+                                        <div className="flex items-center justify-center">
+                                            <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                            </svg>
+                                            Updating...
+                                        </div>
+                                    ) : 'Update Profile'}
                                 </button>
                             </div>
                         </Form>

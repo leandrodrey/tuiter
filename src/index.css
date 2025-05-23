@@ -1,31 +1,46 @@
 @import "tailwindcss";
 
-:root {
-    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
-
-    color-scheme: light dark;
-    color: rgba(255, 255, 255, 0.87);
-    background-color: #242424;
-
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+/* Hide scrollbar for Chrome, Safari and Opera */
+.overflow-y-auto::-webkit-scrollbar,
+.overflow-y-scroll::-webkit-scrollbar,
+.overflow-x-auto::-webkit-scrollbar,
+.overflow-x::-webkit-scrollbar,
+.overflow-x-scroll::-webkit-scrollbar,
+.overflow-y::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;
 }
 
+/* Hide scrollbar for IE, Edge and Firefox */
+.overflow-y-auto,
+.overflow-y-scroll,
+.overflow-x-auto,
+.overflow-x,
+.overflow-x-scroll,
+.overflow-y,
 body {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+/* Twitter-like background color */
+.bg-twitter {
+    background-color: #15202b;
+}
+
+/* Twitter-like dim background color */
+.bg-dim-700 {
+    --bg-opacity: 1;
+    background-color: #192734;
+}
+
+/* Reset margins for body and html */
+html, body {
     margin: 0;
-    min-width: 320px;
-    min-height: 100vh;
-    scroll-behavior: smooth;
+    background-color: #15202b;
 }
 
-@media (prefers-color-scheme: light) {
-    :root {
-        color: #213547;
-        background-color: #ffffff;
-    }
+/* Paint icon fill */
+svg.paint-icon {
+    fill: currentcolor;
 }
-

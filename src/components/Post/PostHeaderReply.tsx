@@ -7,29 +7,26 @@ interface PostHeaderReplyProps {
 }
 
 const PostHeaderReply = ({post}: PostHeaderReplyProps): JSX.Element => {
-    // Styles specific for replies
-    const authorTextSize = "text-sm";
-
     return (
-        <div className="flex items-start mb-3">
-            <Avatar
-                username={post.author}
-                avatarUrl={post.avatar_url}
-                size="sm"
-                className="mr-3"
-            />
-            <div className="flex-1">
+        <div className="flex flex-shrink-0 p-3 pb-0">
+            <a href="#" className="flex-shrink-0 group block">
                 <div className="flex items-center">
-                    <h3 className={`${authorTextSize} text-gray-900 dark:text-white`}>{post.author}</h3>
-                    <span className="text-sm text-gray-500 ml-2">
-                        {new Date(post.date).toLocaleString()}
-                    </span>
-                    <span className="text-xs text-blue-500 ml-2">
-                        Reply
-                    </span>
+                    <div>
+                        <Avatar username={post.author} avatarUrl={post.avatar_url} size="sm" />
+                    </div>
+                    <div className="ml-2">
+                        <p className="text-sm leading-6 font-medium text-white">
+                            {post.author}
+                            <span className="ml-1 text-xs leading-5 font-medium text-gray-400 group-hover:text-gray-300 transition ease-in-out duration-150">
+                                @{post.author.replace(/\s+/g, '')}  · {new Date(post.date).toLocaleDateString()}
+                            </span>
+                            <span className="ml-1 text-xs text-blue-400">
+                                Reply
+                            </span>
+                        </p>
+                    </div>
                 </div>
-            </div>
-            {/* No "Add to Favorites" button for replies */}
+            </a>
         </div>
     );
 };

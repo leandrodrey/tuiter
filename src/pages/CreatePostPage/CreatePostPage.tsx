@@ -5,6 +5,7 @@ import {
 import PostForm from '../../components/PostForm/PostForm';
 import {PageHeader} from '../../components/UI';
 import {usePostCreation} from '../../hooks/post-creation/usePostCreation';
+import {useUser} from '../../hooks/context/useUser';
 
 /**
  * Page component for creating new posts.
@@ -21,6 +22,8 @@ const CreatePostPage = (): JSX.Element => {
         handleClearDraft
     } = usePostCreation();
 
+    const { userInformation } = useUser();
+
     return (
         <div>
             <PageHeader title="Create New Post" subtitle="Create a new post and share it with the world."/>
@@ -32,6 +35,7 @@ const CreatePostPage = (): JSX.Element => {
                     onSubmit={handleSubmit}
                     onSaveDraft={handleSaveDraft}
                     onClearDraft={handleClearDraft}
+                    userAvatar={userInformation?.avatar_url}
                 />
             </div>
         </div>

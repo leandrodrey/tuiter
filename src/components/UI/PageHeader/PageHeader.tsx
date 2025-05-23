@@ -14,22 +14,30 @@ const PageHeader = ({
     children
 }: PageHeaderProps): JSX.Element => {
     return (
-        <div className={`mb-8 text-center ${className}`}>
-            <h2 className="text-3xl font-bold  text-gray-900 dark:text-white">
-                {title}
-            </h2>
+        <div className={className}>
+            <div className="flex">
+                <div className="flex-1 mx-2">
+                    <h2 className="px-4 py-2 text-xl font-semibold text-white">
+                        {title}
+                    </h2>
+                </div>
+            </div>
 
             {subtitle && (
-                <p className="mt-2 text-gray-600 dark:text-gray-400">
-                    {subtitle}
-                </p>
+                <div className="px-6 pb-2">
+                    <p className="text-sm text-gray-400">
+                        {subtitle}
+                    </p>
+                </div>
             )}
 
             {children && (
-                <div className="mt-4">
+                <div className="mt-2 px-4">
                     {children}
                 </div>
             )}
+
+            <hr className="border-gray-800" />
         </div>
     );
 };
