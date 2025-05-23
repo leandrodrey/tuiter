@@ -29,7 +29,7 @@ const SidebarNav = ({isActive}: SidebarNavProps): JSX.Element => {
                 isActive={isActive("/")}
                 className="group flex items-center px-2 py-2 text-sm sm:text-base leading-6 font-semibold rounded-full hover:bg-gray-800 hover:text-blue-300"
             >
-                <HomeIcon className="mr-2 md:mr-4 h-5 w-5 sm:h-6 sm:w-6" />
+                <HomeIcon className="mr-2 md:mr-4 h-5 w-5 sm:h-6 sm:w-6"/>
                 <span className="hidden md:inline">Home</span>
             </NavLink>
             <NavLink
@@ -37,7 +37,7 @@ const SidebarNav = ({isActive}: SidebarNavProps): JSX.Element => {
                 isActive={isActive("/users/register")}
                 className="mt-1 group flex items-center px-2 py-2 text-sm sm:text-base leading-6 font-semibold rounded-full hover:bg-gray-800 hover:text-blue-300"
             >
-                <UserIcon className="mr-2 md:mr-4 h-5 w-5 sm:h-6 sm:w-6" />
+                <UserIcon className="mr-2 md:mr-4 h-5 w-5 sm:h-6 sm:w-6"/>
                 <span className="hidden md:inline">Register</span>
             </NavLink>
             <NavLink
@@ -45,7 +45,7 @@ const SidebarNav = ({isActive}: SidebarNavProps): JSX.Element => {
                 isActive={isActive("/posts/create")}
                 className="mt-1 group flex items-center px-2 py-2 text-sm sm:text-base leading-6 font-semibold rounded-full hover:bg-gray-800 hover:text-blue-300"
             >
-                <CreatePostIcon className="mr-2 md:mr-4 h-5 w-5 sm:h-6 sm:w-6" />
+                <CreatePostIcon className="mr-2 md:mr-4 h-5 w-5 sm:h-6 sm:w-6"/>
                 <span className="hidden md:inline">Create Post</span>
             </NavLink>
             <NavLink
@@ -53,7 +53,7 @@ const SidebarNav = ({isActive}: SidebarNavProps): JSX.Element => {
                 isActive={isActive("/users/favorites")}
                 className="mt-1 group flex items-center px-2 py-2 text-sm sm:text-base leading-6 font-semibold rounded-full hover:bg-gray-800 hover:text-blue-300"
             >
-                <FavoritesIcon className="mr-2 md:mr-4 h-5 w-5 sm:h-6 sm:w-6" />
+                <FavoritesIcon className="mr-2 md:mr-4 h-5 w-5 sm:h-6 sm:w-6"/>
                 <span className="hidden md:inline">Favorites</span>
             </NavLink>
             <NavLink
@@ -61,11 +61,11 @@ const SidebarNav = ({isActive}: SidebarNavProps): JSX.Element => {
                 isActive={isActive("/users/edit")}
                 className="mt-1 group flex items-center px-2 py-2 text-sm sm:text-base leading-6 font-semibold rounded-full hover:bg-gray-800 hover:text-blue-300"
             >
-                <EditProfileIcon className="mr-2 md:mr-4 h-5 w-5 sm:h-6 sm:w-6" />
+                <EditProfileIcon className="mr-2 md:mr-4 h-5 w-5 sm:h-6 sm:w-6"/>
                 <span className="hidden md:inline">Edit Profile</span>
             </NavLink>
 
-            <TweetButton />
+            <TweetButton/>
         </nav>
     );
 };

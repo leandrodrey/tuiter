@@ -3,6 +3,15 @@ import type {PostFormData} from '../../types/formTypes.ts';
 import Spinner from '../UI/Loader/Spinner.tsx';
 import {CharCount, SaveDraftButton, ClearDraftButton, TweetButton} from '../UI';
 
+/**
+ * Props for the PostFormActions component
+ * @interface PostFormActionsProps
+ * @property {boolean} isSubmitting - Whether the form is currently submitting
+ * @property {PostFormData} values - Current values of the form
+ * @property {Function} resetForm - Function to reset the form to its initial state
+ * @property {Function} onSaveDraft - Function to save the current form state as a draft
+ * @property {Function} onClearDraft - Function to clear the current draft
+ */
 interface PostFormActionsProps {
     isSubmitting: boolean;
     values: PostFormData;
@@ -11,6 +20,14 @@ interface PostFormActionsProps {
     onClearDraft: (resetForm: (nextState?: { values: PostFormData }) => void) => void;
 }
 
+/**
+ * Component that renders the action buttons and character count for the post form.
+ * Includes buttons for saving drafts, clearing drafts, and submitting the post.
+ * Also displays a character count and handles disabled states based on form state.
+ *
+ * @param {PostFormActionsProps} props - Component props
+ * @returns {JSX.Element} The post form actions component
+ */
 const PostFormActions = ({
     isSubmitting,
     values,
@@ -27,14 +44,12 @@ const PostFormActions = ({
         <div className="flex">
             <div className="w-64 px-2">
                 <div className="flex items-center">
-                    {/* Save Draft button */}
                     <SaveDraftButton
                         onClick={onSaveDraft}
                         values={values}
                         isDisabled={isSubmitting || isMessageEmpty}
                     />
 
-                    {/* Clear Draft button */}
                     <ClearDraftButton
                         onClick={onClearDraft}
                         resetForm={resetForm}

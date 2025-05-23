@@ -6,6 +6,16 @@ import PostFormFields from './PostFormFields';
 import PostFormActions from './PostFormActions';
 import {Avatar} from '../UI';
 
+/**
+ * Props for the PostForm component
+ * @interface PostFormProps
+ * @property {PostFormData} initialValues - Initial values for the form
+ * @property {ObjectSchema<PostFormData>} validationSchema - Yup validation schema for the form
+ * @property {Function} onSubmit - Function to handle form submission
+ * @property {Function} onSaveDraft - Function to save the current form state as a draft
+ * @property {Function} onClearDraft - Function to clear the current draft
+ * @property {string} [userAvatar] - URL of the user's avatar image
+ */
 interface PostFormProps {
     initialValues: PostFormData;
     validationSchema: ObjectSchema<PostFormData>;
@@ -15,6 +25,14 @@ interface PostFormProps {
     userAvatar?: string;
 }
 
+/**
+ * A form component for creating or replying to posts.
+ * Uses Formik for form state management and validation.
+ * Includes fields for the post content and action buttons for submitting, saving drafts, etc.
+ *
+ * @param {PostFormProps} props - Component props
+ * @returns {JSX.Element} The post form component
+ */
 const PostForm = ({
     initialValues,
     validationSchema,
@@ -44,7 +62,6 @@ const PostForm = ({
                                 </div>
                             </div>
 
-                            {/* Form actions */}
                             <PostFormActions
                                 isSubmitting={isSubmitting}
                                 values={values}

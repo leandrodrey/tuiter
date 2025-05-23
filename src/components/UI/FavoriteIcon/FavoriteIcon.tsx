@@ -29,10 +29,8 @@ const FavoriteIcon = ({isFavorite, isHovered = false, className = ''}: FavoriteI
 
     return (
         <div className={`relative ${className} transition-colors duration-200`}>
-            {/* Person icon */}
             <PersonIcon isFavorite={isFavorite} />
 
-            {/* Heart icon */}
             <HeartIcon
                 isFavorite={isFavorite}
                 isHovered={effectiveIsHovered}
