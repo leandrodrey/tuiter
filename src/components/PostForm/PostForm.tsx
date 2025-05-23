@@ -55,10 +55,10 @@ const PostForm = ({
                         <div className="border-b border-gray-800">
                             <div className="flex">
                                 <div className="m-2 py-1">
-                                    <Avatar username="User" avatarUrl={userAvatar} />
+                                    <Avatar username="User" avatarUrl={userAvatar}/>
                                 </div>
                                 <div className="flex-1 px-2 pt-2 mt-2">
-                                    <PostFormFields isSubmitting={isSubmitting} />
+                                    <PostFormFields isSubmitting={isSubmitting}/>
                                 </div>
                             </div>
 

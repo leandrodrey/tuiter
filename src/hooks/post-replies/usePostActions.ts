@@ -1,5 +1,5 @@
-import { useCallback } from 'react';
-import type { Post } from '../../types/postTypes';
+import {useCallback} from 'react';
+import type {Post} from '../../types/postTypes';
 
 /**
  * Hook for managing post-actions like liking and toggling replies

@@ -48,7 +48,7 @@ const FavoriteButton = ({
             title={isFavorite ? `${author} is in your favorites` : `Add ${author} to favorites`}
             aria-label={isFavorite ? `${author} is in your favorites` : `Add ${author} to favorites`}
         >
-            <FavoriteIcon isFavorite={isFavorite} isHovered={isHovered} />
+            <FavoriteIcon isFavorite={isFavorite} isHovered={isHovered}/>
         </button>
     );
 };

@@ -1,6 +1,6 @@
-import { useState, useCallback } from 'react';
-import { apiGetTuitReplies } from '../../services/TuitsService';
-import type { Post } from '../../types/postTypes';
+import {useState, useCallback} from 'react';
+import {apiGetTuitReplies} from '../../services/TuitsService';
+import type {Post} from '../../types/postTypes';
 
 /**
  * Hook for managing post replies visibility and fetching

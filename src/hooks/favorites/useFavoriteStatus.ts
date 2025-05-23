@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { FAVORITE_USERS_KEY } from '../../constants/storageConstants';
-import { useUser } from '../context/useUser';
+import {useState, useEffect} from 'react';
+import {FAVORITE_USERS_KEY} from '../../constants/storageConstants';
+import {useUser} from '../context/useUser';
 
 /**
  * Custom hook to check if a user is in favorites and update when favorites change.
@@ -9,47 +9,47 @@ import { useUser } from '../context/useUser';
  * @returns {boolean} Whether the user is in favorites
  */
 export const useFavoriteStatus = (author: string): boolean => {
-  const { userInformation } = useUser();
-  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+    const {userInformation} = useUser();
+    const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
-  // Create a user-specific key for storing favorites
-  const getUserSpecificKey = () => {
-    if (!userInformation || !userInformation.email) {
-      return FAVORITE_USERS_KEY;
-    }
-    return `${FAVORITE_USERS_KEY}_${userInformation.email}`;
-  };
+    // Create a user-specific key for storing favorites
+    const getUserSpecificKey = () => {
+        if (!userInformation || !userInformation.email) {
+            return FAVORITE_USERS_KEY;
+        }
+        return `${FAVORITE_USERS_KEY}_${userInformation.email}`;
+    };
 
-  // Check if the user is in favorites
-  const checkFavoriteStatus = () => {
-    const userSpecificKey = getUserSpecificKey();
-    const existingFavorites = JSON.parse(localStorage.getItem(userSpecificKey) || '[]');
-    const isAlreadyFavorite = existingFavorites.some(
-      (favorite: { author: string }) => favorite.author === author
-    );
-    setIsFavorite(isAlreadyFavorite);
-  };
+    // Check if the user is in favorites
+    const checkFavoriteStatus = () => {
+        const userSpecificKey = getUserSpecificKey();
+        const existingFavorites = JSON.parse(localStorage.getItem(userSpecificKey) || '[]');
+        const isAlreadyFavorite = existingFavorites.some(
+            (favorite: { author: string }) => favorite.author === author
+        );
+        setIsFavorite(isAlreadyFavorite);
+    };
 
-  // Listen for storage events to update the favorite status when it changes
-  useEffect(() => {
-    // Check initial status
-    checkFavoriteStatus();
-
-    // Function to handle storage events
-    const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === getUserSpecificKey()) {
+    // Listen for storage events to update the favorite status when it changes
+    useEffect(() => {
+        // Check initial status
         checkFavoriteStatus();
-      }
-    };
 
-    // Add event listener for storage events
-    window.addEventListener('storage', handleStorageChange);
+        // Function to handle storage events
+        const handleStorageChange = (event: StorageEvent) => {
+            if (event.key === getUserSpecificKey()) {
+                checkFavoriteStatus();
+            }
+        };
 
-    // Clean up event listener
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
-  }, [author, userInformation]);
+        // Add event listener for storage events
+        window.addEventListener('storage', handleStorageChange);
 
-  return isFavorite;
+        // Clean up event listener
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+        };
+    }, [author, userInformation]);
+
+    return isFavorite;
 };

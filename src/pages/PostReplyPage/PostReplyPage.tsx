@@ -22,7 +22,7 @@ const PostReplyPage = (): JSX.Element => {
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
     const toast = useToast();
-    const { userInformation } = useUser();
+    const {userInformation} = useUser();
 
     const {postId} = useParams<{ postId: string }>();
 

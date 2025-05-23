@@ -37,7 +37,7 @@ const PageHeader = ({
                 </div>
             )}
 
-            <hr className="border-gray-800" />
+            <hr className="border-gray-800"/>
         </div>
     );
 };

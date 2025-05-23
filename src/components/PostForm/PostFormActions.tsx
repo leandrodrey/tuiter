@@ -61,7 +61,7 @@ const PostFormActions = ({
             <div className="flex-1 flex items-center justify-end">
                 {charCount > 0 && (
                     <div className="mr-3">
-                        <CharCount charCount={charCount} maxChars={maxChars} />
+                        <CharCount charCount={charCount} maxChars={maxChars}/>
                     </div>
                 )}
                 <TweetButton

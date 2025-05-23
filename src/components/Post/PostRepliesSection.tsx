@@ -36,7 +36,7 @@ const PostRepliesSection = ({
         <>
             {loadingReplies && (
                 <div className="pl-16 pr-4 pb-4 text-center">
-                    <Loader text="Loading replies..." spinnerSize="sm" />
+                    <Loader text="Loading replies..." spinnerSize="sm"/>
                 </div>
             )}
 

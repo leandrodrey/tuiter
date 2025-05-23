@@ -22,7 +22,7 @@ const CreatePostPage = (): JSX.Element => {
         handleClearDraft
     } = usePostCreation();
 
-    const { userInformation } = useUser();
+    const {userInformation} = useUser();
 
     return (
         <div>

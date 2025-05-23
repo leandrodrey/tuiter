@@ -28,7 +28,7 @@ const PostCard = ({post, onLike, onAddToFavorites, replies: initialReplies = []}
                 onAddToFavorites={onAddToFavorites}
             />
 
-            <PostContent message={post.message} />
+            <PostContent message={post.message}/>
 
             <PostActionsSection
                 post={post}
