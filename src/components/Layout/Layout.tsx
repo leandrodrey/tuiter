@@ -14,17 +14,13 @@ import Footer from './Footer/Footer.tsx';
 const Layout = ({children}: { children: ReactNode }): JSX.Element => {
     return (
         <div className="min-h-screen flex flex-col bg-[#15202b]">
-            {/* Skip to main content link for keyboard users */}
-            <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-2 focus:bg-blue-500 focus:text-white">
-                Skip to main content
-            </a>
             <div className="flex flex-grow overflow-x-hidden">
-                <Header/>
-                <Main id="main-content">
+                <Header />
+                <Main>
                     {children}
                 </Main>
             </div>
-            <Footer/>
+            <Footer />
         </div>
     );
 };

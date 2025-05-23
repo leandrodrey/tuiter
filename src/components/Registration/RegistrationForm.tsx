@@ -14,24 +14,19 @@ interface RegistrationFormProps {
 
 const RegistrationForm = ({onSubmit}: RegistrationFormProps): JSX.Element => {
     return (
-        <div className="flex justify-center w-full">
-            <div className="min-h-1/2 bg-gray-900 border border-gray-900 rounded-2xl w-full max-w-sm sm:max-w-md mx-auto">
-                <div className="px-3 sm:px-4 py-6 sm:py-8 flex items-center space-y-3 sm:space-y-4 font-semibold text-gray-500 flex-col">
-                    <h1 className="text-white text-xl sm:text-2xl text-center">Create your account</h1>
-                    <Formik
-                        initialValues={initialValues}
-                        validationSchema={validationSchema}
-                        onSubmit={onSubmit}
-                    >
-                        {({isSubmitting}) => (
-                            <Form className="w-full flex flex-col space-y-4 sm:space-y-5">
-                                <RegistrationFormFields isSubmitting={isSubmitting}/>
-                                <RegistrationActions isSubmitting={isSubmitting}/>
-                            </Form>
-                        )}
-                    </Formik>
-                </div>
-            </div>
+        <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+            <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={onSubmit}
+            >
+                {({isSubmitting}) => (
+                    <Form className="space-y-4">
+                        <RegistrationFormFields isSubmitting={isSubmitting}/>
+                        <RegistrationActions isSubmitting={isSubmitting}/>
+                    </Form>
+                )}
+            </Formik>
         </div>
     );
 };

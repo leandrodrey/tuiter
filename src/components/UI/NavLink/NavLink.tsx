@@ -16,11 +16,7 @@ const NavLink = ({to, children, className = '', isActive}: NavLinkProps): JSX.El
     } ${className}`;
 
     return (
-        <Link
-            to={to}
-            className={linkClassName}
-            aria-current={isActive ? 'page' : undefined}
-        >
+        <Link to={to} className={linkClassName}>
             {children}
         </Link>
     );

@@ -13,15 +13,7 @@ interface HomeIconProps {
  */
 const HomeIcon = ({className = ''}: HomeIconProps): JSX.Element => {
     return (
-        <svg
-            className={className}
-            stroke="currentColor"
-            fill="none"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-            role="img"
-        >
-            <title>Home icon</title>
+        <svg className={className} stroke="currentColor" fill="none" viewBox="0 0 24 24">
             <path
                 strokeLinecap="round"
                 strokeLinejoin="round"

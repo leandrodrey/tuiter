@@ -10,6 +10,8 @@ export {default as SaveDraftButton} from './SaveDraftButton/SaveDraftButton.tsx'
 export {default as ClearDraftButton} from './ClearDraftButton/ClearDraftButton.tsx';
 export {default as LogoutButton} from './LogoutButton/LogoutButton.tsx';
 export {default as TweetButton} from './TweetButton/TweetButton.tsx';
+export {default as SubmitButton} from './SubmitButton/SubmitButton.tsx';
+export {default as RegistrationLink} from './RegistrationLink/RegistrationLink.tsx';
 
 export {
     HomeIcon,

@@ -23,51 +23,46 @@ interface SidebarNavProps {
  */
 const SidebarNav = ({isActive}: SidebarNavProps): JSX.Element => {
     return (
-        <nav className="mt-4 sm:mt-5 px-1 sm:px-2" aria-label="Main navigation">
+        <nav className="mt-4 sm:mt-5 px-1 sm:px-2">
             <NavLink
                 to="/"
                 isActive={isActive("/")}
                 className="group flex items-center px-2 py-2 text-sm sm:text-base leading-6 font-semibold rounded-full hover:bg-gray-800 hover:text-blue-300"
             >
-                <HomeIcon className="mr-2 md:mr-4 h-5 w-5 sm:h-6 sm:w-6" aria-hidden="true"/>
+                <HomeIcon className="mr-2 md:mr-4 h-5 w-5 sm:h-6 sm:w-6"/>
                 <span className="hidden md:inline">Home</span>
-                <span className="md:hidden sr-only">Home</span>
             </NavLink>
             <NavLink
                 to="/users/register"
                 isActive={isActive("/users/register")}
                 className="mt-1 group flex items-center px-2 py-2 text-sm sm:text-base leading-6 font-semibold rounded-full hover:bg-gray-800 hover:text-blue-300"
             >
-                <UserIcon className="mr-2 md:mr-4 h-5 w-5 sm:h-6 sm:w-6" aria-hidden="true"/>
+                <UserIcon className="mr-2 md:mr-4 h-5 w-5 sm:h-6 sm:w-6"/>
                 <span className="hidden md:inline">Register</span>
-                <span className="md:hidden sr-only">Register</span>
             </NavLink>
             <NavLink
                 to="/posts/create"
                 isActive={isActive("/posts/create")}
                 className="mt-1 group flex items-center px-2 py-2 text-sm sm:text-base leading-6 font-semibold rounded-full hover:bg-gray-800 hover:text-blue-300"
             >
-                <CreatePostIcon className="mr-2 md:mr-4 h-5 w-5 sm:h-6 sm:w-6" aria-hidden="true"/>
+                <CreatePostIcon className="mr-2 md:mr-4 h-5 w-5 sm:h-6 sm:w-6"/>
                 <span className="hidden md:inline">Create Post</span>
-                <span className="md:hidden sr-only">Create Post</span>
             </NavLink>
             <NavLink
                 to="/users/favorites"
                 isActive={isActive("/users/favorites")}
                 className="mt-1 group flex items-center px-2 py-2 text-sm sm:text-base leading-6 font-semibold rounded-full hover:bg-gray-800 hover:text-blue-300"
             >
-                <FavoritesIcon className="mr-2 md:mr-4 h-5 w-5 sm:h-6 sm:w-6" aria-hidden="true"/>
+                <FavoritesIcon className="mr-2 md:mr-4 h-5 w-5 sm:h-6 sm:w-6"/>
                 <span className="hidden md:inline">Favorites</span>
-                <span className="md:hidden sr-only">Favorites</span>
             </NavLink>
             <NavLink
                 to="/users/edit"
                 isActive={isActive("/users/edit")}
                 className="mt-1 group flex items-center px-2 py-2 text-sm sm:text-base leading-6 font-semibold rounded-full hover:bg-gray-800 hover:text-blue-300"
             >
-                <EditProfileIcon className="mr-2 md:mr-4 h-5 w-5 sm:h-6 sm:w-6" aria-hidden="true"/>
+                <EditProfileIcon className="mr-2 md:mr-4 h-5 w-5 sm:h-6 sm:w-6"/>
                 <span className="hidden md:inline">Edit Profile</span>
-                <span className="md:hidden sr-only">Edit Profile</span>
             </NavLink>
 
             <TweetButton/>
