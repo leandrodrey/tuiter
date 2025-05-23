@@ -2,12 +2,11 @@ import {
     useState,
     useEffect,
     useCallback,
-    type ReactNode
+    type ReactNode, type JSX
 } from "react";
 import {setHttpAuthToken} from '../utils/authUtils';
 import {
     USER_TOKEN_KEY,
-    USER_DATA_KEY,
 } from '../constants/authConstants.ts';
 import {AuthContext, initialAuthState} from "./AuthContext.ts";
 import type {AuthContextType} from "../types/userTypes.ts";
@@ -23,7 +22,7 @@ setHttpAuthToken(initialAuthState.userToken);
  * @param {ReactNode} props.children - Child components that will have access to auth context
  * @returns {JSX.Element} Provider component with auth context
  */
-export const AuthProvider = ({children}: { children: ReactNode }) => {
+export const AuthProvider = ({children}: { children: ReactNode }): JSX.Element => {
     const [isLoadingAuth, setIsLoadingAuth] = useState<boolean>(initialAuthState.isLoadingAuth);
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(initialAuthState.isAuthenticated);
     const [userToken, setUserTokenState] = useState<string | null>(initialAuthState.userToken);
@@ -43,11 +42,11 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
     }, [setUserTokenState, setIsAuthenticated, setIsLoadingAuth]);
 
     /**
-     * Handles user login by setting authentication state and token.
+     * Sets the authentication token and updates authentication state.
      * Stores the auth token in localStorage and sets the auth header.
      * @param {string} token - The authentication token to store
      */
-    const login = (token: string): void => {
+    const setAuthToken = (token: string): void => {
         setUserTokenState(token);
         setIsAuthenticated(true);
 
@@ -59,7 +58,7 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
     /**
      * Handles the login form submission process.
      * Attempts to authenticate the user with the provided credentials.
-     * On success, stores user data and token, then updates authentication state.
+     * On success, updates authentication state with the token.
      * On failure, displays an error message.
      *
      * @param {Object} values - The form values containing login credentials
@@ -70,7 +69,7 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
      * @param {Function} formikHelpers.resetForm - Function to reset the form
      * @returns {Promise<void>} A promise that resolves when the login process completes
      */
-    const handleLoginSubmit = async (
+    const handleLogin = async (
         values: { email: string; password: string },
         formikHelpers: { setSubmitting: (isSubmitting: boolean) => void; resetForm: () => void }
     ): Promise<void> => {
@@ -79,12 +78,7 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
             const response = await apiLogin(values as Omit<UserData, 'name'>);
             const token = response.token;
 
-            localStorage.setItem(USER_DATA_KEY, JSON.stringify({
-                name: response.name,
-                email: response.email,
-            }));
-
-            login(token);
+            setAuthToken(token);
 
             toast.success(`Welcome back, ${response.name}!`);
             resetForm();
@@ -119,9 +113,9 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
         isLoadingAuth,
         isAuthenticated,
         userToken,
-        login,
+        login: setAuthToken,
         logout,
-        handleLoginSubmit,
+        handleLoginSubmit: handleLogin,
     };
 
     return (
