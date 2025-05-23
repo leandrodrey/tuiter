@@ -12,6 +12,7 @@ export interface ProfileResponse {
     id: string;
     name: string;
     avatar_url?: string;
+    email?: string;
 }
 
 /**

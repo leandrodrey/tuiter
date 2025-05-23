@@ -1,4 +1,5 @@
 import {useAuthContext} from '../../hooks/context/useAuthContext.ts';
+import {useUser} from '../../hooks/context/useUser.ts';
 import UserInfo from '../LoginForm/UserInfo';
 import {NavLink, LoginButton} from '../UI';
 import {useLocation} from 'react-router-dom';
@@ -10,7 +11,8 @@ import {useLocation} from 'react-router-dom';
  * @returns The navigation bar with links and authentication controls
  */
 const Navbar = () => {
-    const {isAuthenticated, userInformation, logout} = useAuthContext();
+    const {isAuthenticated, logout} = useAuthContext();
+    const {userInformation} = useUser();
     const location = useLocation();
     console.log(userInformation)
     /**
