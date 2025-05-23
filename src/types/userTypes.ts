@@ -20,7 +20,10 @@ export interface AuthState {
 export interface AuthContextType extends AuthState {
     login: (token: string) => void;
     logout: () => void;
-    handleLoginSubmit: (values: { email: string; password: string }, formikHelpers: { setSubmitting: (isSubmitting: boolean) => void; resetForm: () => void }) => Promise<void>;
+    handleLoginSubmit: (values: { email: string; password: string }, formikHelpers: {
+        setSubmitting: (isSubmitting: boolean) => void;
+        resetForm: () => void
+    }) => Promise<void>;
 }
 
 // User state

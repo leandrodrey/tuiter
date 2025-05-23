@@ -1,10 +1,10 @@
-import { apiAddLikeToTuit, apiRemoveLikeFromTuit } from '../../services/TuitsService.ts';
-import { FAVORITE_USERS_KEY } from '../../constants/storageConstants.ts';
-import { useToast } from '../context/useToast.ts';
-import { useUser } from '../context/useUser.ts';
-import type { Post } from '../../types/postTypes.ts';
-import type { PostWithReplies } from './usePostProcessor.ts';
-import type { Dispatch, SetStateAction } from 'react';
+import {apiAddLikeToTuit, apiRemoveLikeFromTuit} from '../../services/TuitsService.ts';
+import {FAVORITE_USERS_KEY} from '../../constants/storageConstants.ts';
+import {useToast} from '../context/useToast.ts';
+import {useUser} from '../context/useUser.ts';
+import type {Post} from '../../types/postTypes.ts';
+import type {PostWithReplies} from './usePostProcessor.ts';
+import type {Dispatch, SetStateAction} from 'react';
 
 /**
  * Hook for handling post interactions (liking, adding to favorites)
@@ -17,7 +17,7 @@ export const usePostInteractions = (
     setPostsWithReplies: Dispatch<SetStateAction<PostWithReplies[]>>
 ) => {
     const toast = useToast();
-    const { userInformation } = useUser();
+    const {userInformation} = useUser();
 
     /**
      * Creates a user-specific key for storing favorites in localStorage.
@@ -88,7 +88,12 @@ export const usePostInteractions = (
                                 ...pwr,
                                 replies: pwr.replies.map(reply =>
                                     reply.id === postId
-                                        ? {...reply, likes: (reply.likes || 0) - 1, liked: false, key: reply.id.toString()}
+                                        ? {
+                                            ...reply,
+                                            likes: (reply.likes || 0) - 1,
+                                            liked: false,
+                                            key: reply.id.toString()
+                                        }
                                         : {...reply, key: reply.id.toString()}
                                 ),
                                 key: pwr.post.id.toString()
@@ -119,7 +124,12 @@ export const usePostInteractions = (
                                 ...pwr,
                                 replies: pwr.replies.map(reply =>
                                     reply.id === postId
-                                        ? {...reply, likes: (reply.likes || 0) + 1, liked: true, key: reply.id.toString()}
+                                        ? {
+                                            ...reply,
+                                            likes: (reply.likes || 0) + 1,
+                                            liked: true,
+                                            key: reply.id.toString()
+                                        }
                                         : {...reply, key: reply.id.toString()}
                                 ),
                                 key: pwr.post.id.toString()

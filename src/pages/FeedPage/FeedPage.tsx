@@ -2,8 +2,8 @@ import {type JSX} from 'react';
 import PostList from '../../components/Post/PostList';
 import {Loader, PageHeader} from '../../components/UI';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { useFeedPosts } from '../../hooks/feed/useFeedPosts.ts';
-import { usePostInteractions } from '../../hooks/feed/usePostInteractions.ts';
+import {useFeedPosts} from '../../hooks/feed/useFeedPosts.ts';
+import {usePostInteractions} from '../../hooks/feed/usePostInteractions.ts';
 
 const FeedPage = (): JSX.Element => {
 
@@ -42,7 +42,7 @@ const FeedPage = (): JSX.Element => {
 
     return (
         <div>
-            <PageHeader title="Post Feed" subtitle="See what's happening in the community" />
+            <PageHeader title="Post Feed" subtitle="See what's happening in the community"/>
 
             <InfiniteScroll
                 dataLength={postsWithReplies.length}
@@ -60,7 +60,7 @@ const FeedPage = (): JSX.Element => {
                 }
                 scrollThreshold={0.8}
                 className="overflow-hidden"
-                style={{ scrollBehavior: 'smooth' }}
+                style={{scrollBehavior: 'smooth'}}
                 pullDownToRefresh
                 pullDownToRefreshThreshold={50}
                 pullDownToRefreshContent={

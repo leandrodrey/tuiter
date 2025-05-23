@@ -1,5 +1,5 @@
-import { useCallback } from 'react';
-import type { Post } from '../../types/postTypes.ts';
+import {useCallback} from 'react';
+import type {Post} from '../../types/postTypes.ts';
 
 export interface PostWithReplies {
     post: Post;

@@ -55,7 +55,7 @@ const Navbar = () => {
                                         <UserInfo userInformation={userInformation} onLogout={logout}/>
                                     </div>
                                 ) : (
-                                    <LoginButton isActive={isActive("/login")} />
+                                    <LoginButton isActive={isActive("/login")}/>
                                 )}
                             </li>
                         </ul>

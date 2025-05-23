@@ -1,6 +1,6 @@
-import { type JSX } from 'react';
-import { Link } from 'react-router-dom';
-import { Avatar } from '../index';
+import {type JSX} from 'react';
+import {Link} from 'react-router-dom';
+import {Avatar} from '../index';
 
 /**
  * Interface defining the props for the LoginButton component.
@@ -18,10 +18,10 @@ interface LoginButtonProps {
  * @param {LoginButtonProps} props - The component props
  * @returns A styled login button with an avatar
  */
-const LoginButton = ({ isActive, className = '' }: LoginButtonProps): JSX.Element => {
+const LoginButton = ({isActive, className = ''}: LoginButtonProps): JSX.Element => {
     const linkClassName = `flex items-center px-3 py-2 text-sm font-medium rounded-full transition-colors ${
-        isActive 
-            ? 'text-blue-500 bg-blue-50 dark:bg-blue-900/20' 
+        isActive
+            ? 'text-blue-500 bg-blue-50 dark:bg-blue-900/20'
             : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
     } ${className}`;
 

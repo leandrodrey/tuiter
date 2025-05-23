@@ -106,7 +106,7 @@ const PostReplyPage = (): JSX.Element => {
         if (typeof updaterFn === 'function') {
             setReplies(prevReplies => {
                 // Convert replies to PostWithReplies format
-                const prevPostsWithReplies = prevReplies.map(reply => ({ post: reply, replies: [] }));
+                const prevPostsWithReplies = prevReplies.map(reply => ({post: reply, replies: []}));
 
                 // Apply the updater function
                 const updatedPostsWithReplies = updaterFn(prevPostsWithReplies);
@@ -127,9 +127,9 @@ const PostReplyPage = (): JSX.Element => {
         }
     };
 
-    const { handleLikePost } = usePostInteractions(
+    const {handleLikePost} = usePostInteractions(
         // Convert replies to the format expected by usePostInteractions
-        replies.map(reply => ({ post: reply, replies: [], key: reply.id.toString() })),
+        replies.map(reply => ({post: reply, replies: [], key: reply.id.toString()})),
         setPostsWithRepliesWrapper
     );
 
@@ -142,7 +142,7 @@ const PostReplyPage = (): JSX.Element => {
     }, []);
 
     if (isLoading) {
-        return <Loader text="Loading post..." fullScreen={true} />;
+        return <Loader text="Loading post..." fullScreen={true}/>;
     }
 
     if (error && !originalPost) {
@@ -151,7 +151,7 @@ const PostReplyPage = (): JSX.Element => {
 
     return (
         <div className="max-w-2xl mx-auto px-4 py-6">
-            <PageHeader title="Thread" subtitle="Reply to the original post" />
+            <PageHeader title="Thread" subtitle="Reply to the original post"/>
 
             {/* Original post */}
             {originalPost && (
@@ -189,7 +189,7 @@ const PostReplyPage = (): JSX.Element => {
                                 </div>
                                 <div className="flex items-center mr-6">
                                     <svg className={`w-5 h-5 mr-1 ${originalPost.liked ? 'text-red-500 fill-current' : ''}`}
-                                         fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
                                     </svg>
                                     <span>{originalPost.likes}</span>
@@ -215,7 +215,8 @@ const PostReplyPage = (): JSX.Element => {
                         className="mr-3"
                     />
                     <div className="flex-1">
-                        {error && <div className="p-3 mb-4 text-red-500 dark:text-red-400 bg-red-50 dark:bg-red-900/10 rounded">{error}</div>}
+                        {error &&
+                            <div className="p-3 mb-4 text-red-500 dark:text-red-400 bg-red-50 dark:bg-red-900/10 rounded">{error}</div>}
 
                         <PostForm
                             initialValues={initialValues}

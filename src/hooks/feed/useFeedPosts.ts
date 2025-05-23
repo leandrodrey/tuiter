@@ -1,8 +1,8 @@
-import { useState, useEffect, useCallback } from 'react';
-import { apiGetFeed } from '../../services/FeedService.ts';
-import { useToast } from '../context/useToast.ts';
-import { usePostProcessor, type PostWithReplies } from './usePostProcessor.ts';
-import type { Post } from '../../types/postTypes';
+import {useState, useEffect, useCallback} from 'react';
+import {apiGetFeed} from '../../services/FeedService.ts';
+import {useToast} from '../context/useToast.ts';
+import {usePostProcessor, type PostWithReplies} from './usePostProcessor.ts';
+import type {Post} from '../../types/postTypes';
 
 // Constants
 const POSTS_PER_PAGE = 10;
@@ -21,7 +21,7 @@ export const useFeedPosts = () => {
     const [initialLoading, setInitialLoading] = useState<boolean>(true);
 
     const toast = useToast();
-    const { processPostsResponse } = usePostProcessor();
+    const {processPostsResponse} = usePostProcessor();
 
     /**
      * Handles the API response and updates state accordingly
@@ -71,7 +71,7 @@ export const useFeedPosts = () => {
             isInitialLoad?: boolean;
         } = {}
     ) => {
-        const { isLoadingMore = false, isRefresh = false, isInitialLoad = false } = options;
+        const {isLoadingMore = false, isRefresh = false, isInitialLoad = false} = options;
 
         // Set appropriate loading state
         if (isInitialLoad) {
@@ -84,7 +84,7 @@ export const useFeedPosts = () => {
 
         try {
             setError(null);
-            const response = await apiGetFeed({ page: pageNumber });
+            const response = await apiGetFeed({page: pageNumber});
             const processedPosts = handleApiResponse(response, isInitialLoad, isRefresh);
             if (isRefresh && processedPosts.length > 0) {
                 toast.success('Feed refreshed successfully!');
@@ -120,7 +120,7 @@ export const useFeedPosts = () => {
         if (!hasMore || loadingMore || loading) return;
 
         const nextPage = page + 1;
-        const newPosts = await fetchPosts(nextPage, { isLoadingMore: true });
+        const newPosts = await fetchPosts(nextPage, {isLoadingMore: true});
 
         if (newPosts) {
             setPostsWithReplies(prevPosts => [...prevPosts, ...newPosts]);
@@ -138,7 +138,7 @@ export const useFeedPosts = () => {
         setPage(1);
         setHasMore(true);
 
-        const refreshedPosts = await fetchPosts(1, { isRefresh: true });
+        const refreshedPosts = await fetchPosts(1, {isRefresh: true});
 
         if (refreshedPosts) {
             setPostsWithReplies(refreshedPosts);
@@ -147,7 +147,7 @@ export const useFeedPosts = () => {
 
     useEffect(() => {
         const fetchInitialPosts = async () => {
-            const initialPosts = await fetchPosts(1, { isInitialLoad: true });
+            const initialPosts = await fetchPosts(1, {isInitialLoad: true});
 
             if (initialPosts) {
                 setPostsWithReplies(initialPosts);

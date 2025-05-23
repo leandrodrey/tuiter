@@ -3,7 +3,11 @@ import {useNavigate, useParams} from 'react-router-dom';
 import {Formik, Form, Field, ErrorMessage, type FormikHelpers} from 'formik';
 import {apiGetProfile, apiUpdateProfile} from '../../services/ProfileService.ts';
 import type {ProfileData} from '../../services/ProfileService.ts';
-import {userEditValidationSchema as validationSchema, type UserFormData, userEditEmptyValues as emptyValues} from '../../validations/userSchemas';
+import {
+    userEditValidationSchema as validationSchema,
+    type UserFormData,
+    userEditEmptyValues as emptyValues
+} from '../../validations/userSchemas';
 import {Loader, PageHeader} from '../../components/UI';
 import {useToast} from "../../hooks/context/useToast.ts";
 
@@ -81,12 +85,12 @@ const UserEditPage = (): JSX.Element => {
     };
 
     if (isLoading) {
-        return <Loader text="Loading user data..." fullScreen={true} />;
+        return <Loader text="Loading user data..." fullScreen={true}/>;
     }
 
     return (
         <div>
-            <PageHeader title="Edit Profile" />
+            <PageHeader title="Edit Profile"/>
 
             <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
                 {error && (

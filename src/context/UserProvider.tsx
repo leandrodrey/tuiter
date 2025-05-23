@@ -28,7 +28,8 @@ export const UserProvider = ({children}: { children: ReactNode }) => {
      * Updates the user information state and stores it in localStorage.
      * Handles authentication errors by logging out the user if needed.
      *
-     * @returns {Promise<UserInformation | null>} A promise that resolves with the user information or null if an error occurs
+     * @returns {Promise<UserInformation | null>} A promise that resolves with the user information or null if an error
+     *     occurs
      */
     const getUserInformation = useCallback(async (): Promise<UserInformation | null> => {
         if (!userToken) {
@@ -74,7 +75,8 @@ export const UserProvider = ({children}: { children: ReactNode }) => {
      * Handles errors by displaying appropriate messages and logging out if needed.
      *
      * @param {Partial<UserInformation>} userData - The user data to update
-     * @returns {Promise<UserInformation | null>} A promise that resolves with the updated user information or null if an error occurs
+     * @returns {Promise<UserInformation | null>} A promise that resolves with the updated user information or null if
+     *     an error occurs
      */
     const updateUserInformation = useCallback(async (userData: Partial<UserInformation>): Promise<UserInformation | null> => {
         if (!userToken) {

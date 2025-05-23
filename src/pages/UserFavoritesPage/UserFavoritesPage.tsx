@@ -14,7 +14,7 @@ import {useUser} from '../../hooks/context/useUser';
 const UserFavoritesPage = (): JSX.Element => {
     const [favorites, setFavorites] = useState<FavoriteUser[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const { userInformation } = useUser();
+    const {userInformation} = useUser();
 
     /**
      * Creates a user-specific key for storing favorites in localStorage.
