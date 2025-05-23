@@ -1,7 +1,6 @@
 import ApiService from './ApiService';
 import type {TuitData, TuitResponse} from '../types/apiTypes';
 
-// --- Create Tuit ---
 /**
  * Calls the API endpoint to create a new tuit.
  * @param data The payload containing tuit data (message).
@@ -16,7 +15,6 @@ export async function apiCreateTuit(data: TuitData) {
     });
 }
 
-// --- Get Tuit ---
 /**
  * Calls the API endpoint to get a specific tuit.
  * @param tuitId The ID of the tuit to retrieve.
@@ -30,7 +28,6 @@ export async function apiGetTuit(tuitId: number) {
     });
 }
 
-// --- Add Like to Tuit ---
 /**
  * Calls the API endpoint to add a like to a tuit.
  * @param tuitId The ID of the tuit to like.
@@ -44,7 +41,6 @@ export async function apiAddLikeToTuit(tuitId: number) {
     });
 }
 
-// --- Remove Like from Tuit ---
 /**
  * Calls the API endpoint to remove a like from a tuit.
  * @param tuitId The ID of the tuit to unlike.
@@ -58,7 +54,6 @@ export async function apiRemoveLikeFromTuit(tuitId: number) {
     });
 }
 
-// --- Get Tuit Replies ---
 /**
  * Calls the API endpoint to get replies to a tuit.
  * @param tuitId The ID of the tuit to get replies for.
@@ -72,7 +67,6 @@ export async function apiGetTuitReplies(tuitId: number) {
     });
 }
 
-// --- Add Reply to Tuit ---
 /**
  * Calls the API endpoint to add a reply to a tuit.
  * @param tuitId The ID of the tuit to reply to.

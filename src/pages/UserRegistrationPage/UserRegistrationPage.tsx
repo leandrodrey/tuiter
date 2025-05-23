@@ -1,8 +1,9 @@
-import {type JSX} from 'react';
+import {type JSX, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {type FormikHelpers} from 'formik';
 import {apiCreateUser, type UserData} from '../../services/UserService.ts';
 import {useToast} from "../../hooks/context/useToast.ts";
+import {useAuthContext} from "../../hooks/context/useAuthContext.ts";
 import type {RegistrationFormData} from "../../types/formTypes.ts";
 import RegistrationForm from '../../components/Registration/RegistrationForm';
 import {PageHeader} from '../../components/UI';
@@ -10,6 +11,13 @@ import {PageHeader} from '../../components/UI';
 const UserRegistrationPage = (): JSX.Element => {
     const navigate = useNavigate();
     const toast = useToast();
+    const {isAuthenticated} = useAuthContext();
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate('/', {replace: true});
+        }
+    }, [isAuthenticated, navigate]);
 
     const handleSubmit = async (
         values: RegistrationFormData,

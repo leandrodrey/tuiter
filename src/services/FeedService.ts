@@ -6,7 +6,6 @@ export interface FeedParams {
     only_parents?: boolean;
 }
 
-// --- Get Feed ---
 /**
  * Calls the API endpoint to get the user's feed.
  * @param params Optional parameters for pagination and filtering (page, only_parents).

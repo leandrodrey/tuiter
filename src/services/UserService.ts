@@ -15,7 +15,6 @@ export interface UserResponse {
     token: string;
 }
 
-// --- Create User ---
 /**
  * Calls the API endpoint to create a new user.
  * @param data The payload containing user data (name, email, password).
@@ -29,7 +28,6 @@ export async function apiCreateUser(data: UserData) {
     });
 }
 
-// --- Login ---
 /**
  * Calls the API endpoint to login a user.
  * @param data The payload containing user credentials (email, password).

@@ -1,13 +1,23 @@
 import {useAuthContext} from '../../hooks/context/useAuthContext.ts';
 import UserInfo from '../LoginForm/UserInfo';
-import {NavLink} from '../UI';
+import {NavLink, LoginButton} from '../UI';
 import {useLocation} from 'react-router-dom';
 
+/**
+ * Navigation component that displays the main navigation links and user authentication status.
+ * Shows different navigation options based on whether the user is authenticated.
+ * Uses the current location to highlight the active navigation link.
+ * @returns The navigation bar with links and authentication controls
+ */
 const Navbar = () => {
     const {isAuthenticated, userInformation, logout} = useAuthContext();
     const location = useLocation();
     console.log(userInformation)
-
+    /**
+     * Determines if a navigation link should be highlighted as active based on the current URL path.
+     * @param {string} path - The path to check against the current location
+     * @returns {boolean} True if the current location matches the provided path
+     */
     const isActive = (path: string): boolean => {
         return location.pathname === path;
     };
@@ -49,9 +59,7 @@ const Navbar = () => {
                                         <UserInfo userInformation={userInformation} onLogout={logout}/>
                                     </div>
                                 ) : (
-                                    <NavLink to="/login" isActive={isActive("/login")}>
-                                        Login
-                                    </NavLink>
+                                    <LoginButton isActive={isActive("/login")} />
                                 )}
                             </li>
                         </ul>

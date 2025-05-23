@@ -42,7 +42,7 @@ const FeedPage = (): JSX.Element => {
 
     return (
         <div>
-            <PageHeader title="Post Feed" />
+            <PageHeader title="Post Feed" subtitle="See what's happening in the community" />
 
             <InfiniteScroll
                 dataLength={postsWithReplies.length}

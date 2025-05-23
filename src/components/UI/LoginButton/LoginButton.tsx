@@ -2,11 +2,22 @@ import { type JSX } from 'react';
 import { Link } from 'react-router-dom';
 import { Avatar } from '../index';
 
+/**
+ * Interface defining the props for the LoginButton component.
+ */
 interface LoginButtonProps {
+    /** Whether the button should be displayed in its active state */
     isActive: boolean;
+    /** Optional additional CSS classes to apply to the button */
     className?: string;
 }
 
+/**
+ * Component that renders a login button with an avatar.
+ * The button links to the login page and can be styled differently based on its active state.
+ * @param {LoginButtonProps} props - The component props
+ * @returns A styled login button with an avatar
+ */
 const LoginButton = ({ isActive, className = '' }: LoginButtonProps): JSX.Element => {
     const linkClassName = `flex items-center px-3 py-2 text-sm font-medium rounded-full transition-colors ${
         isActive 
