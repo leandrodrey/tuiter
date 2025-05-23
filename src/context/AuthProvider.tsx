@@ -42,7 +42,7 @@ export const AuthProvider = ({children}: { children: ReactNode }): JSX.Element =
     }, [setUserTokenState, setIsAuthenticated, setIsLoadingAuth]);
 
     /**
-     * Sets the authentication token and updates authentication state.
+     * Sets the authentication token and updates the authentication state.
      * Stores the auth token in localStorage and sets the auth header.
      * @param {string} token - The authentication token to store
      */
@@ -58,7 +58,7 @@ export const AuthProvider = ({children}: { children: ReactNode }): JSX.Element =
     /**
      * Handles the login form submission process.
      * Attempts to authenticate the user with the provided credentials.
-     * On success, updates authentication state with the token.
+     * On success, updates the authentication state with the token.
      * On failure, displays an error message.
      *
      * @param {Object} values - The form values containing login credentials
