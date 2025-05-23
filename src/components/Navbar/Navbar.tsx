@@ -14,7 +14,6 @@ const Navbar = () => {
     const {isAuthenticated, logout} = useAuthContext();
     const {userInformation} = useUser();
     const location = useLocation();
-    console.log(userInformation)
     /**
      * Determines if a navigation link should be highlighted as active based on the current URL path.
      * @param {string} path - The path to check against the current location

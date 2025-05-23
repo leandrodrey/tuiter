@@ -16,22 +16,37 @@ import {useToast} from "../hooks/context/useToast.ts";
 
 setHttpAuthToken(initialAuthState.userToken);
 
+/**
+ * Authentication Provider component that manages authentication state and operations.
+ * Provides login, logout functionality and authentication state to child components.
+ * @param {Object} props - Component props
+ * @param {ReactNode} props.children - Child components that will have access to auth context
+ * @returns {JSX.Element} Provider component with auth context
+ */
 export const AuthProvider = ({children}: { children: ReactNode }) => {
     const [isLoadingAuth, setIsLoadingAuth] = useState<boolean>(initialAuthState.isLoadingAuth);
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(initialAuthState.isAuthenticated);
     const [userToken, setUserTokenState] = useState<string | null>(initialAuthState.userToken);
     const toast = useToast();
 
+    /**
+     * Handles user logout by clearing authentication state and token.
+     * Removes the auth token from localStorage and resets the auth header.
+     */
     const logout = useCallback((): void => {
         setUserTokenState(null);
         setIsAuthenticated(false);
 
         localStorage.removeItem(USER_TOKEN_KEY);
-        // UserProvider will handle removing user data from localStorage
         setHttpAuthToken(null);
         setIsLoadingAuth(false);
     }, [setUserTokenState, setIsAuthenticated, setIsLoadingAuth]);
 
+    /**
+     * Handles user login by setting authentication state and token.
+     * Stores the auth token in localStorage and sets the auth header.
+     * @param {string} token - The authentication token to store
+     */
     const login = (token: string): void => {
         setUserTokenState(token);
         setIsAuthenticated(true);
@@ -41,6 +56,20 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
         setIsLoadingAuth(false);
     };
 
+    /**
+     * Handles the login form submission process.
+     * Attempts to authenticate the user with the provided credentials.
+     * On success, stores user data and token, then updates authentication state.
+     * On failure, displays an error message.
+     *
+     * @param {Object} values - The form values containing login credentials
+     * @param {string} values.email - User's email address
+     * @param {string} values.password - User's password
+     * @param {Object} formikHelpers - Formik helper functions
+     * @param {Function} formikHelpers.setSubmitting - Function to update form submission state
+     * @param {Function} formikHelpers.resetForm - Function to reset the form
+     * @returns {Promise<void>} A promise that resolves when the login process completes
+     */
     const handleLoginSubmit = async (
         values: { email: string; password: string },
         formikHelpers: { setSubmitting: (isSubmitting: boolean) => void; resetForm: () => void }
@@ -50,7 +79,6 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
             const response = await apiLogin(values as Omit<UserData, 'name'>);
             const token = response.token;
 
-            // Store basic user data in localStorage for UserProvider to use
             localStorage.setItem(USER_DATA_KEY, JSON.stringify({
                 name: response.name,
                 email: response.email,
@@ -73,13 +101,20 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
         }
     };
 
+    /**
+     * Effect to update loading state when token changes.
+     * Sets loading to false when there's no token.
+     */
     useEffect(() => {
         if (!userToken) {
             setIsLoadingAuth(false);
         }
     }, [userToken]);
 
-    // Context value
+    /**
+     * The authentication context value provided to consumers.
+     * Contains all authentication state and functions.
+     */
     const contextValue: AuthContextType = {
         isLoadingAuth,
         isAuthenticated,

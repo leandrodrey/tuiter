@@ -10,12 +10,26 @@ import type {UserContextType, UserInformation} from "../types/userTypes.ts";
 import {useAuthContext} from "../hooks/context/useAuthContext.ts";
 import {useToast} from "../hooks/context/useToast.ts";
 
+/**
+ * User Provider component that manages user information state and operations.
+ * Provides user data fetching and updating functionality to child components.
+ * @param {Object} props - Component props
+ * @param {ReactNode} props.children - Child components that will have access to user context
+ * @returns {JSX.Element} Provider component with user context
+ */
 export const UserProvider = ({children}: { children: ReactNode }) => {
     const [isLoadingUser, setIsLoadingUser] = useState<boolean>(initialUserState.isLoadingUser);
     const [userInformation, setUserInformation] = useState<UserInformation | null>(initialUserState.userInformation);
     const {userToken, logout} = useAuthContext();
     const toast = useToast();
 
+    /**
+     * Fetches the current user's information from the API.
+     * Updates the user information state and stores it in localStorage.
+     * Handles authentication errors by logging out the user if needed.
+     *
+     * @returns {Promise<UserInformation | null>} A promise that resolves with the user information or null if an error occurs
+     */
     const getUserInformation = useCallback(async (): Promise<UserInformation | null> => {
         if (!userToken) {
             console.warn("No user token available to fetch user information.");
@@ -54,6 +68,14 @@ export const UserProvider = ({children}: { children: ReactNode }) => {
         }
     }, [userToken, logout]);
 
+    /**
+     * Updates the current user's information via the API.
+     * Merges the new data with existing user information and updates state and localStorage.
+     * Handles errors by displaying appropriate messages and logging out if needed.
+     *
+     * @param {Partial<UserInformation>} userData - The user data to update
+     * @returns {Promise<UserInformation | null>} A promise that resolves with the updated user information or null if an error occurs
+     */
     const updateUserInformation = useCallback(async (userData: Partial<UserInformation>): Promise<UserInformation | null> => {
         if (!userToken) {
             console.warn("No user token available to update user information.");
@@ -100,6 +122,10 @@ export const UserProvider = ({children}: { children: ReactNode }) => {
         }
     }, [userToken, userInformation, logout, toast]);
 
+    /**
+     * Effect to load user data when token is available but user information is not.
+     * Automatically fetches user information when needed.
+     */
     useEffect(() => {
         const loadUserData = async () => {
             if (userToken && !userInformation) {
@@ -110,7 +136,10 @@ export const UserProvider = ({children}: { children: ReactNode }) => {
         loadUserData();
     }, [userToken, userInformation, getUserInformation]);
 
-    // Clear user data when user logs out (userToken becomes null)
+    /**
+     * Effect to clear user data when the user logs out.
+     * Removes user information from state and localStorage when token becomes null.
+     */
     useEffect(() => {
         if (!userToken) {
             setUserInformation(null);
@@ -118,7 +147,10 @@ export const UserProvider = ({children}: { children: ReactNode }) => {
         }
     }, [userToken]);
 
-    // Context value
+    /**
+     * The user context value provided to consumers.
+     * Contains all user state and functions.
+     */
     const contextValue: UserContextType = {
         isLoadingUser,
         userInformation,
