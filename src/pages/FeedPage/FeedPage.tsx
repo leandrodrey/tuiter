@@ -1,104 +1,78 @@
-import {useEffect, useState, type JSX} from 'react';
-import {apiGetFeed} from '../../services/FeedService.ts';
-import {apiAddLikeToTuit, apiRemoveLikeFromTuit} from '../../services/TuitsService.ts';
-import {FAVORITE_USERS_KEY} from '../../constants/storageConstants';
-import type {Post} from '../../types/postTypes';
+import {type JSX} from 'react';
 import PostList from '../../components/Post/PostList';
+import {Loader, PageHeader} from '../../components/UI';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import {usePostContext} from './hooks/usePostContext.ts';
 
+/**
+ * FeedPage component that displays the post feed
+ * Uses the post context provided by FeedPageLayout
+ */
 const FeedPage = (): JSX.Element => {
-    const [posts, setPosts] = useState<Post[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
+    const {
+        posts,
+        loading,
+        error,
+        hasMore,
+        initialLoading,
+        fetchMorePosts,
+        refreshFeed
+    } = usePostContext();
 
-    useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                setLoading(true);
-                const response = await apiGetFeed({page: 1});
+    if (initialLoading) return <Loader text="Loading posts..." fullScreen={true}/>;
 
-                // Transform the response to match our Post interface with additional properties
-                const transformedPosts = response.map(tuit => ({
-                    ...tuit,
-                    author: `User ${tuit.user_id}`, // In a real app, you'd fetch user details
-                    avatar_url: 'https://via.placeholder.com/50',
-                    likes_count: 0, // In a real app, this would come from the API
-                    is_liked: false // In a real app, this would come from the API
-                }));
-
-                setPosts(transformedPosts);
-            } catch (err) {
-                setError('Failed to load posts. Please try again later.');
-                console.error('Error fetching posts:', err);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchPosts();
-    }, []);
-
-    const handleLikePost = async (postId: string) => {
-        try {
-            // Check if the post is already liked
-            const post = posts.find(p => p.id === postId);
-
-            if (post && post.is_liked) {
-                // Unlike the post
-                await apiRemoveLikeFromTuit(postId);
-
-                setPosts(prevPosts =>
-                    prevPosts.map(p =>
-                        p.id === postId
-                            ? {...p, likes_count: (p.likes_count || 0) - 1, is_liked: false}
-                            : p
-                    )
-                );
-            } else {
-                // Like the post
-                await apiAddLikeToTuit(postId);
-
-                setPosts(prevPosts =>
-                    prevPosts.map(p =>
-                        p.id === postId
-                            ? {...p, likes_count: (p.likes_count || 0) + 1, is_liked: true}
-                            : p
-                    )
-                );
-            }
-        } catch (err) {
-            console.error('Error toggling like on post:', err);
-        }
-    };
-
-    const handleAddToFavorites = (author: string | undefined, avatarUrl: string | undefined) => {
-        // Get existing favorites from localStorage
-        const existingFavorites = JSON.parse(localStorage.getItem(FAVORITE_USERS_KEY) || '[]');
-
-        const isAlreadyFavorite = existingFavorites.some(
-            (favorite: { author: string }) => favorite.author === author
+    if (error) {
+        return (
+            <div className="p-4 text-center">
+                <p className="text-red-500 dark:text-red-400 mb-4">{error}</p>
+                <button
+                    onClick={refreshFeed}
+                    className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md transition-colors"
+                    disabled={loading}
+                >
+                    {loading ? 'Retrying...' : 'Retry'}
+                </button>
+            </div>
         );
-
-        if (!isAlreadyFavorite) {
-            // Add to favorites
-            const updatedFavorites = [...existingFavorites, {author, avatar_url: avatarUrl}];
-            localStorage.setItem(FAVORITE_USERS_KEY, JSON.stringify(updatedFavorites));
-            alert(`${author} added to favorites!`);
-        } else {
-            alert(`${author} is already in your favorites!`);
-        }
-    };
-
-    if (loading) return <div>Loading posts...</div>;
-    if (error) return <div>{error}</div>;
+    }
 
     return (
-        <div className="feed-container">
-            <h1>Post Feed</h1>
-            <PostList
-                posts={posts}
-                onLike={handleLikePost}
-                onAddToFavorites={handleAddToFavorites}
-            />
+        <div>
+            <PageHeader title="Post Feed" subtitle="See what's happening in the community"/>
+
+            <InfiniteScroll
+                dataLength={posts.length}
+                next={fetchMorePosts}
+                hasMore={hasMore}
+                loader={
+                    <div className="text-center py-4 animate-pulse transition-opacity duration-300 ease-in-out">
+                        <Loader text="Loading more posts..." spinnerSize="md" spinnerColor="primary"/>
+                    </div>
+                }
+                endMessage={
+                    <p className="text-center text-gray-500 dark:text-gray-400 my-8">
+                        <b>You've seen all posts!</b>
+                    </p>
+                }
+                scrollThreshold={0.8}
+                className="overflow-hidden"
+                style={{scrollBehavior: 'smooth'}}
+                pullDownToRefresh
+                pullDownToRefreshThreshold={50}
+                pullDownToRefreshContent={
+                    <h3 className="text-center text-gray-500 dark:text-gray-400 my-4">
+                        &#8595; Pull down to refresh
+                    </h3>
+                }
+                releaseToRefreshContent={
+                    <h3 className="text-center text-gray-500 dark:text-gray-400 my-4">
+                        &#8593; Release to refresh
+                    </h3>
+                }
+                refreshFunction={refreshFeed}
+            >
+                <PostList />
+            </InfiniteScroll>
         </div>
     );
 };

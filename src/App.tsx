@@ -1,27 +1,26 @@
-import './App.css'
 import {AuthProvider} from './context/AuthProvider.tsx';
+import {UserProvider} from './context/UserProvider.tsx';
 import {ToastProvider} from './context/ToastProvider.tsx';
 import AppRouter from "./routes/AppRouter.tsx";
+import Layout from "./layouts/Layout.tsx";
 
+/**
+ * Main application component that sets up the app structure.
+ * Provides authentication and toast notification contexts to the entire application.
+ * Uses the Layout component to provide a consistent structure across the application.
+ * @returns The rendered application with all providers and layout components
+ */
 function App() {
     return (
-        <AuthProvider>
-            <ToastProvider>
-                <div className="app-container">
-                    <header className="app-header">
-                        <h1>Tuiter App</h1>
-                    </header>
-
-                    <main className="app-content">
+        <ToastProvider>
+            <AuthProvider>
+                <UserProvider>
+                    <Layout>
                         <AppRouter/>
-                    </main>
-
-                    <footer className="app-footer">
-                        <p>&copy; {new Date().getFullYear()} Tuiter App - A social media platform</p>
-                    </footer>
-                </div>
-            </ToastProvider>
-        </AuthProvider>
+                    </Layout>
+                </UserProvider>
+            </AuthProvider>
+        </ToastProvider>
     )
 }
 

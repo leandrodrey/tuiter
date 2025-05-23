@@ -1,27 +1,31 @@
 import {type JSX} from 'react';
-import type {Post} from '../../types/postTypes';
 import PostCard from './PostCard';
+import {EmptyMessage} from '../../components/UI';
+import {usePostContext} from '../../pages/FeedPage/hooks/usePostContext.ts';
 
-interface PostListProps {
-    posts: Post[];
-    onLike: (postId: string) => Promise<void>;
-    onAddToFavorites: (author: string | undefined, avatarUrl: string | undefined) => void;
-}
+/**
+ * Component that renders a list of posts with their replies.
+ * Displays a message when no posts are available.
+ * Uses the PostContext to access posts.
+ *
+ * @returns A list of posts or a message indicating no posts are available
+ */
+const PostList = (): JSX.Element => {
+    const {posts} = usePostContext();
 
-const PostList = ({posts, onLike, onAddToFavorites}: PostListProps): JSX.Element => {
     if (posts.length === 0) {
-        return <p>No posts available.</p>;
+        return <EmptyMessage />;
     }
 
     return (
-        <div className="posts-list">
-            {posts.map(post => (
-                <PostCard
-                    key={post.id}
-                    post={post}
-                    onLike={onLike}
-                    onAddToFavorites={onAddToFavorites}
-                />
+        <div className="space-y-4 w-full max-w-2xl mx-auto">
+            {posts.map(({post, replies}) => (
+                <div key={post.id}>
+                    <PostCard
+                        post={post}
+                        replies={replies}
+                    />
+                </div>
             ))}
         </div>
     );

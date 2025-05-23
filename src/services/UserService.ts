@@ -1,21 +1,6 @@
 import ApiService from './ApiService';
+import type { UserData, UserResponse } from '../types/apiTypes';
 
-export interface UserData {
-    name?: string;
-    email: string;
-    password: string;
-
-    [key: string]: string | undefined;
-}
-
-export interface UserResponse {
-    id: string;
-    name: string;
-    email: string;
-    token: string;
-}
-
-// --- Create User ---
 /**
  * Calls the API endpoint to create a new user.
  * @param data The payload containing user data (name, email, password).
@@ -29,7 +14,6 @@ export async function apiCreateUser(data: UserData) {
     });
 }
 
-// --- Login ---
 /**
  * Calls the API endpoint to login a user.
  * @param data The payload containing user credentials (email, password).

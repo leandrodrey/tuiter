@@ -1,58 +1,49 @@
 import {type JSX} from 'react';
-import {Formik, Form, Field, ErrorMessage, type FormikHelpers} from 'formik';
-import {
-    loginValidationSchema as validationSchema,
-    loginInitialValues as initialValues
-} from '../../validations/userSchemas';
-import type {LoginFormData} from "../../types/formTypes.ts";
+import {Field, ErrorMessage, useFormikContext} from 'formik';
 
-interface LoginFormFieldsProps {
-    onSubmit: (values: LoginFormData, formikHelpers: FormikHelpers<LoginFormData>) => Promise<void>;
-}
+/**
+ * Login form fields component
+ * Displays email and password fields
+ *
+ * @returns {JSX.Element} The login form fields component
+ */
+const LoginFormFields = (): JSX.Element => {
+    const {isSubmitting} = useFormikContext();
 
-const LoginFormFields = ({onSubmit}: LoginFormFieldsProps): JSX.Element => {
     return (
-        <div className="login-form-container">
-            <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={onSubmit}
-            >
-                {({isSubmitting}) => (
-                    <Form className="login-form">
-                        <div className="form-group">
-                            <label htmlFor="email">Email</label>
-                            <Field
-                                type="email"
-                                id="email"
-                                name="email"
-                                disabled={isSubmitting}
-                            />
-                            <ErrorMessage name="email" component="div" className="error-message"/>
-                        </div>
+        <>
+            <div className="relative">
+                <Field
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Correo electrónico"
+                    disabled={isSubmitting}
+                    className="w-full p-2 sm:p-3 text-sm sm:text-base bg-gray-900 rounded-md border border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 text-white placeholder-gray-500 transition-colors"
+                />
+                <ErrorMessage name="email">
+                    {(msg) => (
+                        <div className="absolute -bottom-5 left-0 text-red-500 text-xs">{msg}</div>
+                    )}
+                </ErrorMessage>
+            </div>
 
-                        <div className="form-group">
-                            <label htmlFor="password">Password</label>
-                            <Field
-                                type="password"
-                                id="password"
-                                name="password"
-                                disabled={isSubmitting}
-                            />
-                            <ErrorMessage name="password" component="div" className="error-message"/>
-                        </div>
-
-                        <button
-                            type="submit"
-                            disabled={isSubmitting}
-                            className="submit-button"
-                        >
-                            {isSubmitting ? 'Logging in...' : 'Login'}
-                        </button>
-                    </Form>
-                )}
-            </Formik>
-        </div>
+            <div className="relative mt-2">
+                <Field
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Contraseña"
+                    disabled={isSubmitting}
+                    className="w-full p-2 sm:p-3 text-sm sm:text-base bg-gray-900 rounded-md border border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 text-white placeholder-gray-500 transition-colors"
+                />
+                <ErrorMessage name="password">
+                    {(msg) => (
+                        <div className="absolute -bottom-5 left-0 text-red-500 text-xs">{msg}</div>
+                    )}
+                </ErrorMessage>
+            </div>
+        </>
     );
 };
 

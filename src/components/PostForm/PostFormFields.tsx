@@ -7,18 +7,23 @@ interface PostFormFieldsProps {
 
 const PostFormFields = ({isSubmitting}: PostFormFieldsProps): JSX.Element => {
     return (
-        <div className="form-group">
-            <label htmlFor="message">What's on your mind?</label>
+        <>
             <Field
                 as="textarea"
                 id="message"
                 name="message"
-                rows={6}
-                placeholder="Write your post here..."
+                className="bg-transparent text-gray-400 font-medium text-lg w-full"
+                rows="2"
+                cols="50"
+                placeholder="What's happening?"
                 disabled={isSubmitting}
             />
-            <ErrorMessage name="message" component="div" className="error-message"/>
-        </div>
+            <ErrorMessage
+                name="message"
+                component="div"
+                className="mt-1 text-sm text-red-600"
+            />
+        </>
     );
 };
 

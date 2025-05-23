@@ -1,20 +1,6 @@
 import ApiService from './ApiService';
+import type { ProfileData, ProfileResponse } from '../types/apiTypes';
 
-export interface ProfileData {
-    name?: string;
-    avatar_url?: string;
-    password?: string;
-
-    [key: string]: string | undefined | unknown;
-}
-
-export interface ProfileResponse {
-    id: string;
-    name: string;
-    avatar_url?: string;
-}
-
-// --- Get Profile ---
 /**
  * Calls the API endpoint to get the user's profile.
  * @returns A promise that resolves with the user profile response from the API.
@@ -26,7 +12,6 @@ export async function apiGetProfile() {
     });
 }
 
-// --- Update Profile ---
 /**
  * Calls the API endpoint to update the user's profile.
  * @param data The payload containing profile data (name, avatar_url, password).

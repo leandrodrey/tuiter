@@ -1,65 +1,51 @@
-import {useState, type JSX} from 'react';
-import {type FormikHelpers} from 'formik';
-import {apiLogin, type UserData} from '../../services/UserService';
-import {useAuthContext} from '../../hooks/useAuthContext.ts';
+import {type JSX} from 'react';
 import './LoginForm.css';
-import {useToast} from "../../hooks/useToast.ts";
-import type {LoginFormData} from "../../types/formTypes.ts";
-import UserInfo from './UserInfo';
 import LoginFormFields from './LoginFormFields';
-import LoginToggleButton from './LoginToggleButton';
+import {SubmitButton, RegistrationLink} from '../UI';
+import {Formik, Form, type FormikHelpers} from 'formik';
+import type {LoginFormData} from "../../types/formTypes.ts";
+import type {ObjectSchema} from "yup";
 
-const LoginForm = (): JSX.Element => {
-    const {isAuthenticated, userInformation, login, logout} = useAuthContext();
-    const toast = useToast();
-    const [isLoginFormVisible, setIsLoginFormVisible] = useState(false);
+interface LoginFormProps {
+    initialValues: LoginFormData;
+    validationSchema: ObjectSchema<LoginFormData>;
+    onSubmit: (values: LoginFormData, formikHelpers: FormikHelpers<LoginFormData>) => Promise<void>;
+}
 
-    const handleSubmit = async (values: LoginFormData, {setSubmitting, resetForm}: FormikHelpers<LoginFormData>) => {
-        try {
-            const response = await apiLogin(values as Omit<UserData, 'name'>);
-            const token = response.token;
-            login(token, {
-                name: response.name,
-                email: response.email
-            });
-            toast.success(`Welcome back, ${response.name}!`);
-            setIsLoginFormVisible(false);
-            resetForm();
-        } catch (err: unknown) {
-            console.error('Login error:', err);
-            const errorMessage = err instanceof Error
-                ? err.message
-                : (err as {
-                response?: { data?: { message?: string } }
-            })?.response?.data?.message || 'Login failed. Please try again.';
-            toast.error(errorMessage);
-        } finally {
-            setSubmitting(false);
-        }
-    };
-    const toggleLoginForm = () => {
-        setIsLoginFormVisible(!isLoginFormVisible);
-    };
-
+/**
+ * Component that renders a login form or a message if the user is already authenticated.
+ * Uses Formik for form state management and validation.
+ *
+ * @param {LoginFormProps} props - Component props
+ * @returns {JSX.Element} A login form or a message indicating the user is logged in
+ */
+const LoginForm = ({
+    initialValues,
+    validationSchema,
+    onSubmit,
+}: LoginFormProps): JSX.Element => {
     return (
-        <div className="login-container">
-            {isAuthenticated ? (
-                <UserInfo
-                    userInformation={userInformation}
-                    onLogout={logout}
-                />
-            ) : (
-                <>
-                    <LoginToggleButton
-                        isLoginFormVisible={isLoginFormVisible}
-                        onToggle={toggleLoginForm}
-                    />
+        <div className="flex justify-center w-full">
+            <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={onSubmit}
+            >
+                {({isSubmitting}) => (
+                    <Form className="w-full flex flex-col space-y-4 sm:space-y-5">
+                        <LoginFormFields/>
 
-                    {isLoginFormVisible && (
-                        <LoginFormFields onSubmit={handleSubmit}/>
-                    )}
-                </>
-            )}
+                        <SubmitButton
+                            isSubmitting={isSubmitting}
+                            loadingText="Iniciando sesión..."
+                        >
+                            Iniciar sesión
+                        </SubmitButton>
+
+                        <RegistrationLink/>
+                    </Form>
+                )}
+            </Formik>
         </div>
     );
 };

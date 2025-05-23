@@ -1,10 +1,4 @@
 import type {TuitResponse} from './apiTypes';
 
-// Extended post with UI-specific properties
-export interface Post extends TuitResponse {
-    // Additional properties for UI display
-    author?: string;
-    avatar_url?: string;
-    likes_count?: number;
-    is_liked?: boolean;
-}
+// Post type is now directly using TuitResponse since the API provides all needed fields
+export type Post = TuitResponse;

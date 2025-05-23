@@ -1,5 +1,4 @@
 import {Routes, Route} from 'react-router-dom';
-import HomePage from "../pages/HomePage/HomePage.tsx";
 import NotFoundPage from "../pages/NotFoundPage/NotFoundPage.tsx";
 import FeedPage from "../pages/FeedPage/FeedPage.tsx";
 import CreatePostPage from "../pages/CreatePostPage/CreatePostPage.tsx";
@@ -7,24 +6,31 @@ import UserRegistrationPage from "../pages/UserRegistrationPage/UserRegistration
 import UserEditPage from "../pages/UserEditPage/UserEditPage.tsx";
 import UserFavoritesPage from "../pages/UserFavoritesPage/UserFavoritesPage.tsx";
 import PostReplyPage from "../pages/PostReplyPage/PostReplyPage.tsx";
+import PostReplyLayout from "../pages/PostReplyPage/layouts/PostReplyLayout.tsx";
 import LoginPage from "../pages/LoginPage/LoginPage.tsx";
-import Navbar from "../components/Navbar/Navbar.tsx";
 import AuthGuard from "./AuthGuard.tsx";
+import FeedPageLayout from "../pages/FeedPage/layouts/FeedPageLayout.tsx";
 
 const AppRouter = () => {
     return (
         <>
-            <Navbar/>
-
             <Routes>
                 <Route path="/" element={
-                    <HomePage/>
+                    <AuthGuard>
+                        <FeedPageLayout>
+                            <FeedPage/>
+                        </FeedPageLayout>
+                    </AuthGuard>
                 }/>
                 <Route path="/login" element={
                     <LoginPage/>
                 }/>
                 <Route path="/feed" element={
-                    <FeedPage/>
+                    <AuthGuard>
+                        <FeedPageLayout>
+                            <FeedPage/>
+                        </FeedPageLayout>
+                    </AuthGuard>
                 }/>
                 <Route path="/posts/create" element={
                     <AuthGuard>
@@ -33,7 +39,9 @@ const AppRouter = () => {
                 }/>
                 <Route path="/posts/:postId/reply" element={
                     <AuthGuard>
-                        <PostReplyPage/>
+                        <PostReplyLayout>
+                            <PostReplyPage/>
+                        </PostReplyLayout>
                     </AuthGuard>
                 }/>
                 <Route path="/users/register" element={

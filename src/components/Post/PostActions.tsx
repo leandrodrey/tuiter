@@ -1,28 +1,54 @@
 import {type JSX} from 'react';
 import type {Post} from '../../types/postTypes';
+import {usePostActions} from '../../hooks/post-replies/usePostActions';
+import {
+    CommentButton,
+    RetweetButton,
+    LikeButton
+} from './PostActionButtons';
 
 interface PostActionsProps {
     post: Post;
-    onLike: (postId: string) => Promise<void>;
+    onLike: (postId: number) => Promise<void>;
+    onToggleReplies?: (postId: number) => void;
 }
 
-const PostActions = ({post, onLike}: PostActionsProps): JSX.Element => {
-    const handleLike = async () => {
-        await onLike(post.id);
-    };
+/**
+ * Post actions component that displays action buttons for a post
+ * Uses individual button components for each action
+ *
+ * @param {Object} props - Component props
+ * @param {Post} props.post - The post to display actions for
+ * @param {Function} props.onLike - Function to call when the like button is clicked
+ * @param {Function} props.onToggleReplies - Optional function to call when the retweet button is clicked
+ * @returns {JSX.Element} The post actions component
+ */
+const PostActions = ({post, onLike, onToggleReplies}: PostActionsProps): JSX.Element => {
+    const {
+        handleLike,
+        handleToggleReplies,
+        isLiked,
+        likesCount,
+        repliesCount
+    } = usePostActions(post, onLike, onToggleReplies);
 
     return (
-        <div className="post-actions">
-            <button
+        <div className="w-full flex justify-between">
+            <CommentButton
+                postId={post.id}
+                repliesCount={repliesCount}
+                parentId={post.parent_id}
+            />
+
+            <RetweetButton
+                onClick={handleToggleReplies}
+            />
+
+            <LikeButton
                 onClick={handleLike}
-                disabled={post.is_liked}
-                className={`like-button ${post.is_liked ? 'liked' : ''}`}
-            >
-                {post.is_liked ? 'Liked' : 'Like'} ({post.likes_count})
-            </button>
-            <a href={`/posts/${post.id}/reply`} className="reply-link">
-                Reply
-            </a>
+                isLiked={isLiked}
+                likesCount={likesCount}
+            />
         </div>
     );
 };
