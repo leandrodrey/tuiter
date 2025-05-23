@@ -8,65 +8,84 @@ interface RegistrationFormFieldsProps {
 const RegistrationFormFields = ({isSubmitting}: RegistrationFormFieldsProps): JSX.Element => {
     return (
         <>
-            <div>
-                <label htmlFor="username" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Username</label>
+            <div className="relative">
                 <Field
                     type="text"
                     id="username"
                     name="username"
+                    placeholder="Username"
                     disabled={isSubmitting}
-                    className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                    className="w-full p-2 sm:p-3 text-sm sm:text-base bg-gray-900 rounded-md border border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 text-white placeholder-gray-500 transition-colors"
                 />
-                <ErrorMessage name="username" component="div" className="mt-1 text-red-500 dark:text-red-400 text-sm"/>
+                <ErrorMessage name="username">
+                    {(msg) => (
+                        <div className="absolute -bottom-5 left-0 text-red-500 text-xs">{msg}</div>
+                    )}
+                </ErrorMessage>
             </div>
 
-            <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+            <div className="relative">
                 <Field
                     type="email"
                     id="email"
                     name="email"
+                    placeholder="Email"
                     disabled={isSubmitting}
-                    className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                    className="w-full p-2 sm:p-3 text-sm sm:text-base bg-gray-900 rounded-md border border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 text-white placeholder-gray-500 transition-colors"
                 />
-                <ErrorMessage name="email" component="div" className="mt-1 text-red-500 dark:text-red-400 text-sm"/>
+                <ErrorMessage name="email">
+                    {(msg) => (
+                        <div className="absolute -bottom-5 left-0 text-red-500 text-xs">{msg}</div>
+                    )}
+                </ErrorMessage>
             </div>
 
-            <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password</label>
+            <div className="relative">
                 <Field
                     type="password"
                     id="password"
                     name="password"
+                    placeholder="Password"
                     disabled={isSubmitting}
-                    className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                    className="w-full p-2 sm:p-3 text-sm sm:text-base bg-gray-900 rounded-md border border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 text-white placeholder-gray-500 transition-colors"
                 />
-                <ErrorMessage name="password" component="div" className="mt-1 text-red-500 dark:text-red-400 text-sm"/>
+                <ErrorMessage name="password">
+                    {(msg) => (
+                        <div className="absolute -bottom-5 left-0 text-red-500 text-xs">{msg}</div>
+                    )}
+                </ErrorMessage>
             </div>
 
-            <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Confirm Password</label>
+            <div className="relative">
                 <Field
                     type="password"
                     id="confirmPassword"
                     name="confirmPassword"
+                    placeholder="Confirm Password"
                     disabled={isSubmitting}
-                    className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                    className="w-full p-2 sm:p-3 text-sm sm:text-base bg-gray-900 rounded-md border border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 text-white placeholder-gray-500 transition-colors"
                 />
-                <ErrorMessage name="confirmPassword" component="div" className="mt-1 text-red-500 dark:text-red-400 text-sm"/>
+                <ErrorMessage name="confirmPassword">
+                    {(msg) => (
+                        <div className="absolute -bottom-5 left-0 text-red-500 text-xs">{msg}</div>
+                    )}
+                </ErrorMessage>
             </div>
 
-            <div>
-                <label htmlFor="avatar_url" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Avatar URL (optional)</label>
+            <div className="relative">
                 <Field
                     type="text"
                     id="avatar_url"
                     name="avatar_url"
+                    placeholder="Avatar URL (optional)"
                     disabled={isSubmitting}
-                    placeholder="https://example.com/avatar.jpg"
-                    className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                    className="w-full p-2 sm:p-3 text-sm sm:text-base bg-gray-900 rounded-md border border-gray-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 text-white placeholder-gray-500 transition-colors"
                 />
-                <ErrorMessage name="avatar_url" component="div" className="mt-1 text-red-500 dark:text-red-400 text-sm"/>
+                <ErrorMessage name="avatar_url">
+                    {(msg) => (
+                        <div className="absolute -bottom-5 left-0 text-red-500 text-xs">{msg}</div>
+                    )}
+                </ErrorMessage>
             </div>
         </>
     );

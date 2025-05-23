@@ -1,12 +1,12 @@
 import {type JSX, useEffect} from 'react';
-import {useLocation, useNavigate} from 'react-router-dom';
+import {type Location, type NavigateFunction, useLocation, useNavigate} from 'react-router-dom';
 import LoginForm from '../../components/LoginForm/LoginForm.tsx';
 import {useAuthContext} from "../../hooks/context/useAuthContext.ts";
 
 const LoginPage = (): JSX.Element => {
     const {isAuthenticated} = useAuthContext();
-    const location = useLocation();
-    const navigate = useNavigate();
+    const location: Location = useLocation();
+    const navigate: NavigateFunction = useNavigate();
 
     const from = location.state?.from?.pathname || '/';
 
