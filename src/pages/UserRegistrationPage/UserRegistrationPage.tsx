@@ -1,13 +1,18 @@
 import {type JSX, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {type FormikHelpers} from 'formik';
-import {apiCreateUser, type UserData} from '../../services/UserService.ts';
 import {useToast} from "../../hooks/context/useToast.ts";
 import {useAuthContext} from "../../hooks/context/useAuthContext.ts";
-import type {RegistrationFormData} from "../../types/formTypes.ts";
+import {useUserRegistration} from "../../hooks/user-registration/useUserRegistration";
 import RegistrationForm from '../../components/Registration/RegistrationForm';
 import {PageHeader} from '../../components/UI';
 
+/**
+ * Page component for user registration.
+ * Displays a registration form and handles form submission via the useUserRegistration hook.
+ * Redirects authenticated users to the home page.
+ *
+ * @returns {JSX.Element} The rendered registration page
+ */
 const UserRegistrationPage = (): JSX.Element => {
     const navigate = useNavigate();
     const toast = useToast();
@@ -19,40 +24,12 @@ const UserRegistrationPage = (): JSX.Element => {
         }
     }, [isAuthenticated, navigate]);
 
-    const handleSubmit = async (
-        values: RegistrationFormData,
-        {setSubmitting}: FormikHelpers<RegistrationFormData>
-    ) => {
-        try {
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const {confirmPassword, username, ...rest} = values;
-
-            const userData: UserData = {
-                name: username,
-                ...rest
-            };
-
-            await apiCreateUser(userData);
-
-            toast.success('Registration successful! Please log in.');
-            navigate('/login');
-        } catch (err: unknown) {
-            console.error('Registration error:', err);
-            const errorMessage = err instanceof Error
-                ? err.message
-                : (err as {
-                response?: { data?: { message?: string } }
-            })?.response?.data?.message || 'Registration failed. Please try again.';
-            toast.error(errorMessage);
-        } finally {
-            setSubmitting(false);
-        }
-    };
+    const {handleSubmit} = useUserRegistration(navigate, toast);
 
     return (
         <div>
-            <PageHeader title="Create an Account" />
-            <RegistrationForm onSubmit={handleSubmit} />
+            <PageHeader title="Create an Account" subtitle="It's free and always will be."/>
+            <RegistrationForm onSubmit={handleSubmit}/>
         </div>
     );
 };
