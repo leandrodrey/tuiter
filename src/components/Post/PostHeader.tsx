@@ -1,6 +1,6 @@
 import {type JSX} from 'react';
 import type {Post} from '../../types/postTypes';
-import {Avatar} from '../../components/UI';
+import {Avatar, FavoriteButton} from '../../components/UI';
 
 interface PostHeaderProps {
     post: Post;
@@ -29,12 +29,12 @@ const PostHeader = ({post, onAddToFavorites}: PostHeaderProps): JSX.Element => {
                     </span>
                 </div>
             </div>
-            <button
-                onClick={handleAddToFavorites}
-                className="text-sm text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 ml-2"
-            >
-                Add to Favorites
-            </button>
+            <FavoriteButton
+                author={post.author}
+                avatarUrl={post.avatar_url}
+                onAddToFavorites={onAddToFavorites}
+                className="ml-2"
+            />
         </div>
     );
 };
