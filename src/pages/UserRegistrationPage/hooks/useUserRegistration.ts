@@ -1,10 +1,18 @@
-import {useCallback} from 'react';
+import {useCallback, useState} from 'react';
 import type {NavigateFunction} from 'react-router-dom';
 import {type FormikHelpers} from 'formik';
 import {apiCreateUser} from '../../../services/UserService.ts';
 import type {UserData} from '../../../types/apiTypes.ts';
 import type {ToastContextType} from '../../../context/ToastContext.ts';
 import type {RegistrationFormData} from "../../../types/formTypes.ts";
+import {registrationInitialValues} from '../../../validations/userSchemas.ts';
+
+interface UserRegistrationHookResult {
+    initialValues: RegistrationFormData;
+    isLoading: boolean;
+    error: string | null;
+    handleSubmit: (values: RegistrationFormData, formikHelpers: FormikHelpers<RegistrationFormData>) => Promise<void>;
+}
 
 /**
  * Custom hook for handling user registration form submission.
@@ -12,12 +20,15 @@ import type {RegistrationFormData} from "../../../types/formTypes.ts";
  *
  * @param {NavigateFunction} navigate - React Router's navigate function for redirection
  * @param {ToastContextType} toast - Toast context for displaying notifications
- * @returns {Function} handleSubmit function for registration form submission
+ * @returns {UserRegistrationHookResult} Object containing initialValues, isLoading, error, and handleSubmit function
  */
 export const useUserRegistration = (
     navigate: NavigateFunction,
     toast: ToastContextType
-): Function => {
+): UserRegistrationHookResult => {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
+
     /**
      * Handles the registration form submission.
      * Processes form data, calls the API to create a user, and handles success/error states.
@@ -31,11 +42,16 @@ export const useUserRegistration = (
         {setSubmitting}: FormikHelpers<RegistrationFormData>
     ) => {
         try {
+            setIsLoading(true);
+            setError(null);
             const {confirmPassword, username, ...rest} = values;
 
+            // Explicitly include avatar_url to ensure it's sent to the API
             const userData: UserData = {
                 name: username,
-                ...rest
+                email: rest.email,
+                password: rest.password,
+                avatar_url: rest.avatar_url
             };
 
             await apiCreateUser(userData);
@@ -49,11 +65,18 @@ export const useUserRegistration = (
                 : (err as {
                 response?: { data?: { message?: string } }
             })?.response?.data?.message || 'Registration failed. Please try again.';
+            setError(errorMessage);
             toast.error(errorMessage);
         } finally {
+            setIsLoading(false);
             setSubmitting(false);
         }
     }, [navigate, toast]);
 
-    return handleSubmit;
+    return {
+        initialValues: registrationInitialValues,
+        isLoading,
+        error,
+        handleSubmit
+    };
 };

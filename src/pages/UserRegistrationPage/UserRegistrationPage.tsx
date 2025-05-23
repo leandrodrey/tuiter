@@ -4,7 +4,7 @@ import {useToast} from "../../hooks/context/useToast.ts";
 import {useAuthContext} from "../../hooks/context/useAuthContext.ts";
 import {useUserRegistration} from "./hooks/useUserRegistration.ts";
 import RegistrationForm from '../../components/Registration/RegistrationForm';
-import {PageHeader} from '../../components/UI';
+import {Loader, PageHeader} from '../../components/UI';
 
 /**
  * Page component for user registration.
@@ -17,6 +17,7 @@ const UserRegistrationPage = (): JSX.Element => {
     const navigate = useNavigate();
     const toast = useToast();
     const {isAuthenticated} = useAuthContext();
+    const {initialValues, isLoading, error, handleSubmit} = useUserRegistration(navigate, toast);
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -24,13 +25,19 @@ const UserRegistrationPage = (): JSX.Element => {
         }
     }, [isAuthenticated, navigate]);
 
-    const handleSubmit = useUserRegistration(navigate, toast);
+    if (isLoading) {
+        return <Loader text="Processing registration..." fullScreen={true}/>;
+    }
 
     return (
         <div>
             <PageHeader title="Create an Account" subtitle="It's free and always will be."/>
             <div className="max-w-2xl mx-auto">
-                <RegistrationForm onSubmit={handleSubmit}/>
+                <RegistrationForm
+                    initialValues={initialValues}
+                    onSubmit={handleSubmit}
+                    error={error}
+                />
             </div>
         </div>
     );

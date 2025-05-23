@@ -10,13 +10,23 @@ import RegistrationActions from './RegistrationActions';
 
 interface RegistrationFormProps {
     onSubmit: (values: RegistrationFormData, formikHelpers: FormikHelpers<RegistrationFormData>) => Promise<void>;
+    error?: string | null;
+    initialValues?: RegistrationFormData;
 }
 
-const RegistrationForm = ({onSubmit}: RegistrationFormProps): JSX.Element => {
+const RegistrationForm = ({onSubmit, error, initialValues: propInitialValues}: RegistrationFormProps): JSX.Element => {
+    // Use provided initialValues or default ones
+    const formInitialValues = propInitialValues || initialValues;
+
     return (
         <div className="max-w-2xl mx-auto bg-gray-900 border border-gray-800 rounded-2xl p-6 shadow-lg">
+            {error && (
+                <div className="mb-4 p-3 bg-red-900/30 border border-red-800 rounded-md text-red-200">
+                    {error}
+                </div>
+            )}
             <Formik
-                initialValues={initialValues}
+                initialValues={formInitialValues}
                 validationSchema={validationSchema}
                 onSubmit={onSubmit}
             >
