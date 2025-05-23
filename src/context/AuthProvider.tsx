@@ -11,6 +11,8 @@ import {
 } from '../constants/authConstants.ts';
 import {AuthContext, initialAuthState} from "./AuthContext.ts";
 import type {AuthContextType, UserInformation} from "../types/userTypes.ts";
+import {apiLogin, type UserData} from '../services/UserService';
+import {useToast} from "../hooks/context/useToast.ts";
 
 setHttpAuthToken(initialAuthState.userToken);
 
@@ -19,7 +21,8 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(initialAuthState.isAuthenticated);
     const [userToken, setUserTokenState] = useState<string | null>(initialAuthState.userToken);
     const [userInformation, setUserInformationState] = useState<UserInformation | null>(initialAuthState.userInformation);
-    console.log(userInformation);
+    const toast = useToast();
+
     const logout = useCallback((): void => {
         setUserTokenState(null);
         setUserInformationState(null);
@@ -79,6 +82,39 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
         setIsLoadingAuth(false);
     };
 
+    const handleLoginSubmit = async (
+        values: { email: string; password: string },
+        formikHelpers: { setSubmitting: (isSubmitting: boolean) => void; resetForm: () => void }
+    ): Promise<void> => {
+        const { setSubmitting, resetForm } = formikHelpers;
+        try {
+            const response = await apiLogin(values as Omit<UserData, 'name'>);
+            const token = response.token;
+
+            // First set basic user info from login response
+            login(token, {
+                name: response.name,
+                email: response.email,
+            });
+
+            // Then fetch complete user info
+            await getUserInformationAPI();
+
+            toast.success(`Welcome back, ${response.name}!`);
+            resetForm();
+        } catch (err: unknown) {
+            console.error('Login error:', err);
+            const errorMessage = err instanceof Error
+                ? err.message
+                : (err as {
+                response?: { data?: { message?: string } }
+            })?.response?.data?.message || 'Login failed. Please try again.';
+            toast.error(errorMessage);
+        } finally {
+            setSubmitting(false);
+        }
+    };
+
     useEffect(() => {
         const loadInitialData = async () => {
             if (userToken && !userInformation) {
@@ -99,6 +135,7 @@ export const AuthProvider = ({children}: { children: ReactNode }) => {
         userInformation,
         login,
         logout,
+        handleLoginSubmit,
     };
 
     return (

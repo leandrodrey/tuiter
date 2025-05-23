@@ -21,6 +21,7 @@ export interface AuthState {
 export interface AuthContextType extends AuthState {
     login: (token: string, userData: UserInformation) => void;
     logout: () => void;
+    handleLoginSubmit: (values: { email: string; password: string }, formikHelpers: { setSubmitting: (isSubmitting: boolean) => void; resetForm: () => void }) => Promise<void>;
 }
 
 // Favorite user

@@ -1,38 +1,15 @@
 import {type JSX} from 'react';
-import {type FormikHelpers} from 'formik';
-import {apiLogin, type UserData} from '../../services/UserService';
 import {useAuthContext} from '../../hooks/context/useAuthContext.ts';
 import './LoginForm.css';
-import {useToast} from "../../hooks/context/useToast.ts";
-import type {LoginFormData} from "../../types/formTypes.ts";
 import LoginFormFields from './LoginFormFields';
 
+/**
+ * Component that renders a login form or a message if the user is already authenticated.
+ * Uses the authentication context to handle login submission and check authentication status.
+ * @returns A login form or a message indicating the user is logged in
+ */
 const LoginForm = (): JSX.Element => {
-    const {isAuthenticated, login} = useAuthContext();
-    const toast = useToast();
-
-    const handleSubmit = async (values: LoginFormData, {setSubmitting, resetForm}: FormikHelpers<LoginFormData>) => {
-        try {
-            const response = await apiLogin(values as Omit<UserData, 'name'>);
-            const token = response.token;
-            login(token, {
-                name: response.name,
-                email: response.email
-            });
-            toast.success(`Welcome back, ${response.name}!`);
-            resetForm();
-        } catch (err: unknown) {
-            console.error('Login error:', err);
-            const errorMessage = err instanceof Error
-                ? err.message
-                : (err as {
-                response?: { data?: { message?: string } }
-            })?.response?.data?.message || 'Login failed. Please try again.';
-            toast.error(errorMessage);
-        } finally {
-            setSubmitting(false);
-        }
-    };
+    const {isAuthenticated, handleLoginSubmit} = useAuthContext();
 
     return (
         <div className="flex justify-center w-full">
@@ -48,7 +25,7 @@ const LoginForm = (): JSX.Element => {
                         </svg>
                     </div>
                     <h2 className="text-2xl font-bold text-center mb-6 text-gray-900 dark:text-white">Sign in to Tuiter</h2>
-                    <LoginFormFields onSubmit={handleSubmit}/>
+                    <LoginFormFields onSubmit={handleLoginSubmit}/>
                 </div>
             )}
         </div>
