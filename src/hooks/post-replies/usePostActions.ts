@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import type { Post } from '../../types/postTypes';
 
 /**
- * Hook for managing post actions like liking and toggling replies
+ * Hook for managing post-actions like liking and toggling replies
  *
  * @param post - The post to manage actions for
  * @param onLike - Function to call when liking/unliking a post
