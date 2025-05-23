@@ -1,10 +1,9 @@
 import {useState, useEffect, useCallback} from 'react';
-import {apiGetFeed} from '../../services/FeedService.ts';
-import {useToast} from '../context/useToast.ts';
-import {usePostProcessor, type PostWithReplies} from './usePostProcessor.ts';
-import type {Post} from '../../types/postTypes';
+import {apiGetFeed} from '../../../services/FeedService.ts';
+import {useToast} from '../../../hooks/context/useToast.ts';
+import {usePostProcessor, type PostWithReplies} from '../../../hooks/post-feed/usePostProcessor.ts';
+import type {Post} from '../../../types/postTypes';
 
-// Constants
 const POSTS_PER_PAGE = 10;
 
 /**
@@ -35,7 +34,6 @@ export const useFeedPosts = () => {
         isInitialLoad = false,
         isRefresh = false
     ): PostWithReplies[] => {
-        // Check if there are no posts
         if (response.length === 0) {
             setHasMore(false);
 
@@ -48,12 +46,10 @@ export const useFeedPosts = () => {
             return [];
         }
 
-        // (end of list)
         if (response.length < POSTS_PER_PAGE) {
             setHasMore(false);
         }
 
-        // Process the response
         return processPostsResponse(response);
     }, [processPostsResponse]);
 
@@ -116,7 +112,6 @@ export const useFeedPosts = () => {
      * Fetches more posts when the user scrolls to the bottom
      */
     const fetchMorePosts = useCallback(async () => {
-        // Prevent concurrent fetches and don't fetch if there are no more posts
         if (!hasMore || loadingMore || loading) return;
 
         const nextPage = page + 1;
@@ -132,7 +127,6 @@ export const useFeedPosts = () => {
      * Refreshes the feed by fetching the first page of posts
      */
     const refreshFeed = useCallback(async () => {
-        // Prevent concurrent refreshes
         if (loading || loadingMore) return;
 
         setPage(1);
