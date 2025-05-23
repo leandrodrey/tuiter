@@ -24,7 +24,7 @@ const UserRegistrationPage = (): JSX.Element => {
         }
     }, [isAuthenticated, navigate]);
 
-    const {handleSubmit} = useUserRegistration(navigate, toast);
+    const handleSubmit = useUserRegistration(navigate, toast);
 
     return (
         <div>
