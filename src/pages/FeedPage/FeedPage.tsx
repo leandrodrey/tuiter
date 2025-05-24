@@ -14,12 +14,9 @@ const FeedPage = (): JSX.Element => {
         loading,
         error,
         hasMore,
-        initialLoading,
         fetchMorePosts,
         refreshFeed
     } = usePostContext();
-
-    if (initialLoading) return <Loader text="Loading posts..." fullScreen={true}/>;
 
     if (error) {
         return (
