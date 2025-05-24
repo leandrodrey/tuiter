@@ -15,7 +15,7 @@ vi.mock('../../hooks/post-replies/usePostActions', () => ({
 }));
 
 // Mock the action buttons
-vi.mock('./PostActionButtons', () => ({
+vi.mock('../PostActionButtons', () => ({
   CommentButton: vi.fn(({ postId, repliesCount, parentId }) => (
     <button
       data-testid="mock-comment-button"

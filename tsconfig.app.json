@@ -29,6 +29,11 @@
     "include": [
         "src"
     ],
+    "exclude": [
+        "src/**/*.test.ts",
+        "src/**/*.test.tsx",
+        "src/test/**/*"
+    ],
     "files": [
         "src/vite-env.d.ts"
     ]

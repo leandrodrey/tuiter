@@ -13,7 +13,7 @@ vi.mock('react', async () => {
 });
 
 // Mock the usePostReplies hook
-vi.mock('../../hooks/post-replies/usePostReplies', () => ({
+vi.mock('../../../hooks/post-replies/usePostReplies.ts', () => ({
   usePostReplies: vi.fn((_, initialReplies) => ({
     showReplies: false,
     replies: initialReplies || [],
@@ -34,7 +34,7 @@ vi.mock('./PostHeader', () => ({
   ))
 }));
 
-vi.mock('./PostContent', () => ({
+vi.mock('../PostContent.tsx', () => ({
   default: vi.fn(({ message }) => (
     <div
       data-testid="mock-post-content"
@@ -54,7 +54,7 @@ vi.mock('./PostActionsSection', () => ({
   ))
 }));
 
-vi.mock('./PostRepliesSection', () => ({
+vi.mock('../PostRepliesSection.tsx', () => ({
   default: vi.fn(({ showReplies, replies, loadingReplies, onLike }) => (
     <div
       data-testid="mock-post-replies-section"
