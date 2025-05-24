@@ -3,7 +3,7 @@ import {TuiterLogo} from '../../../components/UI';
 import {useLocation} from 'react-router-dom';
 import {useAuthContext} from '../../../hooks/context/useAuthContext.ts';
 import {useUser} from '../../../hooks/context/useUser.ts';
-import {SidebarNav, UserMenu} from '../../../components/Navbar';
+import {SidebarNav, UserMenu} from '../../../components/SideNav';
 
 /**
  * Header component that displays the application header.

@@ -1,7 +1,7 @@
 import {type JSX} from 'react';
-import type {UserInformation} from "../../types/userTypes.ts";
-import {useLogout} from "../../hooks/context/useLogout";
-import {Avatar, LogoutButton} from '../UI';
+import type {UserInformation} from "../../../types/userTypes.ts";
+import {useLogout} from "../../../hooks/context/useLogout.ts";
+import {Avatar, LogoutButton} from '../../UI';
 
 interface UserMenuProps {
     userInformation: UserInformation | null;

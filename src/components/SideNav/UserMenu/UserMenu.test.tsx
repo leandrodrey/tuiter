@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import UserMenu from './UserMenu';
-import type { UserInformation } from '../../types/userTypes';
+import UserMenu from './UserMenu.tsx';
+import type { UserInformation } from '../../../types/userTypes.ts';
 
 // Mock the hooks and UI components
 vi.mock('../../hooks/context/useLogout', () => ({

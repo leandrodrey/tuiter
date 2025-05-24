@@ -22,10 +22,25 @@ const ErrorMessageMock = vi.fn(({ name, children }) => {
   return null;
 });
 
+// Define types for the props
+interface FieldProps {
+  type: string;
+  id: string;
+  name: string;
+  placeholder: string;
+  disabled: boolean;
+  className: string;
+}
+
+interface ErrorMessageProps {
+  name: string;
+  children?: ((message: string) => React.ReactNode) | React.ReactNode;
+}
+
 vi.mock('formik', () => ({
   useFormikContext: () => useFormikContextMock(),
-  Field: (props) => FieldMock(props),
-  ErrorMessage: (props) => ErrorMessageMock(props)
+  Field: (props: FieldProps) => FieldMock(props),
+  ErrorMessage: (props: ErrorMessageProps) => ErrorMessageMock(props)
 }));
 
 describe('LoginFormFields', () => {
@@ -82,39 +97,47 @@ describe('LoginFormFields', () => {
 
     // Check if the email field has the correct classes
     expect(emailFieldCall).toBeDefined();
-    expect(emailFieldCall[0].className).toContain('w-full');
-    expect(emailFieldCall[0].className).toContain('p-2');
-    expect(emailFieldCall[0].className).toContain('sm:p-3');
-    expect(emailFieldCall[0].className).toContain('text-sm');
-    expect(emailFieldCall[0].className).toContain('sm:text-base');
-    expect(emailFieldCall[0].className).toContain('bg-gray-900');
-    expect(emailFieldCall[0].className).toContain('rounded-md');
-    expect(emailFieldCall[0].className).toContain('border');
-    expect(emailFieldCall[0].className).toContain('border-gray-700');
-    expect(emailFieldCall[0].className).toContain('focus:border-blue-500');
-    expect(emailFieldCall[0].className).toContain('focus:ring-2');
-    expect(emailFieldCall[0].className).toContain('focus:ring-blue-500/30');
-    expect(emailFieldCall[0].className).toContain('text-white');
-    expect(emailFieldCall[0].className).toContain('placeholder-gray-500');
-    expect(emailFieldCall[0].className).toContain('transition-colors');
+
+    // Only check the className if emailFieldCall is defined
+    if (emailFieldCall) {
+      expect(emailFieldCall[0].className).toContain('w-full');
+      expect(emailFieldCall[0].className).toContain('p-2');
+      expect(emailFieldCall[0].className).toContain('sm:p-3');
+      expect(emailFieldCall[0].className).toContain('text-sm');
+      expect(emailFieldCall[0].className).toContain('sm:text-base');
+      expect(emailFieldCall[0].className).toContain('bg-gray-900');
+      expect(emailFieldCall[0].className).toContain('rounded-md');
+      expect(emailFieldCall[0].className).toContain('border');
+      expect(emailFieldCall[0].className).toContain('border-gray-700');
+      expect(emailFieldCall[0].className).toContain('focus:border-blue-500');
+      expect(emailFieldCall[0].className).toContain('focus:ring-2');
+      expect(emailFieldCall[0].className).toContain('focus:ring-blue-500/30');
+      expect(emailFieldCall[0].className).toContain('text-white');
+      expect(emailFieldCall[0].className).toContain('placeholder-gray-500');
+      expect(emailFieldCall[0].className).toContain('transition-colors');
+    }
 
     // Check if the password field has the correct classes
     expect(passwordFieldCall).toBeDefined();
-    expect(passwordFieldCall[0].className).toContain('w-full');
-    expect(passwordFieldCall[0].className).toContain('p-2');
-    expect(passwordFieldCall[0].className).toContain('sm:p-3');
-    expect(passwordFieldCall[0].className).toContain('text-sm');
-    expect(passwordFieldCall[0].className).toContain('sm:text-base');
-    expect(passwordFieldCall[0].className).toContain('bg-gray-900');
-    expect(passwordFieldCall[0].className).toContain('rounded-md');
-    expect(passwordFieldCall[0].className).toContain('border');
-    expect(passwordFieldCall[0].className).toContain('border-gray-700');
-    expect(passwordFieldCall[0].className).toContain('focus:border-blue-500');
-    expect(passwordFieldCall[0].className).toContain('focus:ring-2');
-    expect(passwordFieldCall[0].className).toContain('focus:ring-blue-500/30');
-    expect(passwordFieldCall[0].className).toContain('text-white');
-    expect(passwordFieldCall[0].className).toContain('placeholder-gray-500');
-    expect(passwordFieldCall[0].className).toContain('transition-colors');
+
+    // Only check the className if passwordFieldCall is defined
+    if (passwordFieldCall) {
+      expect(passwordFieldCall[0].className).toContain('w-full');
+      expect(passwordFieldCall[0].className).toContain('p-2');
+      expect(passwordFieldCall[0].className).toContain('sm:p-3');
+      expect(passwordFieldCall[0].className).toContain('text-sm');
+      expect(passwordFieldCall[0].className).toContain('sm:text-base');
+      expect(passwordFieldCall[0].className).toContain('bg-gray-900');
+      expect(passwordFieldCall[0].className).toContain('rounded-md');
+      expect(passwordFieldCall[0].className).toContain('border');
+      expect(passwordFieldCall[0].className).toContain('border-gray-700');
+      expect(passwordFieldCall[0].className).toContain('focus:border-blue-500');
+      expect(passwordFieldCall[0].className).toContain('focus:ring-2');
+      expect(passwordFieldCall[0].className).toContain('focus:ring-blue-500/30');
+      expect(passwordFieldCall[0].className).toContain('text-white');
+      expect(passwordFieldCall[0].className).toContain('placeholder-gray-500');
+      expect(passwordFieldCall[0].className).toContain('transition-colors');
+    }
   });
 
   // Note: Testing error messages would require more complex setup with Formik's context
