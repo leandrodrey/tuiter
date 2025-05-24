@@ -24,7 +24,7 @@ const PageHeader = ({
             </div>
 
             {subtitle && (
-                <div className="px-6 pb-2">
+                <div data-testid="subtitle-container" className="px-6 pb-2">
                     <p className="text-sm text-gray-400">
                         {subtitle}
                     </p>
@@ -32,7 +32,7 @@ const PageHeader = ({
             )}
 
             {children && (
-                <div className="mt-2 px-4">
+                <div data-testid="children-container" className="mt-2 px-4">
                     {children}
                 </div>
             )}
