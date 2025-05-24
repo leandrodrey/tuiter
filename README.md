@@ -1,3 +1,5 @@
+# Tuiter App
+
 ## 🧪 Pruebas (Testing)
 
 [![codecov](https://codecov.io/gh/leandrodrey/tuiter/graph/badge.svg?token=HE90Y9GXHQ)](https://codecov.io/gh/leandrodrey/tuiter)
@@ -59,3 +61,42 @@ El workflow `Quality Control CI` se dispara automáticamente con cada Pull Reque
     * Un **dashboard en Codecov.io** con un historial y análisis detallado de la cobertura del proyecto.
 
 Esto nos ayuda a mantener una base de código saludable, reducir regresiones y tener más confianza al realizar cambios y nuevas funcionalidades.
+
+
+## 🚀 Despliegue (Deployment)
+
+Esta aplicación está desplegada en la plataforma [**Vercel**](https://vercel.com/). 
+
+### ¿Por qué Vercel?
+
+Hemos elegido Vercel para el despliegue de este proyecto debido a sus ventajas clave:
+
+* **Facilidad de Despliegue Continuo:** Integración nativa con GitHub para automatización.
+* **Alto Rendimiento Global:** Gracias a su CDN y optimizaciones automáticas.
+* **Previews de Despliegue Instantáneas:** Para cada _commit_ y _Pull Request_.
+* **Escalabilidad Automática:** Maneja el tráfico sin intervención manual.
+* **Seguridad por Defecto:** HTTPS y otras protecciones integradas.
+* **Soporte para Funciones Serverless:** Permite añadir lógica de backend fácilmente.
+
+### Variables de Entorno
+
+Todas las variables de entorno necesarias para la aplicación se gestionan de forma segura directamente en la configuración del proyecto dentro de Vercel. **No se almacenan en el repositorio Git** por razones de seguridad.
+
+Vercel permite configurar variables de entorno para diferentes entornos (Producción, Vista Previa y Desarrollo) y las inyecta automáticamente durante el proceso de _build_ .
+
+### Integración con GitHub y Despliegue Automático
+
+La integración entre Vercel y GitHub es uno de los puntos fuertes de la plataforma:
+
+1.  **Conexión del Repositorio:** El repositorio de GitHub está conectado al proyecto en Vercel.
+2.  **Despliegues Automáticos a Producción:** Cuando se fusionan cambios (merge) a la rama principal (en nuestro caso, `master`), Vercel automáticamente inicia un nuevo _build_ y despliega la versión actualizada a producción. Esto asegura que el sitio en vivo siempre refleje el último código estable.
+3.  **Previews de Despliegue para Pull Requests:** Por cada _Pull Request_ abierto (o cada _commit_ a una rama diferente a `master`), Vercel crea un despliegue de vista previa con su propia URL. Esto es invaluable para:
+  * Revisar los cambios visual y funcionalmente.
+  * Realizar pruebas de calidad (QA) en un entorno aislado.
+  * Facilitar la colaboración.
+
+### Consideraciones Adicionales
+
+* **Seguridad:** Además de la gestión segura de variables de entorno y HTTPS por defecto, Vercel ofrece protección contra ataques comunes.
+* **Monitorización:** Vercel proporciona un dashboard con logs en tiempo real, análisis de uso y monitorización del estado de los despliegues y funciones serverless.
+* **Rollbacks:** Gracias a los despliegues atómicos e inmutables de Vercel, es muy sencillo revertir a una versión anterior del despliegue si se detecta algún problema.
