@@ -1,5 +1,7 @@
 ## 🧪 Pruebas (Testing)
 
+[![codecov](https://codecov.io/gh/leandrodrey/tuiter/graph/badge.svg?token=HE90Y9GXHQ)](https://codecov.io/gh/leandrodrey/tuiter)
+
 Este proyecto utiliza un conjunto de herramientas y configuraciones para asegurar la calidad y el correcto funcionamiento del código a través de pruebas automatizadas.
 
 ### Herramientas Utilizadas
