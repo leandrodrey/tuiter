@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import LoginFormFields from './LoginFormFields';
+import LoginFormFields from './LoginFormFields.tsx';
 
 // Mock the formik components
 const useFormikContextMock = vi.fn().mockReturnValue({ isSubmitting: false });

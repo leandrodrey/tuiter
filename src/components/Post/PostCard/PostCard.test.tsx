@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import PostCard from './PostCard';
-import type { Post } from '../../types/postTypes';
+import PostCard from './PostCard.tsx';
+import type { Post } from '../../../types/postTypes.ts';
 
 // Mock the context and hooks
 vi.mock('react', async () => {

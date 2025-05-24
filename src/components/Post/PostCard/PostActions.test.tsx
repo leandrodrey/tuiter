@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import PostActions from './PostActions';
-import type { Post } from '../../types/postTypes';
+import PostActions from '../PostActions.tsx';
+import type { Post } from '../../../types/postTypes.ts';
 
 // Mock the hooks
 vi.mock('../../hooks/post-replies/usePostActions', () => ({

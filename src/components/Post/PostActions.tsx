@@ -1,6 +1,6 @@
 import {type JSX} from 'react';
-import type {Post} from '../../types/postTypes';
-import {usePostActions} from '../../hooks/post-replies/usePostActions';
+import type {Post} from '../../types/postTypes.ts';
+import {usePostActions} from '../../hooks/post-replies/usePostActions.ts';
 import {
     CommentButton,
     RetweetButton,

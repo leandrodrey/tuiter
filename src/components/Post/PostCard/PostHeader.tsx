@@ -1,6 +1,6 @@
 import {type JSX} from 'react';
-import type {Post} from '../../types/postTypes';
-import {FavoriteButton, Avatar} from '../../components/UI';
+import type {Post} from '../../../types/postTypes.ts';
+import {FavoriteButton, Avatar} from '../../UI';
 
 interface PostHeaderProps {
     post: Post;

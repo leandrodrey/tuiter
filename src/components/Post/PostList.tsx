@@ -1,5 +1,5 @@
 import {type JSX} from 'react';
-import PostCard from './PostCard';
+import PostCard from './PostCard/PostCard.tsx';
 import {EmptyMessage} from '../../components/UI';
 import {usePostContext} from '../../pages/FeedPage/hooks/usePostContext.ts';
 

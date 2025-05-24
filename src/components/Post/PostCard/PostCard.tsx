@@ -1,11 +1,11 @@
 import {type JSX, useContext} from 'react';
-import type {Post} from '../../types/postTypes';
-import {usePostReplies} from '../../hooks/post-replies/usePostReplies';
-import {PostContext} from '../../pages/FeedPage/context/PostContext.ts';
-import PostHeader from './PostHeader';
-import PostContent from './PostContent';
-import PostActionsSection from './PostActionsSection';
-import PostRepliesSection from './PostRepliesSection';
+import type {Post} from '../../../types/postTypes.ts';
+import {usePostReplies} from '../../../hooks/post-replies/usePostReplies.ts';
+import {PostContext} from '../../../pages/FeedPage/context/PostContext.ts';
+import PostHeader from './PostHeader.tsx';
+import PostContent from '../PostContent.tsx';
+import PostActionsSection from './PostActionsSection.tsx';
+import PostRepliesSection from '../PostRepliesSection.tsx';
 
 interface PostCardProps {
     post: Post;
