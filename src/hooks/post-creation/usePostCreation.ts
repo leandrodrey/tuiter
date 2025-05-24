@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import {type FormikHelpers} from 'formik';
 import {apiCreateTuit} from '../../services/TuitsService.ts';
 import {useToast} from "../context/useToast.ts";
+import {useUser} from "../context/useUser.ts";
 import {
     createPostEmptyValues as emptyValues
 } from '../../validations/postSchemas';
@@ -23,14 +24,15 @@ export const usePostCreation = () => {
     const [initialValues, setInitialValues] = useState<PostFormData>(emptyValues);
     const navigate = useNavigate();
     const toast = useToast();
+    const { userInformation } = useUser();
 
     // Load draft on hook initialization
     useEffect(() => {
-        const savedDraft = loadDraft();
+        const savedDraft = loadDraft(userInformation);
         if (savedDraft) {
             setInitialValues({message: savedDraft});
         }
-    }, []);
+    }, [userInformation]);
 
     /**
      * Handles saving the current form values as a draft.
@@ -39,9 +41,9 @@ export const usePostCreation = () => {
      * @param {PostFormData} values - The form values to save as a draft
      */
     const handleSaveDraft = useCallback((values: PostFormData) => {
-        saveDraft(values);
+        saveDraft(values, userInformation);
         toast.success('Draft saved successfully!');
-    }, [toast]);
+    }, [toast, userInformation]);
 
     /**
      * Handles clearing the saved draft.
@@ -50,10 +52,10 @@ export const usePostCreation = () => {
      * @param {Function} resetForm - Formik's resetForm function to reset the form values
      */
     const handleClearDraft = useCallback((resetForm: (nextState?: { values: PostFormData }) => void) => {
-        clearDraft();
+        clearDraft(userInformation);
         resetForm({values: emptyValues});
         toast.info('Draft cleared!');
-    }, [toast]);
+    }, [toast, userInformation]);
 
     /**
      * Handles the post creation form submission.
@@ -70,7 +72,7 @@ export const usePostCreation = () => {
     ) => {
         try {
             await apiCreateTuit({message: values.message});
-            clearDraft();
+            clearDraft(userInformation);
             resetForm();
 
             toast.success('Post created successfully!');
@@ -86,7 +88,7 @@ export const usePostCreation = () => {
         } finally {
             setSubmitting(false);
         }
-    }, [navigate, toast]);
+    }, [navigate, toast, userInformation]);
 
     return {
         initialValues,
