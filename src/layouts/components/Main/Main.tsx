@@ -12,8 +12,8 @@ const Main = ({children}: { children: ReactNode }): JSX.Element => {
 
     return (
         <main role="main" className="w-full">
-            <div className="flex justify-center px-2 sm:px-4">
-                <section className="w-full border border-y-0 border-gray-800 max-w-full sm:max-w-xl md:max-w-2xl lg:max-w-3xl">
+            <div data-testid="main-flex-container" className="flex justify-center px-2 sm:px-4">
+                <section data-testid="main-content-section" className="w-full border border-y-0 border-gray-800 max-w-full sm:max-w-xl md:max-w-2xl lg:max-w-3xl">
                     {children}
                 </section>
             </div>
