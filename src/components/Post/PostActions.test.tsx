@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import PostActions from './PostActions';
 import type { Post } from '../../types/postTypes';
 
@@ -53,10 +53,11 @@ describe('PostActions', () => {
     author: 'testuser',
     avatar_url: 'https://example.com/avatar.jpg',
     message: 'Test message',
-    created_at: '2023-01-01T00:00:00Z',
+    date: '2023-01-01T00:00:00Z',
     likes: 5,
     liked: false,
-    replies_count: 2
+    replies_count: 2,
+    parent_id: 0
   };
 
   const defaultProps = {

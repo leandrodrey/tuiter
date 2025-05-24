@@ -37,7 +37,7 @@ const PostActions = ({post, onLike, onToggleReplies}: PostActionsProps): JSX.Ele
             <CommentButton
                 postId={post.id}
                 repliesCount={repliesCount}
-                parentId={post.parent_id}
+                {...(post.parent_id !== 0 ? { parentId: post.parent_id } : {})}
             />
 
             <RetweetButton

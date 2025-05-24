@@ -28,7 +28,9 @@ describe('TweetButton', () => {
         // Check if SVG icon is rendered for smaller screens
         const svg = button.querySelector('svg');
         expect(svg).toBeInTheDocument();
-        expect(svg.parentElement).toHaveClass('md:hidden');
+        if (svg) {
+            expect(svg.parentElement).toHaveClass('md:hidden');
+        }
     });
 
     it('calls onClick when clicked', () => {

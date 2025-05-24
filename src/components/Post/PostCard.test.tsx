@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import PostCard from './PostCard';
 import type { Post } from '../../types/postTypes';
 
@@ -14,7 +14,7 @@ vi.mock('react', async () => {
 
 // Mock the usePostReplies hook
 vi.mock('../../hooks/post-replies/usePostReplies', () => ({
-  usePostReplies: vi.fn((postId, initialReplies) => ({
+  usePostReplies: vi.fn((_, initialReplies) => ({
     showReplies: false,
     replies: initialReplies || [],
     loadingReplies: false,
@@ -73,10 +73,11 @@ describe('PostCard', () => {
     author: 'testuser',
     avatar_url: 'https://example.com/avatar.jpg',
     message: 'Test message',
-    created_at: '2023-01-01T00:00:00Z',
+    date: '2023-01-01T00:00:00Z',
     likes: 5,
     liked: false,
-    replies_count: 2
+    replies_count: 2,
+    parent_id: 0
   };
 
   const mockReplies: Post[] = [
@@ -85,7 +86,7 @@ describe('PostCard', () => {
       author: 'user2',
       avatar_url: 'https://example.com/avatar2.jpg',
       message: 'Reply 1',
-      created_at: '2023-01-02T00:00:00Z',
+      date: '2023-01-02T00:00:00Z',
       likes: 1,
       liked: false,
       replies_count: 0,
