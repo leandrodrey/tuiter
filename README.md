@@ -168,8 +168,7 @@ El workflow `Quality Control CI` se dispara automáticamente con cada Pull Reque
 
 Esto nos ayuda a mantener una base de código saludable, reducir regresiones y tener más confianza al realizar cambios y nuevas funcionalidades.
 
-![image](https://github.com/user-attachments/assets/7de78bbb-ec52-4d75-8c0c-ebc872d0fe7f)
-
+![image](https://github.com/user-attachments/assets/2e536f20-2cab-41fb-9ed5-6965c523d279)
 
 ## 🚀 Despliegue (Deployment)
 
@@ -205,6 +204,9 @@ La integración entre Vercel y GitHub es uno de los puntos fuertes de la platafo
 
 Ejemplo de Reporte
 ![image](https://github.com/user-attachments/assets/f9d33c2a-7328-4b52-ae0a-5735e504d687)
+
+![image](https://github.com/user-attachments/assets/ab60bf11-529a-452b-865a-00b83bc75f0a)
+
 
 ### Consideraciones Adicionales
 
