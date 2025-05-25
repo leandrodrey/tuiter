@@ -108,7 +108,7 @@ export async function apiGetFeed(params?: FeedParams) {
 
 ## 🧪 Pruebas (Testing)
 
-[![codecov](https://codecov.io/gh/leandrodrey/tuiter/graph/badge.svg?token=HE90Y9GXHQ)](https://codecov.io/gh/leandrodrey/tuiter)
+[![codecov](https://codecov.io/gh/leandrodrey/tuiter/graph/badge.svg?token=HE90Y9GXHQ)](https://codecov.io/gh/leandrodrey/tuiter) Cobertura actual del proyecto
 
 Este proyecto utiliza un conjunto de herramientas y configuraciones para asegurar la calidad y el correcto funcionamiento del código a través de pruebas automatizadas.
 
@@ -203,6 +203,11 @@ La integración entre Vercel y GitHub es uno de los puntos fuertes de la platafo
   * Facilitar la colaboración.
 
 Ejemplo de Reporte
+![image](https://github.com/user-attachments/assets/f9d33c2a-7328-4b52-ae0a-5735e504d687)
+
+![image](https://github.com/user-attachments/assets/ab60bf11-529a-452b-865a-00b83bc75f0a)
+
+
 ### Consideraciones Adicionales
 
 * **Seguridad:** Además de la gestión segura de variables de entorno y HTTPS por defecto, Vercel ofrece protección contra ataques comunes.
