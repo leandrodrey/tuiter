@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
+import { MemoryRouter } from 'react-router-dom';
 import PostCardReply from './PostCardReply';
 import type { Post } from '../../../types/postTypes';
 
@@ -15,7 +16,7 @@ vi.mock('./PostHeaderReply.tsx', () => ({
 }));
 
 // Mock the PostContent component
-vi.mock('../PostContent.tsx', () => ({
+vi.mock('../../PostContent/PostContent.tsx', () => ({
   default: vi.fn(({ message }) => (
     <div
       data-testid="mock-post-content"
@@ -25,7 +26,7 @@ vi.mock('../PostContent.tsx', () => ({
 }));
 
 // Mock the PostActions component
-vi.mock('../PostActions.tsx', () => ({
+vi.mock('../../PostActions/PostActions.tsx', () => ({
   default: vi.fn(({ post, onLike }) => (
     <div
       data-testid="mock-post-actions"
@@ -56,7 +57,11 @@ describe('PostCardReply', () => {
   });
 
   it('renders all child components', () => {
-    render(<PostCardReply post={mockPost} onLike={mockOnLike} />);
+    render(
+      <MemoryRouter>
+        <PostCardReply post={mockPost} onLike={mockOnLike} />
+      </MemoryRouter>
+    );
 
     // Check if all child components are rendered
     expect(screen.getByTestId('mock-post-header-reply')).toBeInTheDocument();
@@ -65,7 +70,11 @@ describe('PostCardReply', () => {
   });
 
   it('passes correct props to PostHeaderReply', () => {
-    render(<PostCardReply post={mockPost} onLike={mockOnLike} />);
+    render(
+      <MemoryRouter>
+        <PostCardReply post={mockPost} onLike={mockOnLike} />
+      </MemoryRouter>
+    );
 
     const postHeader = screen.getByTestId('mock-post-header-reply');
     expect(postHeader).toHaveAttribute('data-post-id', '1');
@@ -73,14 +82,22 @@ describe('PostCardReply', () => {
   });
 
   it('passes correct props to PostContent', () => {
-    render(<PostCardReply post={mockPost} onLike={mockOnLike} />);
+    render(
+      <MemoryRouter>
+        <PostCardReply post={mockPost} onLike={mockOnLike} />
+      </MemoryRouter>
+    );
 
     const postContent = screen.getByTestId('mock-post-content');
     expect(postContent).toHaveAttribute('data-message', 'Test message');
   });
 
   it('passes correct props to PostActions', () => {
-    render(<PostCardReply post={mockPost} onLike={mockOnLike} />);
+    render(
+      <MemoryRouter>
+        <PostCardReply post={mockPost} onLike={mockOnLike} />
+      </MemoryRouter>
+    );
 
     const postActions = screen.getByTestId('mock-post-actions');
     expect(postActions).toHaveAttribute('data-post-id', '1');
@@ -88,7 +105,11 @@ describe('PostCardReply', () => {
   });
 
   it('applies correct styling to the container', () => {
-    render(<PostCardReply post={mockPost} onLike={mockOnLike} />);
+    render(
+      <MemoryRouter>
+        <PostCardReply post={mockPost} onLike={mockOnLike} />
+      </MemoryRouter>
+    );
 
     // Get the container element (parent of all child components)
     const container = screen.getByTestId('mock-post-header-reply').parentElement;
