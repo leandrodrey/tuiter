@@ -168,7 +168,8 @@ El workflow `Quality Control CI` se dispara automáticamente con cada Pull Reque
 
 Esto nos ayuda a mantener una base de código saludable, reducir regresiones y tener más confianza al realizar cambios y nuevas funcionalidades.
 
-![image](https://github.com/user-attachments/assets/2e536f20-2cab-41fb-9ed5-6965c523d279)
+![image](https://github.com/user-attachments/assets/7d3e8ca5-fba1-4bcc-ad44-6dcd16f5b25c)
+
 
 ## 🚀 Despliegue (Deployment)
 
