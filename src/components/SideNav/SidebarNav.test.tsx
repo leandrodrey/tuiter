@@ -1,6 +1,12 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import SidebarNav from './SidebarNav';
+
+// Mock react-router-dom
+const mockNavigate = vi.fn();
+vi.mock('react-router-dom', () => ({
+  useNavigate: () => mockNavigate
+}));
 
 // Mock the UI components
 vi.mock('../UI', () => ({
@@ -14,7 +20,7 @@ vi.mock('../UI', () => ({
       {children}
     </a>
   )),
-  TweetButton: vi.fn(() => <button data-testid="mock-tweet-button">Tweet</button>),
+  TweetButton: vi.fn(({ onClick }) => <button data-testid="mock-tweet-button" onClick={onClick}>Tweet</button>),
   HomeIcon: vi.fn(({ className }) => <div data-testid="mock-home-icon" className={className} />),
   UserIcon: vi.fn(({ className }) => <div data-testid="mock-user-icon" className={className} />),
   CreatePostIcon: vi.fn(({ className }) => <div data-testid="mock-create-post-icon" className={className} />),
@@ -106,5 +112,14 @@ describe('SidebarNav', () => {
     expect(createPostIcon).toBeInTheDocument();
     expect(favoritesIcon).toBeInTheDocument();
     expect(editProfileIcon).toBeInTheDocument();
+  });
+
+  it('navigates to create post page when TweetButton is clicked', () => {
+    render(<SidebarNav isActive={isActiveMock} />);
+
+    const tweetButton = screen.getByTestId('mock-tweet-button');
+    fireEvent.click(tweetButton);
+
+    expect(mockNavigate).toHaveBeenCalledWith('/posts/create');
   });
 });
