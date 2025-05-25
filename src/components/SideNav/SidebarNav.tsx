@@ -1,4 +1,5 @@
 import {type JSX} from 'react';
+import {useNavigate} from 'react-router-dom';
 import {
     NavLink,
     TweetButton,
@@ -22,6 +23,12 @@ interface SidebarNavProps {
  * @returns {JSX.Element} The sidebar navigation component
  */
 const SidebarNav = ({isActive}: SidebarNavProps): JSX.Element => {
+    const navigate = useNavigate();
+
+    const handleTweetClick = () => {
+        navigate('/posts/create');
+    };
+
     return (
         <nav className="mt-4 sm:mt-5 px-1 sm:px-2">
             <NavLink
@@ -65,7 +72,7 @@ const SidebarNav = ({isActive}: SidebarNavProps): JSX.Element => {
                 <span className="hidden md:inline">Edit Profile</span>
             </NavLink>
 
-            <TweetButton/>
+            <TweetButton onClick={handleTweetClick}/>
         </nav>
     );
 };

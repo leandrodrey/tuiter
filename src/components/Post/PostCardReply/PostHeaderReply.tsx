@@ -1,6 +1,6 @@
 import {type JSX} from 'react';
-import type {Post} from '../../types/postTypes';
-import {Avatar} from '../../components/UI';
+import type {Post} from '../../../types/postTypes.ts';
+import {Avatar} from '../../UI';
 
 interface PostHeaderReplyProps {
     post: Post;

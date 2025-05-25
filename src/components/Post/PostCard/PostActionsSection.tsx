@@ -1,6 +1,6 @@
 import {type JSX} from 'react';
-import type {Post} from '../../types/postTypes';
-import PostActions from './PostActions';
+import type {Post} from '../../../types/postTypes.ts';
+import PostActions from '../PostActions.tsx';
 
 interface PostActionsSectionProps {
     post: Post;

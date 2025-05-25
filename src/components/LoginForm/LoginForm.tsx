@@ -1,6 +1,5 @@
 import {type JSX} from 'react';
-import './LoginForm.css';
-import LoginFormFields from './LoginFormFields';
+import LoginFormFields from './LoginFormFields/LoginFormFields.tsx';
 import {SubmitButton, RegistrationLink} from '../UI';
 import {Formik, Form, type FormikHelpers} from 'formik';
 import type {LoginFormData} from "../../types/formTypes.ts";

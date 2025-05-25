@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 import type { LoginFormData } from '../../types/formTypes';
 
 // Mock the dependencies
-vi.mock('./LoginFormFields', () => ({
+vi.mock('./LoginFormFields/LoginFormFields.tsx', () => ({
   default: vi.fn(() => <div data-testid="login-form-fields-mock" />)
 }));
 

@@ -1,7 +1,7 @@
 import type {JSX, ReactNode} from 'react';
-import Header from './components/Header/Header.tsx';
-import Main from './components/Main/Main.tsx';
-import Footer from './components/Footer/Footer.tsx';
+import Header from './components/Header/Header';
+import Main from './components/Main/Main';
+import Footer from './components/Footer/Footer';
 
 /**
  * Layout component that provides a Twitter-like structure for the application.
@@ -13,8 +13,8 @@ import Footer from './components/Footer/Footer.tsx';
  */
 const Layout = ({children}: { children: ReactNode }): JSX.Element => {
     return (
-        <div className="min-h-screen flex flex-col bg-[#15202b]">
-            <div className="flex flex-grow overflow-x-hidden">
+        <div data-testid="layout-container" className="min-h-screen flex flex-col bg-[#15202b]">
+            <div data-testid="layout-content" className="flex flex-grow overflow-x-hidden">
                 <Header/>
                 <Main>
                     {children}

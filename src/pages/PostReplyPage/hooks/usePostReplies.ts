@@ -12,6 +12,7 @@ import {useToast} from "../../../hooks/context/useToast";
 import {usePostInteractions} from "../../../hooks/post-feed/usePostInteractions";
 import type {PostWithReplies} from "../../../hooks/post-feed/usePostProcessor";
 import {useUser} from "../../../hooks/context/useUser";
+import {loadDraft, saveDraft, clearDraft} from '../../../utils/draftUtils';
 
 /**
  * Hook for managing post replies, including fetching, submission, and interactions
@@ -81,16 +82,16 @@ export const usePostReplies = () => {
 
     // Handle saving draft
     const handleSaveDraft = useCallback((values: PostFormData) => {
-        localStorage.setItem('replyDraft', values.message);
+        saveDraft(values, userInformation);
         toast.success('Draft saved successfully!');
-    }, [toast]);
+    }, [toast, userInformation]);
 
     // Handle clearing draft
     const handleClearDraft = useCallback((resetForm: (nextState?: { values: PostFormData }) => void) => {
-        localStorage.removeItem('replyDraft');
+        clearDraft(userInformation);
         resetForm({values: initialValues});
         toast.info('Draft cleared!');
-    }, [toast]);
+    }, [toast, userInformation]);
 
     // Create a wrapper function for setReplies that converts PostWithReplies objects back to Post objects
     const setPostsWithRepliesWrapper = useCallback((updaterFn: React.SetStateAction<PostWithReplies[]>) => {
@@ -120,11 +121,11 @@ export const usePostReplies = () => {
 
     // Load saved draft when the component mounts
     useEffect(() => {
-        const savedDraft = localStorage.getItem('replyDraft');
+        const savedDraft = loadDraft(userInformation);
         if (savedDraft) {
             initialValues.message = savedDraft;
         }
-    }, []);
+    }, [userInformation]);
 
     return {
         replies,

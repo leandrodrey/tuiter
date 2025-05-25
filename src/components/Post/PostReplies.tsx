@@ -1,6 +1,6 @@
 import {type JSX} from 'react';
 import type {Post} from '../../types/postTypes';
-import PostCardReply from './PostCardReply';
+import PostCardReply from './PostCardReply/PostCardReply.tsx';
 
 interface PostRepliesProps {
     replies: Post[];

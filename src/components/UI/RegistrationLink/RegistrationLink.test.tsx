@@ -1,10 +1,15 @@
 import {render, screen} from '@testing-library/react';
 import {describe, it, expect} from 'vitest';
+import {MemoryRouter} from 'react-router-dom';
 import RegistrationLink from './RegistrationLink';
 
 describe('RegistrationLink', () => {
     it('renders correctly', () => {
-        render(<RegistrationLink/>);
+        render(
+            <MemoryRouter>
+                <RegistrationLink/>
+            </MemoryRouter>
+        );
 
         // Check if the container div is rendered
         const container = screen.getByText('¿No tienes cuenta?').parentElement;
@@ -17,7 +22,11 @@ describe('RegistrationLink', () => {
     });
 
     it('renders the prompt text', () => {
-        render(<RegistrationLink/>);
+        render(
+            <MemoryRouter>
+                <RegistrationLink/>
+            </MemoryRouter>
+        );
 
         const promptText = screen.getByText('¿No tienes cuenta?');
         expect(promptText).toBeInTheDocument();
@@ -27,7 +36,11 @@ describe('RegistrationLink', () => {
     });
 
     it('renders the registration link', () => {
-        render(<RegistrationLink/>);
+        render(
+            <MemoryRouter>
+                <RegistrationLink/>
+            </MemoryRouter>
+        );
 
         const link = screen.getByText('Regístrate');
         expect(link).toBeInTheDocument();
@@ -42,7 +55,11 @@ describe('RegistrationLink', () => {
     });
 
     it('has the correct link destination', () => {
-        render(<RegistrationLink/>);
+        render(
+            <MemoryRouter>
+                <RegistrationLink/>
+            </MemoryRouter>
+        );
 
         const link = screen.getByText('Regístrate');
         expect(link).toHaveAttribute('href', '/users/register');

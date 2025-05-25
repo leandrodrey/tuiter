@@ -1,5 +1,5 @@
 import {render, screen, fireEvent} from '@testing-library/react';
-import {describe, it, expect, vi} from 'vitest';
+import {describe, it, expect, vi, beforeEach} from 'vitest';
 import FavoriteButton from './FavoriteButton';
 
 // Define the type for the hook return value
@@ -11,16 +11,20 @@ type UseFavoriteButtonReturn = {
     handleMouseLeave: () => void;
 };
 
+// Import the hook first so we can get its type
+import {useFavoriteButton} from '../../../hooks/favorites/useFavoriteButton';
+
 // Mock the useFavoriteButton hook
 vi.mock('../../../hooks/favorites/useFavoriteButton', () => ({
     useFavoriteButton: vi.fn()
 }));
 
-// Import the mocked hook
-import {useFavoriteButton} from '../../../hooks/favorites/useFavoriteButton';
-
-// Cast the mocked hook to the correct type
-const mockedUseFavoriteButton = useFavoriteButton as vi.MockedFunction<typeof useFavoriteButton>;
+// Get the mocked hook with proper typing
+// Using a more specific type that matches the structure of the mocked function
+type MockFunction = {
+    mockReturnValue: (value: UseFavoriteButtonReturn) => void;
+};
+const mockedUseFavoriteButton = useFavoriteButton as unknown as MockFunction;
 
 describe('FavoriteButton', () => {
     // Default props for testing
