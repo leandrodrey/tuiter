@@ -203,6 +203,8 @@ La integración entre Vercel y GitHub es uno de los puntos fuertes de la platafo
   * Facilitar la colaboración.
 
 Ejemplo de Reporte
+![image](https://github.com/user-attachments/assets/f9d33c2a-7328-4b52-ae0a-5735e504d687)
+
 ### Consideraciones Adicionales
 
 * **Seguridad:** Además de la gestión segura de variables de entorno y HTTPS por defecto, Vercel ofrece protección contra ataques comunes.
