@@ -108,7 +108,7 @@ export async function apiGetFeed(params?: FeedParams) {
 
 ## 🧪 Pruebas (Testing)
 
-[![codecov](https://codecov.io/gh/leandrodrey/tuiter/graph/badge.svg?token=HE90Y9GXHQ)](https://codecov.io/gh/leandrodrey/tuiter)
+[![codecov](https://codecov.io/gh/leandrodrey/tuiter/graph/badge.svg?token=HE90Y9GXHQ)](https://codecov.io/gh/leandrodrey/tuiter) Cobertura actual del proyecto
 
 Este proyecto utiliza un conjunto de herramientas y configuraciones para asegurar la calidad y el correcto funcionamiento del código a través de pruebas automatizadas.
 
