@@ -1,7 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import PostHeader from './PostHeader';
-import type { Post } from '../../../types/postTypes';
+import PostHeader from './PostHeader.tsx';
+import type { Post } from '../../../types/postTypes.ts';
+import { BrowserRouter } from 'react-router-dom';
 
 // Mock the UI components
 vi.mock('../../UI', () => ({
@@ -33,7 +34,8 @@ describe('PostHeader', () => {
     date: '2023-01-01T00:00:00Z',
     likes: 5,
     liked: false,
-    replies_count: 0
+    replies_count: 0,
+    parent_id: 0
   };
 
   // Mock the onAddToFavorites function
@@ -44,7 +46,11 @@ describe('PostHeader', () => {
   });
 
   it('renders the post author information', () => {
-    render(<PostHeader post={mockPost} onAddToFavorites={mockOnAddToFavorites} />);
+    render(
+      <BrowserRouter>
+        <PostHeader post={mockPost} onAddToFavorites={mockOnAddToFavorites} />
+      </BrowserRouter>
+    );
 
     // Check if the author name is displayed
     expect(screen.getByText('Test User')).toBeInTheDocument();
@@ -58,7 +64,11 @@ describe('PostHeader', () => {
   });
 
   it('passes correct props to Avatar component', () => {
-    render(<PostHeader post={mockPost} onAddToFavorites={mockOnAddToFavorites} />);
+    render(
+      <BrowserRouter>
+        <PostHeader post={mockPost} onAddToFavorites={mockOnAddToFavorites} />
+      </BrowserRouter>
+    );
 
     const avatar = screen.getByTestId('mock-avatar');
     expect(avatar).toHaveAttribute('data-username', 'Test User');
@@ -67,7 +77,11 @@ describe('PostHeader', () => {
   });
 
   it('passes correct props to FavoriteButton component', () => {
-    render(<PostHeader post={mockPost} onAddToFavorites={mockOnAddToFavorites} />);
+    render(
+      <BrowserRouter>
+        <PostHeader post={mockPost} onAddToFavorites={mockOnAddToFavorites} />
+      </BrowserRouter>
+    );
 
     const favoriteButton = screen.getByTestId('mock-favorite-button');
     expect(favoriteButton).toHaveAttribute('data-author', 'Test User');
@@ -75,7 +89,11 @@ describe('PostHeader', () => {
   });
 
   it('calls onAddToFavorites when FavoriteButton is clicked', () => {
-    render(<PostHeader post={mockPost} onAddToFavorites={mockOnAddToFavorites} />);
+    render(
+      <BrowserRouter>
+        <PostHeader post={mockPost} onAddToFavorites={mockOnAddToFavorites} />
+      </BrowserRouter>
+    );
 
     const favoriteButton = screen.getByTestId('mock-favorite-button');
     favoriteButton.click();
@@ -84,7 +102,11 @@ describe('PostHeader', () => {
   });
 
   it('applies correct styling to the container', () => {
-    const { container } = render(<PostHeader post={mockPost} onAddToFavorites={mockOnAddToFavorites} />);
+    const { container } = render(
+      <BrowserRouter>
+        <PostHeader post={mockPost} onAddToFavorites={mockOnAddToFavorites} />
+      </BrowserRouter>
+    );
 
     // The outermost div is the container (first child of the render container)
     const headerContainer = container.firstChild;
@@ -101,7 +123,11 @@ describe('PostHeader', () => {
       author: 'Multiple Word Name'
     };
 
-    render(<PostHeader post={postWithSpaces} onAddToFavorites={mockOnAddToFavorites} />);
+    render(
+      <BrowserRouter>
+        <PostHeader post={postWithSpaces} onAddToFavorites={mockOnAddToFavorites} />
+      </BrowserRouter>
+    );
 
     // Check if the username is displayed without spaces
     expect(screen.getByText(/@MultipleWordName/)).toBeInTheDocument();

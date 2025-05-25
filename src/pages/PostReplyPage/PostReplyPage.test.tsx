@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
+import { MemoryRouter } from 'react-router-dom';
 import PostReplyPage from './PostReplyPage';
 import { ObjectSchema } from 'yup';
 import { PostFormData } from '../../types/formTypes';
@@ -33,6 +34,11 @@ vi.mock('../../components/UI', () => ({
   ),
   EmptyMessage: ({ children }) => (
     <div data-testid="empty-message">{children}</div>
+  ),
+  Avatar: ({ username, avatarUrl, size }) => (
+    <div data-testid="avatar" data-username={username} data-avatar-url={avatarUrl} data-size={size}>
+      Avatar
+    </div>
   )
 }));
 
@@ -60,15 +66,15 @@ vi.mock('../../components/PostForm/PostForm', () => ({
   )
 }));
 
-vi.mock('../../components/Post/PostReplies', () => ({
+vi.mock('../../components/PostReply/PostListReplies.tsx', () => ({
   __esModule: true,
   default: ({ replies, onLike }) => (
     <div
-      data-testid="post-replies"
+      data-testid="post-list-replies"
       data-replies-count={replies.length}
       data-has-on-like={!!onLike}
     >
-      Post Replies
+      Post List Replies
     </div>
   )
 }));
@@ -89,7 +95,11 @@ describe('PostReplyPage', () => {
       initialValues: { content: '', parent_id: 100 }
     });
 
-    render(<PostReplyPage />);
+    render(
+      <MemoryRouter>
+        <PostReplyPage />
+      </MemoryRouter>
+    );
 
     // Check if the loader is rendered
     const loader = screen.getByTestId('loader');
@@ -113,7 +123,11 @@ describe('PostReplyPage', () => {
       initialValues: { content: '', parent_id: 100 }
     });
 
-    render(<PostReplyPage />);
+    render(
+      <MemoryRouter>
+        <PostReplyPage />
+      </MemoryRouter>
+    );
 
     // Check if the error message is displayed
     const errorMessage = screen.getByText('Failed to load post');
@@ -156,7 +170,11 @@ describe('PostReplyPage', () => {
       initialValues: { content: '', parent_id: 100 }
     });
 
-    render(<PostReplyPage />);
+    render(
+      <MemoryRouter>
+        <PostReplyPage />
+      </MemoryRouter>
+    );
 
     // Check if the page header is rendered with correct props
     const pageHeader = screen.getByTestId('page-header');
@@ -178,11 +196,11 @@ describe('PostReplyPage', () => {
     const heading = screen.getByText('Other Replies');
     expect(heading).toBeInTheDocument();
 
-    // Check if the post replies component is rendered with correct props
-    const postReplies = screen.getByTestId('post-replies');
-    expect(postReplies).toBeInTheDocument();
-    expect(postReplies).toHaveAttribute('data-replies-count', '2');
-    expect(postReplies).toHaveAttribute('data-has-on-like', 'true');
+    // Check if the post list replies component is rendered with correct props
+    const postListReplies = screen.getByTestId('post-list-replies');
+    expect(postListReplies).toBeInTheDocument();
+    expect(postListReplies).toHaveAttribute('data-replies-count', '2');
+    expect(postListReplies).toHaveAttribute('data-has-on-like', 'true');
   });
 
   it('renders empty message when there are no replies', () => {
@@ -200,7 +218,11 @@ describe('PostReplyPage', () => {
       initialValues: { content: '', parent_id: 100 }
     });
 
-    render(<PostReplyPage />);
+    render(
+      <MemoryRouter>
+        <PostReplyPage />
+      </MemoryRouter>
+    );
 
     // Check if the empty message is rendered
     const emptyMessage = screen.getByTestId('empty-message');

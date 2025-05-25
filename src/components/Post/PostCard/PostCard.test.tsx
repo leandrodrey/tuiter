@@ -1,16 +1,23 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { MemoryRouter } from 'react-router-dom';
 import PostCard from './PostCard.tsx';
 import type { Post } from '../../../types/postTypes.ts';
 
-// Mock the context and hooks
-vi.mock('react', async () => {
-  const actual = await vi.importActual('react');
-  return {
-    ...actual,
-    useContext: vi.fn(() => null) // Return null to simulate no context
-  };
-});
+// Mock the usePostContext hook
+vi.mock('../../../pages/FeedPage/hooks/usePostContext.ts', () => ({
+  usePostContext: vi.fn(() => ({
+    posts: [],
+    loading: false,
+    error: null,
+    hasMore: false,
+    initialLoading: false,
+    fetchMorePosts: vi.fn(),
+    refreshFeed: vi.fn(),
+    handleLikePost: vi.fn(),
+    handleAddToFavorites: vi.fn()
+  }))
+}));
 
 // Mock the usePostReplies hook
 vi.mock('../../../hooks/post-replies/usePostReplies.ts', () => ({
@@ -34,7 +41,7 @@ vi.mock('./PostHeader', () => ({
   ))
 }));
 
-vi.mock('../PostContent.tsx', () => ({
+vi.mock('../../PostContent/PostContent.tsx', () => ({
   default: vi.fn(({ message }) => (
     <div
       data-testid="mock-post-content"
@@ -43,24 +50,11 @@ vi.mock('../PostContent.tsx', () => ({
   ))
 }));
 
-vi.mock('./PostActionsSection', () => ({
-  default: vi.fn(({ post, onLike, onToggleReplies }) => (
+vi.mock('../../PostActions/PostActions.tsx', () => ({
+  default: vi.fn(({ post, onLike }) => (
     <div
-      data-testid="mock-post-actions-section"
+      data-testid="mock-post-actions"
       data-post-id={post.id}
-      data-on-like={!!onLike}
-      data-on-toggle-replies={!!onToggleReplies}
-    />
-  ))
-}));
-
-vi.mock('../PostRepliesSection.tsx', () => ({
-  default: vi.fn(({ showReplies, replies, loadingReplies, onLike }) => (
-    <div
-      data-testid="mock-post-replies-section"
-      data-show-replies={showReplies}
-      data-replies-count={replies.length}
-      data-loading-replies={loadingReplies}
       data-on-like={!!onLike}
     />
   ))
@@ -80,25 +74,9 @@ describe('PostCard', () => {
     parent_id: 0
   };
 
-  const mockReplies: Post[] = [
-    {
-      id: 2,
-      author: 'user2',
-      avatar_url: 'https://example.com/avatar2.jpg',
-      message: 'Reply 1',
-      date: '2023-01-02T00:00:00Z',
-      likes: 1,
-      liked: false,
-      replies_count: 0,
-      parent_id: 1
-    }
-  ];
 
   const defaultProps = {
-    post: mockPost,
-    replies: mockReplies,
-    onLike: vi.fn(),
-    onAddToFavorites: vi.fn()
+    post: mockPost
   };
 
   beforeEach(() => {
@@ -106,7 +84,11 @@ describe('PostCard', () => {
   });
 
   it('renders correctly with required props', () => {
-    render(<PostCard {...defaultProps} />);
+    render(
+      <MemoryRouter>
+        <PostCard {...defaultProps} />
+      </MemoryRouter>
+    );
 
     // Check if the article element is rendered
     const article = screen.getByRole('article');
@@ -119,17 +101,19 @@ describe('PostCard', () => {
     // Check if all sub-components are rendered
     const postHeader = screen.getByTestId('mock-post-header');
     const postContent = screen.getByTestId('mock-post-content');
-    const postActionsSection = screen.getByTestId('mock-post-actions-section');
-    const postRepliesSection = screen.getByTestId('mock-post-replies-section');
+    const postActions = screen.getByTestId('mock-post-actions');
 
     expect(postHeader).toBeInTheDocument();
     expect(postContent).toBeInTheDocument();
-    expect(postActionsSection).toBeInTheDocument();
-    expect(postRepliesSection).toBeInTheDocument();
+    expect(postActions).toBeInTheDocument();
   });
 
   it('passes correct props to sub-components', () => {
-    render(<PostCard {...defaultProps} />);
+    render(
+      <MemoryRouter>
+        <PostCard {...defaultProps} />
+      </MemoryRouter>
+    );
 
     // Check PostHeader props
     const postHeader = screen.getByTestId('mock-post-header');
@@ -141,39 +125,23 @@ describe('PostCard', () => {
     const postContent = screen.getByTestId('mock-post-content');
     expect(postContent).toHaveAttribute('data-message', 'Test message');
 
-    // Check PostActionsSection props
-    const postActionsSection = screen.getByTestId('mock-post-actions-section');
-    expect(postActionsSection).toHaveAttribute('data-post-id', '1');
-    expect(postActionsSection).toHaveAttribute('data-on-like', 'true');
-    expect(postActionsSection).toHaveAttribute('data-on-toggle-replies', 'true');
-
-    // Check PostRepliesSection props
-    const postRepliesSection = screen.getByTestId('mock-post-replies-section');
-    expect(postRepliesSection).toHaveAttribute('data-show-replies', 'false');
-    expect(postRepliesSection).toHaveAttribute('data-replies-count', '1');
-    expect(postRepliesSection).toHaveAttribute('data-loading-replies', 'false');
-    expect(postRepliesSection).toHaveAttribute('data-on-like', 'true');
+    // Check PostActions props
+    const postActions = screen.getByTestId('mock-post-actions');
+    expect(postActions).toHaveAttribute('data-post-id', '1');
+    expect(postActions).toHaveAttribute('data-on-like', 'true');
   });
 
-  it('works without optional props', () => {
-    // Create a console.warn spy to check for warnings
-    const consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
-
-    render(<PostCard post={mockPost} />);
-
-    // Check if warning was logged
-    expect(consoleWarnSpy).toHaveBeenCalledWith(
-      expect.stringContaining('PostCard is being used outside of a PostProvider context without required props')
+  it('works with minimal props', () => {
+    render(
+      <MemoryRouter>
+        <PostCard post={mockPost} />
+      </MemoryRouter>
     );
 
-    // Check if all sub-components are still rendered
+    // Check if all sub-components are rendered
     expect(screen.getByTestId('mock-post-header')).toBeInTheDocument();
     expect(screen.getByTestId('mock-post-content')).toBeInTheDocument();
-    expect(screen.getByTestId('mock-post-actions-section')).toBeInTheDocument();
-    expect(screen.getByTestId('mock-post-replies-section')).toBeInTheDocument();
-
-    // Restore console.warn
-    consoleWarnSpy.mockRestore();
+    expect(screen.getByTestId('mock-post-actions')).toBeInTheDocument();
   });
 
   // This test is removed because we can't easily verify the arguments passed to the hook

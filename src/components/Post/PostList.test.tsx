@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import PostList from './PostList';
-import type { PostWithReplies } from '../../hooks/post-feed/usePostProcessor';
+import type { Post } from '../../types/postTypes';
 
 // Mock the usePostContext hook
 vi.mock('../../pages/FeedPage/hooks/usePostContext.ts', () => ({
@@ -15,11 +15,10 @@ vi.mock('../../components/UI', () => ({
 
 // Mock the PostCard component
 vi.mock('./PostCard/PostCard.tsx', () => ({
-  default: vi.fn(({ post, replies }) => (
+  default: vi.fn(({ post }) => (
     <div
       data-testid="mock-post-card"
       data-post-id={post.id}
-      data-replies-count={replies.length}
     />
   ))
 }));
@@ -58,46 +57,28 @@ describe('PostList', () => {
 
   it('renders PostCards when there are posts', () => {
     // Create mock posts
-    const mockPosts: PostWithReplies[] = [
+    const mockPosts: Post[] = [
       {
-        post: {
-          id: 1,
-          author: 'user1',
-          avatar_url: 'https://example.com/avatar1.jpg',
-          message: 'Test post 1',
-          date: '2023-01-01T00:00:00Z',
-          likes: 5,
-          liked: false,
-          parent_id: 0,
-          replies_count: 2
-        },
-        replies: [
-          {
-            id: 3,
-            author: 'user3',
-            avatar_url: 'https://example.com/avatar3.jpg',
-            message: 'Reply to post 1',
-            date: '2023-01-02T00:00:00Z',
-            likes: 1,
-            liked: false,
-            parent_id: 1,
-            replies_count: 0
-          }
-        ]
+        id: 1,
+        author: 'user1',
+        avatar_url: 'https://example.com/avatar1.jpg',
+        message: 'Test post 1',
+        date: '2023-01-01T00:00:00Z',
+        likes: 5,
+        liked: false,
+        parent_id: 0,
+        replies_count: 2
       },
       {
-        post: {
-          id: 2,
-          author: 'user2',
-          avatar_url: 'https://example.com/avatar2.jpg',
-          message: 'Test post 2',
-          date: '2023-01-03T00:00:00Z',
-          likes: 10,
-          liked: true,
-          parent_id: 0,
-          replies_count: 0
-        },
-        replies: []
+        id: 2,
+        author: 'user2',
+        avatar_url: 'https://example.com/avatar2.jpg',
+        message: 'Test post 2',
+        date: '2023-01-03T00:00:00Z',
+        likes: 10,
+        liked: true,
+        parent_id: 0,
+        replies_count: 0
       }
     ];
 
@@ -126,10 +107,6 @@ describe('PostList', () => {
     // Check that the correct post IDs are rendered
     expect(postCards[0]).toHaveAttribute('data-post-id', '1');
     expect(postCards[1]).toHaveAttribute('data-post-id', '2');
-
-    // Check that the correct number of replies are passed
-    expect(postCards[0]).toHaveAttribute('data-replies-count', '1');
-    expect(postCards[1]).toHaveAttribute('data-replies-count', '0');
   });
 
   it('applies the correct styling to the container', () => {
@@ -137,18 +114,15 @@ describe('PostList', () => {
     (usePostContext as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
       posts: [
         {
-          post: {
-            id: 1,
-            author: 'user1',
-            avatar_url: 'https://example.com/avatar1.jpg',
-            message: 'Test post',
-            date: '2023-01-01T00:00:00Z',
-            likes: 5,
-            liked: false,
-            parent_id: 0,
-            replies_count: 0
-          },
-          replies: []
+          id: 1,
+          author: 'user1',
+          avatar_url: 'https://example.com/avatar1.jpg',
+          message: 'Test post',
+          date: '2023-01-01T00:00:00Z',
+          likes: 5,
+          liked: false,
+          parent_id: 0,
+          replies_count: 0
         }
       ],
       loading: false,

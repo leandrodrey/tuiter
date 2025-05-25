@@ -2,6 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import UserMenu from './UserMenu.tsx';
 import type { UserInformation } from '../../../types/userTypes.ts';
+import { BrowserRouter } from 'react-router-dom';
 
 // Mock the hooks and UI components
 vi.mock('../../../hooks/context/useLogout', () => ({
@@ -50,17 +51,23 @@ describe('UserMenu', () => {
 
   it('renders null when not authenticated', () => {
     const { container } = render(
-      <UserMenu
-        {...defaultProps}
-        isAuthenticated={false}
-      />
+      <BrowserRouter>
+        <UserMenu
+          {...defaultProps}
+          isAuthenticated={false}
+        />
+      </BrowserRouter>
     );
 
     expect(container.firstChild).toBeNull();
   });
 
   it('renders correctly when authenticated', () => {
-    render(<UserMenu {...defaultProps} />);
+    render(
+      <BrowserRouter>
+        <UserMenu {...defaultProps} />
+      </BrowserRouter>
+    );
 
     // Check if the container is rendered
     const container = screen.getByTestId('mock-avatar').closest('div');
@@ -87,10 +94,12 @@ describe('UserMenu', () => {
 
   it('uses fallback values when userInformation is incomplete', () => {
     render(
-      <UserMenu
-        {...defaultProps}
-        userInformation={{ id: 1 }}
-      />
+      <BrowserRouter>
+        <UserMenu
+          {...defaultProps}
+          userInformation={{ id: 1 }}
+        />
+      </BrowserRouter>
     );
 
     // Check if fallback values are used
@@ -103,7 +112,11 @@ describe('UserMenu', () => {
   });
 
   it('calls onLogout when logout button is clicked', () => {
-    render(<UserMenu {...defaultProps} />);
+    render(
+      <BrowserRouter>
+        <UserMenu {...defaultProps} />
+      </BrowserRouter>
+    );
 
     // Click the logout button
     const logoutButton = screen.getByTestId('mock-logout-button');

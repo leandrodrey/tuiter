@@ -1,57 +1,63 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import CommentButton from './CommentButton';
+import CommentButton from './CommentButton.tsx';
+import { BrowserRouter } from 'react-router-dom';
 
 describe('CommentButton', () => {
   const defaultProps = {
-    postId: 1,
-    repliesCount: 5
+    postId: 1
   };
 
   it('renders correctly with required props', () => {
-    render(<CommentButton {...defaultProps} />);
+    render(
+      <BrowserRouter>
+        <CommentButton {...defaultProps} />
+      </BrowserRouter>
+    );
 
-    // Check if the component is rendered
-    const container = screen.getByRole('link');
+    // Check if the component is rendered with the correct classes
+    const container = screen.getByTestId('comment-button-container');
     expect(container).toBeInTheDocument();
-    expect(container).toHaveAttribute('href', '/posts/1/reply');
+    expect(container).toHaveClass('flex-1');
     expect(container).toHaveClass('flex');
     expect(container).toHaveClass('items-center');
+    expect(container).toHaveClass('text-xs');
+    expect(container).toHaveClass('text-gray-400');
+    expect(container).toHaveClass('hover:text-blue-400');
+    expect(container).toHaveClass('transition');
+    expect(container).toHaveClass('duration-350');
+    expect(container).toHaveClass('ease-in-out');
+
+    // Check if the link is rendered correctly
+    const link = container.querySelector('a');
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute('href', '/posts/1/reply');
+    expect(link).toHaveClass('flex');
+    expect(link).toHaveClass('items-center');
 
     // Check if the SVG icon is rendered
-    const svg = container.querySelector('svg');
+    const svg = link.querySelector('svg');
     expect(svg).toBeInTheDocument();
     expect(svg).toHaveClass('w-5');
     expect(svg).toHaveClass('h-5');
     expect(svg).toHaveClass('mr-2');
-
-    // Check if the replies count is displayed
-    expect(container).toHaveTextContent('5');
   });
 
-  it('does not display replies count when it is 0', () => {
-    render(<CommentButton postId={1} repliesCount={0} />);
+  it('renders correctly with optional parentId prop', () => {
+    const propsWithParentId = {
+      ...defaultProps,
+      parentId: 2
+    };
 
-    const container = screen.getByRole('link');
-    expect(container).toHaveTextContent('');
-  });
-
-  it('renders an empty div when parentId is provided', () => {
-    const { container } = render(
-      <CommentButton postId={1} repliesCount={5} parentId={2} />
+    render(
+      <BrowserRouter>
+        <CommentButton {...propsWithParentId} />
+      </BrowserRouter>
     );
 
-    // Check if an empty div is rendered
-    const emptyDiv = container.querySelector('div');
-    expect(emptyDiv).toBeInTheDocument();
-    expect(emptyDiv).toHaveClass('flex-1');
-    expect(emptyDiv).toBeEmptyDOMElement();
-
-    // Check that the link is not rendered
+    // The link should still point to the same URL since parentId doesn't affect the URL in the current implementation
+    const container = screen.getByTestId('comment-button-container');
     const link = container.querySelector('a');
-    expect(link).not.toBeInTheDocument();
+    expect(link).toHaveAttribute('href', '/posts/1/reply');
   });
-
-  // The CommentButton component doesn't accept data-testid directly
-  // This test is removed as it's not applicable
 });

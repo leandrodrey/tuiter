@@ -1,7 +1,7 @@
 import {type ReactNode, type JSX} from 'react';
 import {PostContext} from './PostContext.ts';
 import {useFeedPosts} from '../hooks/useFeedPosts.ts';
-import {usePostInteractions} from '../../../hooks/post-feed/usePostInteractions.ts';
+import {usePostInteractionsFeed} from '../../../hooks/post-feed/usePostInteractionsFeed.ts';
 
 interface PostProviderProps {
     children: ReactNode;
@@ -16,8 +16,8 @@ interface PostProviderProps {
  */
 export const PostProvider = ({children}: PostProviderProps): JSX.Element => {
     const {
-        postsWithReplies: posts,
-        setPostsWithReplies: setPosts,
+        posts,
+        setPosts,
         loading,
         error,
         hasMore,
@@ -29,7 +29,7 @@ export const PostProvider = ({children}: PostProviderProps): JSX.Element => {
     const {
         handleLikePost,
         handleAddToFavorites
-    } = usePostInteractions(posts, setPosts);
+    } = usePostInteractionsFeed(posts, setPosts);
 
     const contextValue = {
         posts,

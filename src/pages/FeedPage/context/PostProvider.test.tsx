@@ -5,24 +5,28 @@ import { PostContext } from './PostContext';
 import { useContext } from 'react';
 
 // Mock the hooks used by PostProvider
+const fetchMorePostsMock = vi.fn();
+const refreshFeedMock = vi.fn();
+const handleLikePostMock = vi.fn();
+const handleAddToFavoritesMock = vi.fn();
+
 vi.mock('../hooks/useFeedPosts.ts', () => ({
   useFeedPosts: vi.fn(() => ({
-    postsWithReplies: [],
-    setPostsWithReplies: vi.fn(),
+    posts: [],
+    setPosts: vi.fn(),
     loading: false,
-    loadingMore: false,
     error: null,
     hasMore: true,
     initialLoading: false,
-    fetchMorePosts: vi.fn(),
-    refreshFeed: vi.fn()
+    fetchMorePosts: fetchMorePostsMock,
+    refreshFeed: refreshFeedMock
   }))
 }));
 
-vi.mock('../../../hooks/post-feed/usePostInteractions.ts', () => ({
-  usePostInteractions: vi.fn(() => ({
-    handleLikePost: vi.fn(),
-    handleAddToFavorites: vi.fn()
+vi.mock('../../../hooks/post-feed/usePostInteractionsFeed.ts', () => ({
+  usePostInteractionsFeed: vi.fn(() => ({
+    handleLikePost: handleLikePostMock,
+    handleAddToFavorites: handleAddToFavoritesMock
   }))
 }));
 
@@ -73,12 +77,6 @@ describe('PostProvider', () => {
   });
 
   it('provides functions that can be called by children', () => {
-    // Skip this test for now
-    // This test is failing because we can't dynamically mock modules in Vitest
-    // We would need to refactor the PostProvider component to accept the hooks as props
-    // or use a different testing approach
-    return;
-
     render(
       <PostProvider>
         <TestConsumer />

@@ -2,6 +2,7 @@ import {type JSX} from 'react';
 import type {UserInformation} from "../../../types/userTypes.ts";
 import {useLogout} from "../../../hooks/context/useLogout.ts";
 import {Avatar, LogoutButton} from '../../UI';
+import {Link} from 'react-router-dom';
 
 interface UserMenuProps {
     userInformation: UserInformation | null;
@@ -30,7 +31,7 @@ const UserMenu = ({userInformation, onLogout, isAuthenticated}: UserMenuProps): 
     return (
         <div className="absolute" style={{bottom: '1rem'}}>
             <div className="flex-shrink-0 flex hover:bg-gray-800 rounded-full px-2 sm:px-4 py-2 sm:py-3 mt-8 sm:mt-12 mr-1 sm:mr-2">
-                <a href="#" className="flex-shrink-0 group block">
+                <Link to="users/edit" className="flex-shrink-0 group block">
                     <div className="flex items-center">
                         <div>
                             <Avatar
@@ -48,7 +49,7 @@ const UserMenu = ({userInformation, onLogout, isAuthenticated}: UserMenuProps): 
                             </p>
                         </div>
                     </div>
-                </a>
+                </Link>
                 <LogoutButton
                     onLogout={handleLogout}
                     color="default"

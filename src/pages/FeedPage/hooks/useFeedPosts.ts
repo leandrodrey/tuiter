@@ -1,7 +1,6 @@
 import {useState, useEffect, useCallback} from 'react';
 import {apiGetFeed} from '../../../services/FeedService.ts';
 import {useToast} from '../../../hooks/context/useToast.ts';
-import {usePostProcessor, type PostWithReplies} from '../../../hooks/post-feed/usePostProcessor.ts';
 import type {Post} from '../../../types/postTypes';
 
 const POSTS_PER_PAGE = 10;
@@ -11,7 +10,7 @@ const POSTS_PER_PAGE = 10;
  * @returns State and functions for managing feed posts
  */
 export const useFeedPosts = () => {
-    const [postsWithReplies, setPostsWithReplies] = useState<PostWithReplies[]>([]);
+    const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [loadingMore, setLoadingMore] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
@@ -20,27 +19,26 @@ export const useFeedPosts = () => {
     const [initialLoading, setInitialLoading] = useState<boolean>(true);
 
     const toast = useToast();
-    const {processPostsResponse} = usePostProcessor();
 
     /**
      * Handles the API response and updates state accordingly
      * @param response The API response
      * @param isInitialLoad Whether this is the initial load
      * @param isRefresh Whether this is a refresh operation
-     * @returns Processed posts with replies
+     * @returns Posts from the API
      */
     const handleApiResponse = useCallback((
         response: Post[],
         isInitialLoad = false,
         isRefresh = false
-    ): PostWithReplies[] => {
+    ): Post[] => {
         if (response.length === 0) {
             setHasMore(false);
 
             if (isInitialLoad) {
                 setError('No posts available at the moment.');
             } else if (isRefresh) {
-                setPostsWithReplies([]);
+                setPosts([]);
                 toast.info('No posts available at the moment.');
             }
             return [];
@@ -50,8 +48,8 @@ export const useFeedPosts = () => {
             setHasMore(false);
         }
 
-        return processPostsResponse(response);
-    }, [processPostsResponse, toast]);
+        return response;
+    }, [toast]);
 
     /**
      * Common function to fetch posts with error handling
@@ -118,7 +116,7 @@ export const useFeedPosts = () => {
         const newPosts = await fetchPosts(nextPage, {isLoadingMore: true});
 
         if (newPosts) {
-            setPostsWithReplies(prevPosts => [...prevPosts, ...newPosts]);
+            setPosts(prevPosts => [...prevPosts, ...newPosts]);
             setPage(nextPage);
         }
     }, [fetchPosts, hasMore, loadingMore, loading, page]);
@@ -135,7 +133,7 @@ export const useFeedPosts = () => {
         const refreshedPosts = await fetchPosts(1, {isRefresh: true});
 
         if (refreshedPosts) {
-            setPostsWithReplies(refreshedPosts);
+            setPosts(refreshedPosts);
         }
     }, [fetchPosts, loading, loadingMore]);
 
@@ -144,7 +142,7 @@ export const useFeedPosts = () => {
             const initialPosts = await fetchPosts(1, {isInitialLoad: true});
 
             if (initialPosts) {
-                setPostsWithReplies(initialPosts);
+                setPosts(initialPosts);
             }
         };
 
@@ -152,8 +150,8 @@ export const useFeedPosts = () => {
     }, [fetchPosts]);
 
     return {
-        postsWithReplies,
-        setPostsWithReplies,
+        posts,
+        setPosts,
         loading,
         loadingMore,
         error,
