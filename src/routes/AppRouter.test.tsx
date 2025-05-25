@@ -4,49 +4,49 @@ import { MemoryRouter } from 'react-router-dom';
 import AppRouter from './AppRouter';
 
 // Mock all the page components
-vi.mock('../pages/NotFoundPage/NotFoundPage.tsx', () => ({
+vi.mock('../pages/NotFoundPage/NotFoundPage', () => ({
   default: () => <div data-testid="not-found-page">Not Found Page</div>
 }));
 
-vi.mock('../pages/FeedPage/FeedPage.tsx', () => ({
+vi.mock('../pages/FeedPage/FeedPage', () => ({
   default: () => <div data-testid="feed-page">Feed Page</div>
 }));
 
-vi.mock('../pages/CreatePostPage/CreatePostPage.tsx', () => ({
+vi.mock('../pages/CreatePostPage/CreatePostPage', () => ({
   default: () => <div data-testid="create-post-page">Create Post Page</div>
 }));
 
-vi.mock('../pages/UserRegistrationPage/UserRegistrationPage.tsx', () => ({
+vi.mock('../pages/UserRegistrationPage/UserRegistrationPage', () => ({
   default: () => <div data-testid="user-registration-page">User Registration Page</div>
 }));
 
-vi.mock('../pages/UserEditPage/UserEditPage.tsx', () => ({
+vi.mock('../pages/UserEditPage/UserEditPage', () => ({
   default: () => <div data-testid="user-edit-page">User Edit Page</div>
 }));
 
-vi.mock('../pages/UserFavoritesPage/UserFavoritesPage.tsx', () => ({
+vi.mock('../pages/UserFavoritesPage/UserFavoritesPage', () => ({
   default: () => <div data-testid="user-favorites-page">User Favorites Page</div>
 }));
 
-vi.mock('../pages/PostReplyPage/PostReplyPage.tsx', () => ({
+vi.mock('../pages/PostReplyPage/PostReplyPage', () => ({
   default: () => <div data-testid="post-reply-page">Post Reply Page</div>
 }));
 
-vi.mock('../pages/LoginPage/LoginPage.tsx', () => ({
+vi.mock('../pages/LoginPage/LoginPage', () => ({
   default: () => <div data-testid="login-page">Login Page</div>
 }));
 
 // Mock the layouts
-vi.mock('../pages/FeedPage/layouts/FeedPageLayout.tsx', () => ({
+vi.mock('../pages/FeedPage/layouts/FeedPageLayout', () => ({
   default: ({ children }) => <div data-testid="feed-page-layout">{children}</div>
 }));
 
-vi.mock('../pages/PostReplyPage/layouts/PostReplyLayout.tsx', () => ({
+vi.mock('../pages/PostReplyPage/layouts/PostReplyLayout', () => ({
   default: ({ children }) => <div data-testid="post-reply-layout">{children}</div>
 }));
 
 // Mock the AuthGuard
-vi.mock('./AuthGuard.tsx', () => ({
+vi.mock('./AuthGuard', () => ({
   default: ({ children }) => <div data-testid="auth-guard">{children}</div>
 }));
 

@@ -4,7 +4,7 @@ import PostActions from '../PostActions.tsx';
 import type { Post } from '../../../types/postTypes.ts';
 
 // Mock the hooks
-vi.mock('../../hooks/post-replies/usePostActions', () => ({
+vi.mock('../../../hooks/post-replies/usePostActions.ts', () => ({
   usePostActions: vi.fn((post, onLike, onToggleReplies) => ({
     handleLike: vi.fn(() => onLike(post.id)),
     handleToggleReplies: vi.fn(() => onToggleReplies?.(post.id)),
