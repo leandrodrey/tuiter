@@ -1,7 +1,7 @@
 import type {JSX, ReactNode} from 'react';
-import Header from './components/Header/Header';
-import Main from './components/Main/Main';
-import Footer from './components/Footer/Footer';
+import Header from '../components/Header/Header';
+import Main from '../components/Main/Main';
+import Footer from '../components/Footer/Footer';
 
 /**
  * Layout component that provides a Twitter-like structure for the application.

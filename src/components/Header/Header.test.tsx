@@ -4,14 +4,14 @@ import { MemoryRouter } from 'react-router-dom';
 import Header from './Header';
 
 // Mock the hooks
-vi.mock('../../../hooks/context/useAuthContext.ts', () => ({
+vi.mock('../../hooks/context/useAuthContext.ts', () => ({
   useAuthContext: vi.fn(() => ({
     isAuthenticated: true,
     logout: vi.fn()
   }))
 }));
 
-vi.mock('../../../hooks/context/useUser.ts', () => ({
+vi.mock('../../hooks/context/useUser.ts', () => ({
   useUser: vi.fn(() => ({
     userInformation: {
       name: 'Test User',
@@ -21,11 +21,11 @@ vi.mock('../../../hooks/context/useUser.ts', () => ({
 }));
 
 // Mock the components
-vi.mock('../../../components/UI', () => ({
+vi.mock('../UI', () => ({
   TuiterLogo: ({ className }) => <div data-testid="tuiter-logo" className={className}>Tuiter Logo</div>
 }));
 
-vi.mock('../../../components/SideNav', () => ({
+vi.mock('../SideNav', () => ({
   SidebarNav: ({ isActive }) => (
     <div data-testid="sidebar-nav" data-is-active-fn={!!isActive}>Sidebar Nav</div>
   ),

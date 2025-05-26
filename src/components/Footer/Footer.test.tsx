@@ -4,7 +4,7 @@ import '@testing-library/jest-dom';
 import Footer from './Footer';
 
 // Mock the components used in Footer
-vi.mock('../../../components/UI', () => ({
+vi.mock('../UI', () => ({
   TuiterLogo: ({ className }) => <div data-testid="tuiter-logo" className={className}>Tuiter Logo</div>
 }));
 
