@@ -1,11 +1,11 @@
 import {createContext} from 'react';
-import type {PostWithReplies} from '../../../hooks/post-feed/usePostProcessor.ts';
+import type {Post} from '../../../types/postTypes.ts';
 
 /**
  * Type definition for the Post context
  */
 export interface PostContextType {
-    posts: PostWithReplies[];
+    posts: Post[];
     loading: boolean;
     error: string | null;
     hasMore: boolean;

@@ -1,7 +1,7 @@
 import {type JSX} from 'react';
 import {Loader, PageHeader, EmptyMessage} from '../../components/UI';
 import PostForm from '../../components/PostForm/PostForm';
-import PostReplies from '../../components/Post/PostReplies';
+import PostListReplies from '../../components/PostReply/PostListReplies.tsx';
 import {usePostReplyContext} from './hooks/usePostReplyContext';
 
 /**
@@ -37,7 +37,6 @@ const PostReplyPage = (): JSX.Element => {
             <div className="border-b border-gray-200 dark:border-gray-800 pb-6 mb-4">
                 <div className="flex">
                     <div className="flex-1">
-
                         <PostForm
                             initialValues={initialValues}
                             validationSchema={validationSchema}
@@ -53,7 +52,7 @@ const PostReplyPage = (): JSX.Element => {
             {replies.length > 0 ? (
                 <div>
                     <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Other Replies</h2>
-                    <PostReplies
+                    <PostListReplies
                         replies={replies}
                         onLike={handleLikePost}
                     />

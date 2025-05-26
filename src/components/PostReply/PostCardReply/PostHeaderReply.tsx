@@ -1,6 +1,7 @@
 import {type JSX} from 'react';
 import type {Post} from '../../../types/postTypes.ts';
 import {Avatar} from '../../UI';
+import {Link} from 'react-router-dom';
 
 interface PostHeaderReplyProps {
     post: Post;
@@ -9,7 +10,7 @@ interface PostHeaderReplyProps {
 const PostHeaderReply = ({post}: PostHeaderReplyProps): JSX.Element => {
     return (
         <div className="flex flex-shrink-0 p-3 pb-0">
-            <a href="#" className="flex-shrink-0 group block">
+            <Link to="#" className="flex-shrink-0 group block">
                 <div className="flex items-center">
                     <div>
                         <Avatar username={post.author} avatarUrl={post.avatar_url} size="sm"/>
@@ -26,7 +27,7 @@ const PostHeaderReply = ({post}: PostHeaderReplyProps): JSX.Element => {
                         </p>
                     </div>
                 </div>
-            </a>
+            </Link>
         </div>
     );
 };

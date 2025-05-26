@@ -19,11 +19,10 @@ const PostList = (): JSX.Element => {
 
     return (
         <div className="space-y-4 w-full max-w-2xl mx-auto">
-            {posts.map(({post, replies}) => (
+            {posts.map((post) => (
                 <div key={post.id}>
                     <PostCard
                         post={post}
-                        replies={replies}
                     />
                 </div>
             ))}

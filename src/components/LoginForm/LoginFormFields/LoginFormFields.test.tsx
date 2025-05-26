@@ -22,25 +22,10 @@ const ErrorMessageMock = vi.fn(({ name, children }) => {
   return null;
 });
 
-// Define types for the props
-interface FieldProps {
-  type: string;
-  id: string;
-  name: string;
-  placeholder: string;
-  disabled: boolean;
-  className: string;
-}
-
-interface ErrorMessageProps {
-  name: string;
-  children?: ((message: string) => React.ReactNode) | React.ReactNode;
-}
-
 vi.mock('formik', () => ({
   useFormikContext: () => useFormikContextMock(),
-  Field: (props: FieldProps) => FieldMock(props),
-  ErrorMessage: (props: ErrorMessageProps) => ErrorMessageMock(props)
+  Field: (props) => FieldMock(props),
+  ErrorMessage: (props) => ErrorMessageMock(props)
 }));
 
 describe('LoginFormFields', () => {

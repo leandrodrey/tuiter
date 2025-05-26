@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import PostReplies from './PostReplies';
+import PostListReplies from './PostListReplies';
 import type { Post } from '../../types/postTypes';
 
 // Mock the PostCardReply component
@@ -48,7 +48,7 @@ describe('PostReplies', () => {
   });
 
   it('renders all replies', () => {
-    render(<PostReplies replies={mockReplies} onLike={mockOnLike} />);
+    render(<PostListReplies replies={mockReplies} onLike={mockOnLike} />);
 
     // Check if all replies are rendered
     const replyCards = screen.getAllByTestId('mock-post-card-reply');
@@ -64,14 +64,14 @@ describe('PostReplies', () => {
   });
 
   it('renders no replies when the array is empty', () => {
-    render(<PostReplies replies={[]} onLike={mockOnLike} />);
+    render(<PostListReplies replies={[]} onLike={mockOnLike} />);
 
     // Check that no replies are rendered
     expect(screen.queryByTestId('mock-post-card-reply')).not.toBeInTheDocument();
   });
 
   it('applies the correct styling to the container', () => {
-    render(<PostReplies replies={mockReplies} onLike={mockOnLike} />);
+    render(<PostListReplies replies={mockReplies} onLike={mockOnLike} />);
 
     // Get the container element (parent of the first reply)
     const container = screen.getAllByTestId('mock-post-card-reply')[0].parentElement;

@@ -1,6 +1,7 @@
 import {type JSX} from 'react';
 import type {Post} from '../../../types/postTypes.ts';
 import {FavoriteButton, Avatar} from '../../UI';
+import {Link} from 'react-router-dom';
 
 interface PostHeaderProps {
     post: Post;
@@ -10,7 +11,7 @@ interface PostHeaderProps {
 const PostHeader = ({post, onAddToFavorites}: PostHeaderProps): JSX.Element => {
     return (
         <div className="flex flex-shrink-0 p-2 sm:p-4 pb-0">
-            <a href="#" className="flex-shrink-0 group block">
+            <Link to="#" className="flex-shrink-0 group block">
                 <div className="flex items-center">
                     <div>
                         <Avatar username={post.author} avatarUrl={post.avatar_url} size="md"/>
@@ -24,7 +25,7 @@ const PostHeader = ({post, onAddToFavorites}: PostHeaderProps): JSX.Element => {
                         </p>
                     </div>
                 </div>
-            </a>
+            </Link>
             <div className="ml-auto">
                 <FavoriteButton
                     author={post.author}

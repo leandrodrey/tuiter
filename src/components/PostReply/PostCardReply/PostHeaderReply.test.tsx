@@ -1,7 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import PostHeaderReply from './PostHeaderReply';
-import type { Post } from '../../../types/postTypes';
+import PostHeaderReply from './PostHeaderReply.tsx';
+import type { Post } from '../../../types/postTypes.ts';
+import { BrowserRouter } from 'react-router-dom';
 
 // Mock the Avatar component
 vi.mock('../../UI', () => ({
@@ -34,7 +35,11 @@ describe('PostHeaderReply', () => {
   });
 
   it('renders the post author information', () => {
-    render(<PostHeaderReply post={mockPost} />);
+    render(
+      <BrowserRouter>
+        <PostHeaderReply post={mockPost} />
+      </BrowserRouter>
+    );
 
     // Check if the author name is displayed
     expect(screen.getByText('Test User')).toBeInTheDocument();
@@ -51,7 +56,11 @@ describe('PostHeaderReply', () => {
   });
 
   it('passes correct props to Avatar component', () => {
-    render(<PostHeaderReply post={mockPost} />);
+    render(
+      <BrowserRouter>
+        <PostHeaderReply post={mockPost} />
+      </BrowserRouter>
+    );
 
     const avatar = screen.getByTestId('mock-avatar');
     expect(avatar).toHaveAttribute('data-username', 'Test User');
@@ -60,9 +69,13 @@ describe('PostHeaderReply', () => {
   });
 
   it('applies correct styling to the container', () => {
-    render(<PostHeaderReply post={mockPost} />);
+    render(
+      <BrowserRouter>
+        <PostHeaderReply post={mockPost} />
+      </BrowserRouter>
+    );
 
-    // The outermost div is the direct parent of the anchor element
+    // The outermost div is the direct parent of the Link element
     // which is the parent of the div containing the avatar and text
     const container = screen.getByRole('link').parentElement;
     expect(container).toHaveClass('flex');
@@ -77,7 +90,11 @@ describe('PostHeaderReply', () => {
       author: 'Multiple Word Name'
     };
 
-    render(<PostHeaderReply post={postWithSpaces} />);
+    render(
+      <BrowserRouter>
+        <PostHeaderReply post={postWithSpaces} />
+      </BrowserRouter>
+    );
 
     // Check if the username is displayed without spaces
     expect(screen.getByText(/@MultipleWordName/)).toBeInTheDocument();

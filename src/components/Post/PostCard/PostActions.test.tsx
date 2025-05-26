@@ -1,37 +1,26 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import PostActions from '../PostActions.tsx';
+import PostActions from '../../PostActions/PostActions.tsx';
 import type { Post } from '../../../types/postTypes.ts';
 
 // Mock the hooks
 vi.mock('../../../hooks/post-replies/usePostActions.ts', () => ({
-  usePostActions: vi.fn((post, onLike, onToggleReplies) => ({
+  usePostActions: vi.fn((post, onLike) => ({
     handleLike: vi.fn(() => onLike(post.id)),
-    handleToggleReplies: vi.fn(() => onToggleReplies?.(post.id)),
     isLiked: post.liked,
-    likesCount: post.likes,
-    repliesCount: post.replies_count
+    likesCount: post.likes
   }))
 }));
 
 // Mock the action buttons
 vi.mock('../PostActionButtons', () => ({
-  CommentButton: vi.fn(({ postId, repliesCount, parentId }) => (
+  CommentButton: vi.fn(({ postId, parentId }) => (
     <button
       data-testid="mock-comment-button"
       data-post-id={postId}
-      data-replies-count={repliesCount}
       data-parent-id={parentId}
     >
-      Comment ({repliesCount})
-    </button>
-  )),
-  RetweetButton: vi.fn(({ onClick }) => (
-    <button
-      onClick={onClick}
-      data-testid="mock-retweet-button"
-    >
-      Retweet
+      Comment ()
     </button>
   )),
   LikeButton: vi.fn(({ onClick, isLiked, likesCount }) => (
@@ -62,8 +51,7 @@ describe('PostActions', () => {
 
   const defaultProps = {
     post: mockPost,
-    onLike: vi.fn(),
-    onToggleReplies: vi.fn()
+    onLike: vi.fn()
   };
 
   beforeEach(() => {
@@ -82,11 +70,9 @@ describe('PostActions', () => {
 
     // Check if all buttons are rendered
     const commentButton = screen.getByTestId('mock-comment-button');
-    const retweetButton = screen.getByTestId('mock-retweet-button');
     const likeButton = screen.getByTestId('mock-like-button');
 
     expect(commentButton).toBeInTheDocument();
-    expect(retweetButton).toBeInTheDocument();
     expect(likeButton).toBeInTheDocument();
   });
 
@@ -95,7 +81,6 @@ describe('PostActions', () => {
 
     const commentButton = screen.getByTestId('mock-comment-button');
     expect(commentButton).toHaveAttribute('data-post-id', '1');
-    expect(commentButton).toHaveAttribute('data-replies-count', '2');
     expect(commentButton).not.toHaveAttribute('data-parent-id');
   });
 
@@ -118,33 +103,7 @@ describe('PostActions', () => {
     expect(defaultProps.onLike).toHaveBeenCalledWith(mockPost.id);
   });
 
-  it('calls onToggleReplies when retweet button is clicked', () => {
-    render(<PostActions {...defaultProps} />);
 
-    // Click the retweet button
-    const retweetButton = screen.getByTestId('mock-retweet-button');
-    fireEvent.click(retweetButton);
-
-    // Check if onToggleReplies was called with the correct post ID
-    expect(defaultProps.onToggleReplies).toHaveBeenCalledWith(mockPost.id);
-  });
-
-  it('works without onToggleReplies prop', () => {
-    // Create a new object without the onToggleReplies property
-    const propsWithoutToggle = {
-      post: defaultProps.post,
-      onLike: defaultProps.onLike
-    };
-
-    render(<PostActions {...propsWithoutToggle} />);
-
-    // Click the retweet button
-    const retweetButton = screen.getByTestId('mock-retweet-button');
-    fireEvent.click(retweetButton);
-
-    // Check that no error occurs (the handleToggleReplies function should handle the undefined case)
-    expect(true).toBe(true);
-  });
 
   // This test is removed because we can't easily verify the arguments passed to the hook
   // The functionality is already tested indirectly through the other tests
