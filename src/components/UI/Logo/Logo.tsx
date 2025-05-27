@@ -4,6 +4,14 @@ interface LogoProps {
     className?: string;
 }
 
+/**
+ * Logo component that displays the Tuiter logo.
+ * Renders an SVG logo with Twitter-like styling.
+ *
+ * @param {Object} props - Component props
+ * @param {string} [props.className] - Additional CSS classes for styling
+ * @returns {JSX.Element} The logo component
+ */
 const Logo = ({className = ''}: LogoProps): JSX.Element => {
     return (
         <div className={`flex items-center ${className}`}>

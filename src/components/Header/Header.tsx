@@ -7,7 +7,8 @@ import {useOnClickOutside} from '../../hooks/useOnClickOutside';
 /**
  * Header component that displays the application header.
  * Includes a responsive toggle menu using react-pro-sidebar.
- * Contains the toggle button that controls the sidebar collapse state.
+ * Uses the MenuButton component to control the sidebar collapse state.
+ * Implements click-outside behavior to collapse the menu when clicking outside.
  *
  * @returns {JSX.Element} The header component
  */

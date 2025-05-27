@@ -10,7 +10,10 @@ interface CopyrightProps {
  * Copyright component that displays a copyright notice.
  * This is a reusable component that can be used in different parts of the application.
  *
- * @param {CopyrightProps} props - The component props
+ * @param {Object} props - Component props
+ * @param {number} [props.year] - The copyright year (defaults to current year)
+ * @param {string} [props.text] - The text to display after the copyright symbol and year
+ * @param {string} [props.className] - Additional CSS classes for styling
  * @returns {JSX.Element} The copyright component
  */
 const Copyright = ({
