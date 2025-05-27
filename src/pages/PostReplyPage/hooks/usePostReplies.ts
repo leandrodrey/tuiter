@@ -54,7 +54,10 @@ export const usePostReplies = () => {
     }, [postId]);
 
     // Handle form submission
-    const handleSubmit = useCallback(async (values: PostFormData, {setSubmitting, resetForm}: FormikHelpers<PostFormData>) => {
+    const handleSubmit = useCallback(async (values: PostFormData, {
+        setSubmitting,
+        resetForm
+    }: FormikHelpers<PostFormData>) => {
         if (!postId) {
             setError('Cannot reply: original post ID is missing');
             setSubmitting(false);

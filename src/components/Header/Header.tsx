@@ -1,8 +1,8 @@
 import type {JSX} from 'react';
-import { useState, useRef, useCallback } from 'react';
+import {useState, useRef, useCallback} from 'react';
 import {ToggleMenu} from '../SideNav';
-import { MenuIcon } from '../UI';
-import { useOnClickOutside } from '../../hooks/useOnClickOutside';
+import {MenuIcon} from '../UI';
+import {useOnClickOutside} from '../../hooks/useOnClickOutside';
 
 /**
  * Header component that displays the application header.
@@ -37,11 +37,11 @@ const Header = (): JSX.Element => {
                     className="p-2 rounded-full hover:bg-gray-800 transition-colors fixed z-50 "
                     aria-label={collapsed ? "Expand menu" : "Collapse menu"}
                 >
-                    <MenuIcon className="h-6 w-6 text-white" />
+                    <MenuIcon className="h-6 w-6 text-white"/>
                 </button>
                 <div className={`${collapsed ? 'w-0' : 'w-14 sm:w-16 lg:w-64'} transition-all duration-200`} ref={menuRef}>
                     <div className={`${collapsed ? 'w-0' : 'lg:w-64'} fixed h-[100dvh] transition-all duration-200`}>
-                        <ToggleMenu collapsed={collapsed} />
+                        <ToggleMenu collapsed={collapsed}/>
                     </div>
                 </div>
             </div>

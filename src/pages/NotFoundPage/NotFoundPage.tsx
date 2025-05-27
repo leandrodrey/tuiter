@@ -12,7 +12,7 @@ const NotFound = (): JSX.Element => {
     return (
         <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12 text-white">
             <div className="w-full max-w-md text-center">
-                <TuiterLogo className="h-16 w-16 sm:h-20 sm:w-20 mx-auto mb-6 text-blue-400" />
+                <TuiterLogo className="h-16 w-16 sm:h-20 sm:w-20 mx-auto mb-6 text-blue-400"/>
 
                 <div className="mb-8">
                     <h1 className="text-9xl font-bold text-blue-500">404</h1>

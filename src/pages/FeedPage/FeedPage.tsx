@@ -68,7 +68,7 @@ const FeedPage = (): JSX.Element => {
                 }
                 refreshFunction={refreshFeed}
             >
-                <PostList />
+                <PostList/>
             </InfiniteScroll>
         </div>
     );

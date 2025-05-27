@@ -73,6 +73,7 @@ export interface ProfileData {
     avatar_url?: string;
     /** User's password (for updates) */
     password?: string;
+
     /** Additional properties that might be included */
     [key: string]: string | number | boolean | null | undefined;
 }

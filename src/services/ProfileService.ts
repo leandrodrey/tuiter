@@ -1,5 +1,5 @@
 import ApiService from './ApiService';
-import type { ProfileData, ProfileResponse } from '../types/apiTypes';
+import type {ProfileData, ProfileResponse} from '../types/apiTypes';
 
 /**
  * Calls the API endpoint to get the user's profile.

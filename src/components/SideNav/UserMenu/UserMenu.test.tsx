@@ -1,128 +1,128 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import {render, screen, fireEvent} from '@testing-library/react';
+import {describe, it, expect, vi, beforeEach} from 'vitest';
 import UserMenu from './UserMenu.tsx';
-import type { UserInformation } from '../../../types/userTypes.ts';
-import { BrowserRouter } from 'react-router-dom';
+import type {UserInformation} from '../../../types/userTypes.ts';
+import {BrowserRouter} from 'react-router-dom';
 
 // Mock the hooks and UI components
 vi.mock('../../../hooks/context/useLogout', () => ({
-  useLogout: vi.fn((callback) => () => callback())
+    useLogout: vi.fn((callback) => () => callback())
 }));
 
 vi.mock('../../UI', () => ({
-  Avatar: vi.fn(({ username, avatarUrl, size }) => (
-    <div
-      data-testid="mock-avatar"
-      data-username={username}
-      data-avatar-url={avatarUrl}
-      data-size={size}
-    />
-  )),
-  LogoutButton: vi.fn(({ onLogout, color, size, className }) => (
-    <button
-      onClick={onLogout}
-      data-testid="mock-logout-button"
-      data-color={color}
-      data-size={size}
-      className={className}
-    >
-      Logout
-    </button>
-  ))
+    Avatar: vi.fn(({username, avatarUrl, size}) => (
+        <div
+            data-testid="mock-avatar"
+            data-username={username}
+            data-avatar-url={avatarUrl}
+            data-size={size}
+        />
+    )),
+    LogoutButton: vi.fn(({onLogout, color, size, className}) => (
+        <button
+            onClick={onLogout}
+            data-testid="mock-logout-button"
+            data-color={color}
+            data-size={size}
+            className={className}
+        >
+            Logout
+        </button>
+    ))
 }));
 
 describe('UserMenu', () => {
-  const mockUserInfo: UserInformation = {
-    id: 1,
-    name: 'Test User',
-    email: 'test@example.com',
-    avatar_url: 'https://example.com/avatar.jpg'
-  };
+    const mockUserInfo: UserInformation = {
+        id: 1,
+        name: 'Test User',
+        email: 'test@example.com',
+        avatar_url: 'https://example.com/avatar.jpg'
+    };
 
-  const defaultProps = {
-    userInformation: mockUserInfo,
-    onLogout: vi.fn(),
-    isAuthenticated: true
-  };
+    const defaultProps = {
+        userInformation: mockUserInfo,
+        onLogout: vi.fn(),
+        isAuthenticated: true
+    };
 
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
+    beforeEach(() => {
+        vi.clearAllMocks();
+    });
 
-  it('renders null when not authenticated', () => {
-    const { container } = render(
-      <BrowserRouter>
-        <UserMenu
-          {...defaultProps}
-          isAuthenticated={false}
-        />
-      </BrowserRouter>
-    );
+    it('renders null when not authenticated', () => {
+        const {container} = render(
+            <BrowserRouter>
+                <UserMenu
+                    {...defaultProps}
+                    isAuthenticated={false}
+                />
+            </BrowserRouter>
+        );
 
-    expect(container.firstChild).toBeNull();
-  });
+        expect(container.firstChild).toBeNull();
+    });
 
-  it('renders correctly when authenticated', () => {
-    render(
-      <BrowserRouter>
-        <UserMenu {...defaultProps} />
-      </BrowserRouter>
-    );
+    it('renders correctly when authenticated', () => {
+        render(
+            <BrowserRouter>
+                <UserMenu {...defaultProps} />
+            </BrowserRouter>
+        );
 
-    // Check if the container is rendered
-    const container = screen.getByTestId('mock-avatar').closest('div');
-    expect(container).toBeInTheDocument();
+        // Check if the container is rendered
+        const container = screen.getByTestId('mock-avatar').closest('div');
+        expect(container).toBeInTheDocument();
 
-    // Check if the Avatar component is rendered with correct props
-    const avatar = screen.getByTestId('mock-avatar');
-    expect(avatar).toBeInTheDocument();
-    expect(avatar).toHaveAttribute('data-username', 'Test User');
-    expect(avatar).toHaveAttribute('data-avatar-url', 'https://example.com/avatar.jpg');
-    expect(avatar).toHaveAttribute('data-size', 'md');
+        // Check if the Avatar component is rendered with correct props
+        const avatar = screen.getByTestId('mock-avatar');
+        expect(avatar).toBeInTheDocument();
+        expect(avatar).toHaveAttribute('data-username', 'Test User');
+        expect(avatar).toHaveAttribute('data-avatar-url', 'https://example.com/avatar.jpg');
+        expect(avatar).toHaveAttribute('data-size', 'md');
 
-    // Check if the user name and email are displayed
-    expect(screen.getByText('Test User')).toBeInTheDocument();
-    expect(screen.getByText('test@example.com')).toBeInTheDocument();
+        // Check if the user name and email are displayed
+        expect(screen.getByText('Test User')).toBeInTheDocument();
+        expect(screen.getByText('test@example.com')).toBeInTheDocument();
 
-    // Check if the LogoutButton is rendered with correct props
-    const logoutButton = screen.getByTestId('mock-logout-button');
-    expect(logoutButton).toBeInTheDocument();
-    expect(logoutButton).toHaveAttribute('data-color', 'default');
-    expect(logoutButton).toHaveAttribute('data-size', 'sm');
-    expect(logoutButton).toHaveClass('ml-auto');
-  });
+        // Check if the LogoutButton is rendered with correct props
+        const logoutButton = screen.getByTestId('mock-logout-button');
+        expect(logoutButton).toBeInTheDocument();
+        expect(logoutButton).toHaveAttribute('data-color', 'default');
+        expect(logoutButton).toHaveAttribute('data-size', 'sm');
+        expect(logoutButton).toHaveClass('ml-auto');
+    });
 
-  it('uses fallback values when userInformation is incomplete', () => {
-    render(
-      <BrowserRouter>
-        <UserMenu
-          {...defaultProps}
-          userInformation={{ id: 1 }}
-        />
-      </BrowserRouter>
-    );
+    it('uses fallback values when userInformation is incomplete', () => {
+        render(
+            <BrowserRouter>
+                <UserMenu
+                    {...defaultProps}
+                    userInformation={{id: 1}}
+                />
+            </BrowserRouter>
+        );
 
-    // Check if fallback values are used
-    const avatar = screen.getByTestId('mock-avatar');
-    expect(avatar).toHaveAttribute('data-username', 'User');
+        // Check if fallback values are used
+        const avatar = screen.getByTestId('mock-avatar');
+        expect(avatar).toHaveAttribute('data-username', 'User');
 
-    // Check if fallback text is displayed
-    expect(screen.getByText('User')).toBeInTheDocument();
-    expect(screen.getByText('@user')).toBeInTheDocument();
-  });
+        // Check if fallback text is displayed
+        expect(screen.getByText('User')).toBeInTheDocument();
+        expect(screen.getByText('@user')).toBeInTheDocument();
+    });
 
-  it('calls onLogout when logout button is clicked', () => {
-    render(
-      <BrowserRouter>
-        <UserMenu {...defaultProps} />
-      </BrowserRouter>
-    );
+    it('calls onLogout when logout button is clicked', () => {
+        render(
+            <BrowserRouter>
+                <UserMenu {...defaultProps} />
+            </BrowserRouter>
+        );
 
-    // Click the logout button
-    const logoutButton = screen.getByTestId('mock-logout-button');
-    fireEvent.click(logoutButton);
+        // Click the logout button
+        const logoutButton = screen.getByTestId('mock-logout-button');
+        fireEvent.click(logoutButton);
 
-    // Check if onLogout was called
-    expect(defaultProps.onLogout).toHaveBeenCalledTimes(1);
-  });
+        // Check if onLogout was called
+        expect(defaultProps.onLogout).toHaveBeenCalledTimes(1);
+    });
 });

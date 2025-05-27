@@ -1,5 +1,5 @@
 import ApiService from './ApiService';
-import type { UserData, UserResponse } from '../types/apiTypes';
+import type {UserData, UserResponse} from '../types/apiTypes';
 
 /**
  * Calls the API endpoint to create a new user.

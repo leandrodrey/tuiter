@@ -14,7 +14,7 @@ const PostList = (): JSX.Element => {
     const {posts} = usePostContext();
 
     if (posts.length === 0) {
-        return <EmptyMessage />;
+        return <EmptyMessage/>;
     }
 
     return (
