@@ -16,7 +16,7 @@ const PageHeader = ({
     return (
         <div className={className}>
             <div className="flex">
-                <div className="flex-1 mx-2">
+                <div className="flex-1 mx-2 pl-10 md:pl-0">
                     <h2 className="px-4 py-2 text-xl font-semibold text-white">
                         {title}
                     </h2>
