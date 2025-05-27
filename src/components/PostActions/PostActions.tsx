@@ -9,6 +9,7 @@ import {
 interface PostActionsProps {
     post: Post;
     onLike: (postId: number) => Promise<void>;
+    hideCommentButton?: boolean;
 }
 
 /**
@@ -20,7 +21,7 @@ interface PostActionsProps {
  * @param {Function} props.onLike - Function to call when the like button is clicked
  * @returns {JSX.Element} The post actions component
  */
-const PostActions = ({post, onLike}: PostActionsProps): JSX.Element => {
+const PostActions = ({post, onLike, hideCommentButton = false}: PostActionsProps): JSX.Element => {
     const {
         handleLike,
         isLiked,
@@ -29,15 +30,17 @@ const PostActions = ({post, onLike}: PostActionsProps): JSX.Element => {
 
     return (
         <div className="w-full flex justify-between">
-            <CommentButton
-                postId={post.id}
-            />
-
             <LikeButton
                 onClick={handleLike}
                 isLiked={isLiked}
                 likesCount={likesCount}
             />
+
+            {!hideCommentButton && (
+                <CommentButton
+                    postId={post.id}
+                />
+            )}
         </div>
     );
 };

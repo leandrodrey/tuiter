@@ -19,6 +19,7 @@ const PostCardReply = ({post, onLike}: PostCardReplyProps): JSX.Element => {
             <PostActions
                 post={post}
                 onLike={onLike}
+                hideCommentButton={true}
             />
         </div>
     );
