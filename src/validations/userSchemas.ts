@@ -1,7 +1,9 @@
 import * as Yup from 'yup';
 import type {LoginFormData, RegistrationFormData, UserFormData} from '../types/formTypes';
 
-// --- Login Form ---
+/**
+ * Validation schema for the login form
+ */
 export const loginValidationSchema = Yup.object({
     email: Yup.string()
         .email('Email is invalid')
@@ -10,12 +12,17 @@ export const loginValidationSchema = Yup.object({
         .required('Password is required'),
 });
 
+/**
+ * Initial empty values for the login form
+ */
 export const loginInitialValues: LoginFormData = {
     email: '',
     password: '',
 };
 
-// --- User Registration Form ---
+/**
+ * Validation schema for the user registration form
+ */
 export const registrationValidationSchema = Yup.object({
     username: Yup.string()
         .trim()
@@ -34,6 +41,9 @@ export const registrationValidationSchema = Yup.object({
         .nullable()
 });
 
+/**
+ * Initial empty values for the registration form
+ */
 export const registrationInitialValues: RegistrationFormData = {
     username: '',
     email: '',
@@ -42,7 +52,9 @@ export const registrationInitialValues: RegistrationFormData = {
     avatar_url: '',
 };
 
-// --- User Edit Form ---
+/**
+ * Validation schema for the user edit form
+ */
 export const userEditValidationSchema = Yup.object({
     name: Yup.string()
         .required('Username is required'),
@@ -64,6 +76,9 @@ export const userEditValidationSchema = Yup.object({
         .nullable()
 });
 
+/**
+ * Initial empty values for the user edit form
+ */
 export const userEditEmptyValues: UserFormData = {
     name: '',
     email: '',

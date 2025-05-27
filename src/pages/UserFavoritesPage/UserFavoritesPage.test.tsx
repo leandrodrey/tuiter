@@ -52,7 +52,6 @@ const localStorageMock = (() => {
 Object.defineProperty(window, 'localStorage', {
   value: localStorageMock
 });
-
 describe('UserFavoritesPage', () => {
   const userSpecificKey = `${FAVORITE_USERS_KEY}_test@example.com`;
 
@@ -63,13 +62,6 @@ describe('UserFavoritesPage', () => {
 
   afterEach(() => {
     vi.resetAllMocks();
-  });
-
-  // Skip the loading state test since it's difficult to test without mocking React.useState
-  // The component's behavior is covered by the other tests
-  it.skip('renders loading state correctly', () => {
-    // This test is skipped because it's difficult to test the loading state
-    // without mocking React.useState, which requires importing React
   });
 
   it('renders empty state when no favorites exist', () => {

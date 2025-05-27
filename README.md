@@ -2,7 +2,9 @@
 
 ## 📱 Acerca de Tuiter
 
-Tuiter es una aplicación web moderna inspirada en Twitter que permite a los usuarios compartir mensajes cortos, interactuar con publicaciones de otros usuarios y gestionar su perfil personal. Diseñada con un enfoque en la experiencia de usuario, Tuiter ofrece una interfaz intuitiva y responsive para la comunicación social.
+Tuiter es una aplicación web moderna inspirada en Twitter que permite a los usuarios compartir mensajes cortos, interactuar con publicaciones de otros usuarios y gestionar su perfil personal. Diseñada con un enfoque en la experiencia de usuario, Tuiter ofrece una interfaz intuitiva y responsive para la comunicación social. 
+
+Para más detalles sobre el proyecto, consulta el [documento del desafío](docs/Challenge_Frontend_Tuiter.pdf).
 
 ## ✨ Características Principales
 
@@ -106,6 +108,62 @@ export async function apiGetFeed(params?: FeedParams) {
 }
 ```
 
+## 💻 Instalación y Ejecución Local
+
+Para ejecutar Tuiter en tu entorno local, sigue estos pasos:
+
+### Requisitos Previos
+
+Asegúrate de tener instalado:
+
+* **Node.js**: Versión 18 o superior (recomendado v22)
+* **Yarn**: Como gestor de paquetes (recomendado sobre npm)
+
+### Pasos de Instalación
+
+1. **Clonar el repositorio**:
+   ```bash
+   git clone https://github.com/leandrodrey/tuiter.git
+   cd tuiter
+   ```
+
+2. **Instalar dependencias**:
+   ```bash
+   yarn install
+   ```
+
+3. **Variables de entorno**:
+   Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
+   ```
+   VITE_API_URL=https://api.example.com
+   VITE_APP_TOKEN=your_app_token
+   ```
+
+### Comandos Disponibles
+
+* **Iniciar servidor de desarrollo**:
+  ```bash
+  yarn dev
+  ```
+  Esto iniciará el servidor de desarrollo en `http://localhost:5173`
+
+* **Compilar para producción**:
+  ```bash
+  yarn build
+  ```
+  Los archivos compilados se generarán en la carpeta `dist/`
+
+* **Ejecutar linter**:
+  ```bash
+  yarn lint
+  ```
+  Verifica el código según las reglas de estilo definidas
+
+* **Ejecutar tests**:
+  ```bash
+  yarn test
+  ```
+
 ## 🧪 Pruebas (Testing)
 
 [![codecov](https://codecov.io/gh/leandrodrey/tuiter/graph/badge.svg?token=HE90Y9GXHQ)](https://codecov.io/gh/leandrodrey/tuiter) Cobertura actual del proyecto
@@ -207,9 +265,70 @@ Ejemplo de Reporte
 
 ![image](https://github.com/user-attachments/assets/ab60bf11-529a-452b-865a-00b83bc75f0a)
 
-
 ### Consideraciones Adicionales
 
 * **Seguridad:** Además de la gestión segura de variables de entorno y HTTPS por defecto, Vercel ofrece protección contra ataques comunes.
 * **Monitorización:** Vercel proporciona un dashboard con logs en tiempo real, análisis de uso y monitorización del estado de los despliegues y funciones serverless.
 * **Rollbacks:** Gracias a los despliegues atómicos e inmutables de Vercel, es muy sencillo revertir a una versión anterior del despliegue si se detecta algún problema.
+
+## 🔄 Mejoras Futuras
+
+Esta sección describe las mejoras planificadas para futuras versiones de Tuiter:
+
+### Internacionalización (i18n)
+
+Una de las principales mejoras a implementar es la internacionalización completa de la aplicación:
+
+* **¿Qué es i18n?** La internacionalización (i18n) es el proceso de diseñar y preparar la aplicación para que pueda adaptarse a diferentes idiomas y regiones sin cambios de ingeniería.
+
+* **Beneficios de implementar i18n:**
+  * Ampliar el alcance global de la aplicación
+  * Mejorar la experiencia de usuario para hablantes no nativos de español
+  * Cumplir con requisitos de accesibilidad en diferentes regiones
+
+* **Implementación propuesta:**
+  * Crear archivos de traducción JSON para cada idioma soportado
+  * Implementar un selector de idioma en la interfaz de usuario
+  * Extraer todos los textos estáticos a claves de traducción
+  * Adaptar formatos de fecha, hora y números según las convenciones locales
+
+* **Consideraciones técnicas:**
+  * Detección automática del idioma preferido del navegador
+  * Persistencia de la preferencia de idioma del usuario
+  * Pruebas automatizadas para verificar la correcta visualización en diferentes idiomas
+
+### Contador de Respuestas para Tuits
+
+* **Situación actual:** La API actualmente no devuelve la cantidad de respuestas que tiene un tuit.
+* **Mejora propuesta:** Implementar la visualización del número de respuestas para cada publicación.
+* **Beneficios:**
+  * Mejorar la experiencia de usuario al proporcionar información sobre la popularidad o relevancia de un tuit
+  * Permitir a los usuarios identificar rápidamente las conversaciones más activas
+* **Implementación técnica:**
+  * Se podría agregar desde el frontend, calculando el número de respuestas basado en los datos disponibles
+  * Dicho esto, lo mas apropiado sería incluir un endpoint a tal fin.
+* **Nota:** Esta funcionalidad no fue incluida en la versión inicial debido a una priorización de tareas, pero representa una oportunidad de mejora significativa para futuras versiones.
+
+### Mejoras de Accesibilidad
+
+La accesibilidad web es fundamental para garantizar que todas las personas, independientemente de sus capacidades, puedan utilizar nuestra aplicación. 
+
+Estas son las mejoras de accesibilidad planificadas:
+
+* **Cumplimiento de WCAG 2.1:** Implementar las pautas de accesibilidad de contenido web para alcanzar al menos el nivel AA.
+
+* **Mejoras específicas:**
+  * **Navegación por teclado:** Mejorar la navegación completa de la aplicación sin necesidad de ratón.
+  * **Compatibilidad con lectores de pantalla:** Optimizar la estructura semántica y los atributos ARIA.
+  * **Contraste y tamaño de texto ajustables:** Permitir a los usuarios personalizar la visualización según sus necesidades.
+  * **Subtítulos y transcripciones:** Añadir soporte para contenido multimedia.
+
+* **Beneficios:**
+  * Ampliar la base de usuarios incluyendo personas con discapacidades.
+  * Mejorar la experiencia general para todos los usuarios.
+
+* **Implementación técnica:**
+  * Auditoría inicial de accesibilidad para identificar problemas actuales.
+  * Integración de pruebas automatizadas de accesibilidad en el flujo de CI/CD.
+  * Desarrollo de componentes accesibles reutilizables.
+  * Documentación de mejores prácticas de accesibilidad para el equipo de desarrollo.
