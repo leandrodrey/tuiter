@@ -14,24 +14,25 @@ import { useOnClickOutside } from '../../hooks/useOnClickOutside';
 const Header = (): JSX.Element => {
     const [collapsed, setCollapsed] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
+    const buttonRef = useRef<HTMLButtonElement>(null);
 
     const handleToggle = () => {
         setCollapsed(!collapsed);
     };
 
-    const handleClickOutside = useCallback(() => {
-        if (!collapsed) {
+    const handleClickOutside = useCallback((event: MouseEvent | TouchEvent) => {
+        if (!collapsed && buttonRef.current && !buttonRef.current.contains(event.target as Node)) {
             setCollapsed(true);
         }
     }, [collapsed]);
 
-    // Use the hook to detect clicks outside the menu
     useOnClickOutside(menuRef, handleClickOutside);
 
     return (
         <header className="text-white h-auto z-50">
             <div className="flex">
                 <button
+                    ref={buttonRef}
                     onClick={handleToggle}
                     className="p-2 rounded-full hover:bg-gray-800 transition-colors fixed z-50 "
                     aria-label={collapsed ? "Expand menu" : "Collapse menu"}

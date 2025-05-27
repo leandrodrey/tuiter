@@ -26,6 +26,11 @@ vi.mock('../UI', () => ({
 }));
 
 describe('Header', () => {
+  beforeEach(() => {
+    // Clear all mocks before each test
+    vi.clearAllMocks();
+  });
+
   it('renders correctly with default state', () => {
     render(<Header />);
 
@@ -54,30 +59,29 @@ describe('Header', () => {
     expect(toggleMenu).toHaveAttribute('data-collapsed', 'false');
   });
 
-  it('toggles the collapsed state when the button is clicked', () => {
+
+  it('renders with the correct initial state and toggles on button click', () => {
     render(<Header />);
+
+    // Check initial state
+    const toggleMenu = screen.getByTestId('mock-toggle-menu');
+    expect(toggleMenu).toHaveAttribute('data-collapsed', 'false');
 
     // Get the toggle button
     const toggleButton = screen.getByRole('button');
-
-    // Initially, the menu should not be collapsed
-    let toggleMenu = screen.getByTestId('mock-toggle-menu');
-    expect(toggleMenu).toHaveAttribute('data-collapsed', 'false');
     expect(toggleButton).toHaveAttribute('aria-label', 'Collapse menu');
 
     // Click the toggle button
     fireEvent.click(toggleButton);
 
-    // After clicking, the menu should be collapsed
-    toggleMenu = screen.getByTestId('mock-toggle-menu');
+    // Check that the menu is now collapsed
     expect(toggleMenu).toHaveAttribute('data-collapsed', 'true');
     expect(toggleButton).toHaveAttribute('aria-label', 'Expand menu');
 
     // Click the toggle button again
     fireEvent.click(toggleButton);
 
-    // After clicking again, the menu should be expanded
-    toggleMenu = screen.getByTestId('mock-toggle-menu');
+    // Check that the menu is expanded again
     expect(toggleMenu).toHaveAttribute('data-collapsed', 'false');
     expect(toggleButton).toHaveAttribute('aria-label', 'Collapse menu');
   });
