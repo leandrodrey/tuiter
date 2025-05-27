@@ -9,7 +9,7 @@ vi.mock('../UI', () => ({
 }));
 
 vi.mock('./Copyright', () => ({
-    default: () => <div data-testid="copyright-mock">Copyright Mock</div>
+    default: ({text}) => <div data-testid="copyright-mock">{text}</div>
 }));
 
 describe('Footer', () => {

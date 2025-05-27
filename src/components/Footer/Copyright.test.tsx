@@ -4,9 +4,10 @@ import Copyright from './Copyright';
 
 describe('Copyright', () => {
     it('renders correctly with default props', () => {
-        render(<Copyright/>);
+        const defaultText = 'Tuiter: A Twitter-like platform';
+        render(<Copyright text={defaultText}/>);
 
-        const copyright = screen.getByText(/© \d{4} - Tuiter: A Twitter-like platform/);
+        const copyright = screen.getByText(new RegExp(`© \\d{4} - ${defaultText}`));
         expect(copyright).toBeInTheDocument();
         expect(copyright).toHaveClass('text-xs');
         expect(copyright).toHaveClass('sm:text-sm');
@@ -14,9 +15,10 @@ describe('Copyright', () => {
     });
 
     it('renders with custom year', () => {
-        render(<Copyright year={2023}/>);
+        const defaultText = 'Tuiter: A Twitter-like platform';
+        render(<Copyright year={2023} text={defaultText}/>);
 
-        const copyright = screen.getByText(/© 2023 - Tuiter: A Twitter-like platform/);
+        const copyright = screen.getByText(`© 2023 - ${defaultText}`);
         expect(copyright).toBeInTheDocument();
     });
 
@@ -30,9 +32,10 @@ describe('Copyright', () => {
 
     it('renders with custom className', () => {
         const customClass = 'custom-class';
-        render(<Copyright className={customClass}/>);
+        const defaultText = 'Tuiter: A Twitter-like platform';
+        render(<Copyright className={customClass} text={defaultText}/>);
 
-        const copyright = screen.getByText(/© \d{4} - Tuiter: A Twitter-like platform/);
+        const copyright = screen.getByText(new RegExp(`© \\d{4} - ${defaultText}`));
         expect(copyright).toHaveClass(customClass);
         expect(copyright).not.toHaveClass('text-xs');
         expect(copyright).not.toHaveClass('sm:text-sm');
@@ -60,9 +63,10 @@ describe('Copyright', () => {
 
     it('uses current year by default', () => {
         const currentYear = new Date().getFullYear();
-        render(<Copyright/>);
+        const defaultText = 'Tuiter: A Twitter-like platform';
+        render(<Copyright text={defaultText}/>);
 
-        const copyright = screen.getByText(new RegExp(`© ${currentYear} - `));
+        const copyright = screen.getByText(`© ${currentYear} - ${defaultText}`);
         expect(copyright).toBeInTheDocument();
     });
 });

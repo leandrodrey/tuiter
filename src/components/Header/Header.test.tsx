@@ -16,12 +16,24 @@ vi.mock('../SideNav', () => ({
     ))
 }));
 
-// Mock the MenuIcon component
+// Mock the UI components
 vi.mock('../UI', () => ({
     MenuIcon: vi.fn(({className}) => (
         <div data-testid="mock-menu-icon" className={className}>
             Menu Icon
         </div>
+    )),
+    MenuButton: vi.fn(({buttonRef, onClick, collapsed}) => (
+        <button
+            ref={buttonRef}
+            onClick={onClick}
+            data-testid="mock-menu-button"
+            aria-label={collapsed ? "Expand menu" : "Collapse menu"}
+        >
+            <div data-testid="mock-menu-icon" className="h-6 w-6 text-white">
+                Menu Icon
+            </div>
+        </button>
     ))
 }));
 

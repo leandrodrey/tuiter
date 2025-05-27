@@ -1,17 +1,8 @@
 import type {JSX} from 'react';
 
 interface CopyrightProps {
-    /**
-     * The year to display in the copyright notice. Defaults to current year.
-     */
     year?: number;
-    /**
-     * The text to display after the copyright symbol and year.
-     */
     text?: string;
-    /**
-     * Additional CSS classes to apply to the component.
-     */
     className?: string;
 }
 
@@ -24,12 +15,12 @@ interface CopyrightProps {
  */
 const Copyright = ({
     year = new Date().getFullYear(),
-    text = 'Tuiter: A Twitter-like platform',
+    text,
     className = 'text-xs sm:text-sm md:text-base'
 }: CopyrightProps): JSX.Element => {
     return (
         <span className={className}>
-      &copy; {year} - {text}
+        &copy; {year} - {text}
     </span>
     );
 };
