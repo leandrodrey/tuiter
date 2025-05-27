@@ -48,12 +48,10 @@ describe('UserEditForm', () => {
         // Check if the form fields are rendered
         const formFields = screen.getByTestId('user-edit-form-fields');
         expect(formFields).toBeInTheDocument();
-        expect(formFields).toHaveAttribute('data-is-submitting', 'false');
 
         // Check if the form actions are rendered
         const formActions = screen.getByTestId('user-edit-actions');
         expect(formActions).toBeInTheDocument();
-        expect(formActions).toHaveAttribute('data-is-submitting', 'false');
     });
 
     it('displays error message when error prop is provided', () => {

@@ -1,6 +1,6 @@
 import {render, screen} from '@testing-library/react';
 import {describe, it, expect, vi, beforeEach} from 'vitest';
-import PostHeader from './PostHeader.tsx';
+import PostCardHeader from './PostCardHeader.tsx';
 import type {Post} from '../../../types/postTypes.ts';
 import {BrowserRouter} from 'react-router-dom';
 
@@ -24,7 +24,7 @@ vi.mock('../../UI', () => ({
     ))
 }));
 
-describe('PostHeader', () => {
+describe('PostCardHeader', () => {
     // Create a mock post
     const mockPost: Post = {
         id: 1,
@@ -48,7 +48,7 @@ describe('PostHeader', () => {
     it('renders the post author information', () => {
         render(
             <BrowserRouter>
-                <PostHeader post={mockPost} onAddToFavorites={mockOnAddToFavorites}/>
+                <PostCardHeader post={mockPost} onAddToFavorites={mockOnAddToFavorites}/>
             </BrowserRouter>
         );
 
@@ -66,7 +66,7 @@ describe('PostHeader', () => {
     it('passes correct props to Avatar component', () => {
         render(
             <BrowserRouter>
-                <PostHeader post={mockPost} onAddToFavorites={mockOnAddToFavorites}/>
+                <PostCardHeader post={mockPost} onAddToFavorites={mockOnAddToFavorites}/>
             </BrowserRouter>
         );
 
@@ -79,7 +79,7 @@ describe('PostHeader', () => {
     it('passes correct props to FavoriteButton component', () => {
         render(
             <BrowserRouter>
-                <PostHeader post={mockPost} onAddToFavorites={mockOnAddToFavorites}/>
+                <PostCardHeader post={mockPost} onAddToFavorites={mockOnAddToFavorites}/>
             </BrowserRouter>
         );
 
@@ -91,7 +91,7 @@ describe('PostHeader', () => {
     it('calls onAddToFavorites when FavoriteButton is clicked', () => {
         render(
             <BrowserRouter>
-                <PostHeader post={mockPost} onAddToFavorites={mockOnAddToFavorites}/>
+                <PostCardHeader post={mockPost} onAddToFavorites={mockOnAddToFavorites}/>
             </BrowserRouter>
         );
 
@@ -104,7 +104,7 @@ describe('PostHeader', () => {
     it('applies correct styling to the container', () => {
         const {container} = render(
             <BrowserRouter>
-                <PostHeader post={mockPost} onAddToFavorites={mockOnAddToFavorites}/>
+                <PostCardHeader post={mockPost} onAddToFavorites={mockOnAddToFavorites}/>
             </BrowserRouter>
         );
 
@@ -125,7 +125,7 @@ describe('PostHeader', () => {
 
         render(
             <BrowserRouter>
-                <PostHeader post={postWithSpaces} onAddToFavorites={mockOnAddToFavorites}/>
+                <PostCardHeader post={postWithSpaces} onAddToFavorites={mockOnAddToFavorites}/>
             </BrowserRouter>
         );
 

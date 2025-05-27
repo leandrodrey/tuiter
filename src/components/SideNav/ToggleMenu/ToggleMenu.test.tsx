@@ -72,6 +72,16 @@ vi.mock('../../../hooks/context/useUser', () => ({
     }))
 }));
 
+// Mock the useToast hook
+vi.mock('../../../hooks/context/useToast', () => ({
+    useToast: vi.fn(() => ({
+        success: vi.fn(),
+        error: vi.fn(),
+        info: vi.fn(),
+        warning: vi.fn()
+    }))
+}));
+
 describe('ToggleMenu', () => {
     beforeEach(() => {
         vi.clearAllMocks();

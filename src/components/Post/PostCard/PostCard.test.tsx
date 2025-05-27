@@ -30,7 +30,7 @@ vi.mock('../../../hooks/post-replies/usePostReplies.ts', () => ({
 }));
 
 // Mock the components
-vi.mock('./PostHeader', () => ({
+vi.mock('../PostCardHeader/PostCardHeader.tsx', () => ({
     default: vi.fn(({post, onAddToFavorites}) => (
         <div
             data-testid="mock-post-header"

@@ -15,14 +15,15 @@ vi.mock('./RegistrationFormFields', () => ({
     )
 }));
 
-vi.mock('./RegistrationActions', () => ({
-    default: ({isSubmitting}) => (
-        <div
-            data-testid="registration-actions"
+vi.mock('../UI', () => ({
+    SubmitButton: ({isSubmitting, loadingText, children}) => (
+        <button
+            data-testid="submit-button"
             data-is-submitting={isSubmitting.toString()}
+            data-loading-text={loadingText}
         >
-            Form Actions
-        </div>
+            {children}
+        </button>
     )
 }));
 
@@ -48,10 +49,12 @@ describe('RegistrationForm', () => {
         expect(formFields).toBeInTheDocument();
         expect(formFields).toHaveAttribute('data-is-submitting', 'false');
 
-        // Check if the form actions are rendered
-        const formActions = screen.getByTestId('registration-actions');
-        expect(formActions).toBeInTheDocument();
-        expect(formActions).toHaveAttribute('data-is-submitting', 'false');
+        // Check if the submit button is rendered
+        const submitButton = screen.getByTestId('submit-button');
+        expect(submitButton).toBeInTheDocument();
+        expect(submitButton).toHaveAttribute('data-is-submitting', 'false');
+        expect(submitButton).toHaveAttribute('data-loading-text', 'Registering...');
+        expect(submitButton).toHaveTextContent('Register');
     });
 
     it('displays error message when error prop is provided', () => {

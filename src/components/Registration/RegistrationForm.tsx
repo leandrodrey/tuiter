@@ -6,7 +6,7 @@ import {
 } from '../../validations/userSchemas';
 import type {RegistrationFormData} from "../../types/formTypes.ts";
 import RegistrationFormFields from './RegistrationFormFields';
-import RegistrationActions from './RegistrationActions';
+import RegistrationFormActions from './RegistrationFormActions';
 
 interface RegistrationFormProps {
     onSubmit: (values: RegistrationFormData, formikHelpers: FormikHelpers<RegistrationFormData>) => Promise<void>;
@@ -33,7 +33,7 @@ const RegistrationForm = ({onSubmit, error, initialValues: propInitialValues}: R
                 {({isSubmitting}) => (
                     <Form className="space-y-6">
                         <RegistrationFormFields isSubmitting={isSubmitting}/>
-                        <RegistrationActions isSubmitting={isSubmitting}/>
+                        <RegistrationFormActions isSubmitting={isSubmitting}/>
                     </Form>
                 )}
             </Formik>

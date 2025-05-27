@@ -4,8 +4,8 @@ import {MemoryRouter} from 'react-router-dom';
 import PostCardReply from './PostCardReply';
 import type {Post} from '../../../types/postTypes';
 
-// Mock the PostHeaderReply component
-vi.mock('./PostHeaderReply.tsx', () => ({
+// Mock the PostCardHeaderReply component
+vi.mock('../PostCardHeaderReply/PostCardHeaderReply.tsx', () => ({
     default: vi.fn(({post}) => (
         <div
             data-testid="mock-post-header-reply"

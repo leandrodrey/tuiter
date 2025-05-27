@@ -2,6 +2,7 @@ import {render, screen} from '@testing-library/react';
 import {describe, it, expect, vi} from 'vitest';
 import UserEditActions from './UserEditActions';
 
+
 // Mock the SubmitButton component
 vi.mock('../UI', () => ({
     SubmitButton: ({isSubmitting, loadingText, children}) => (
@@ -18,7 +19,7 @@ vi.mock('../UI', () => ({
 
 describe('UserEditActions', () => {
     it('renders the submit button correctly when not submitting', () => {
-        render(<UserEditActions isSubmitting={false}/>);
+        render(<UserEditActions isSubmitting={false} />);
 
         const submitButton = screen.getByTestId('submit-button');
         expect(submitButton).toBeInTheDocument();
@@ -29,7 +30,7 @@ describe('UserEditActions', () => {
     });
 
     it('renders the submit button correctly when submitting', () => {
-        render(<UserEditActions isSubmitting={true}/>);
+        render(<UserEditActions isSubmitting={true} />);
 
         const submitButton = screen.getByTestId('submit-button');
         expect(submitButton).toBeInTheDocument();
@@ -40,7 +41,7 @@ describe('UserEditActions', () => {
     });
 
     it('renders with the correct container class', () => {
-        const {container} = render(<UserEditActions isSubmitting={false}/>);
+        const {container} = render(<UserEditActions isSubmitting={false} />);
 
         const actionContainer = container.firstChild;
         expect(actionContainer).toHaveClass('pt-6');

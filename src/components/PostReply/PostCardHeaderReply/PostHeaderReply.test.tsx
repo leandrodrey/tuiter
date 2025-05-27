@@ -1,6 +1,6 @@
 import {render, screen} from '@testing-library/react';
 import {describe, it, expect, vi} from 'vitest';
-import PostHeaderReply from './PostHeaderReply.tsx';
+import PostCardHeaderReply from './PostCardHeaderReply.tsx';
 import type {Post} from '../../../types/postTypes.ts';
 import {BrowserRouter} from 'react-router-dom';
 
@@ -16,7 +16,7 @@ vi.mock('../../UI', () => ({
     ))
 }));
 
-describe('PostHeaderReply', () => {
+describe('PostCardHeaderReply', () => {
     // Create a mock post
     const mockPost: Post = {
         id: 1,
@@ -37,7 +37,7 @@ describe('PostHeaderReply', () => {
     it('renders the post author information', () => {
         render(
             <BrowserRouter>
-                <PostHeaderReply post={mockPost}/>
+                <PostCardHeaderReply post={mockPost}/>
             </BrowserRouter>
         );
 
@@ -58,7 +58,7 @@ describe('PostHeaderReply', () => {
     it('passes correct props to Avatar component', () => {
         render(
             <BrowserRouter>
-                <PostHeaderReply post={mockPost}/>
+                <PostCardHeaderReply post={mockPost}/>
             </BrowserRouter>
         );
 
@@ -71,7 +71,7 @@ describe('PostHeaderReply', () => {
     it('applies correct styling to the container', () => {
         render(
             <BrowserRouter>
-                <PostHeaderReply post={mockPost}/>
+                <PostCardHeaderReply post={mockPost}/>
             </BrowserRouter>
         );
 
@@ -92,7 +92,7 @@ describe('PostHeaderReply', () => {
 
         render(
             <BrowserRouter>
-                <PostHeaderReply post={postWithSpaces}/>
+                <PostCardHeaderReply post={postWithSpaces}/>
             </BrowserRouter>
         );
 

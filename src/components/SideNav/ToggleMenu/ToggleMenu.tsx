@@ -12,7 +12,7 @@ import {
 } from '../../UI';
 import {useAuthContext} from '../../../hooks/context/useAuthContext';
 import {useUser} from '../../../hooks/context/useUser';
-import {Avatar, LogoutButton} from '../../UI';
+import UserMenu from "../UserMenu/UserMenu.tsx";
 
 interface ToggleMenuProps {
     collapsed: boolean;
@@ -134,34 +134,12 @@ const ToggleMenu = ({collapsed}: ToggleMenuProps): JSX.Element => {
                     </div>
                 )}
 
-                {isAuthenticated && (
-                    <div className="absolute bottom-0 w-full p-4">
-                        <div className="flex items-center justify-between bg-gray-800 bg-opacity-50 rounded-lg p-2">
-                            <div className="flex items-center">
-                                <Avatar
-                                    username={userInformation?.name || "User"}
-                                    avatarUrl={userInformation?.avatar_url}
-                                    size="sm"
-                                />
-                                {!collapsed && (
-                                    <div className="ml-2">
-                                        <p className="text-sm font-medium text-white truncate">
-                                            {userInformation?.name || "User"}
-                                        </p>
-                                        <p className="text-xs text-gray-400 truncate">
-                                            {userInformation?.email || "@user"}
-                                        </p>
-                                    </div>
-                                )}
-                            </div>
-                            <LogoutButton
-                                onLogout={handleLogout}
-                                color="default"
-                                size="sm"
-                            />
-                        </div>
-                    </div>
-                )}
+                <UserMenu
+                    userInformation={userInformation}
+                    onLogout={handleLogout}
+                    isAuthenticated={isAuthenticated}
+                    collapsed={collapsed}
+                />
             </Sidebar>
         </div>
     );

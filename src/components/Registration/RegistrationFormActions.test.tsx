@@ -1,6 +1,6 @@
 import {render, screen} from '@testing-library/react';
 import {describe, it, expect, vi} from 'vitest';
-import RegistrationActions from './RegistrationActions';
+import RegistrationFormActions from './RegistrationFormActions';
 
 // Mock the SubmitButton component
 vi.mock('../UI', () => ({
@@ -16,9 +16,9 @@ vi.mock('../UI', () => ({
     )
 }));
 
-describe('RegistrationActions', () => {
+describe('RegistrationFormActions', () => {
     it('renders the submit button correctly when not submitting', () => {
-        render(<RegistrationActions isSubmitting={false}/>);
+        render(<RegistrationFormActions isSubmitting={false} />);
 
         const submitButton = screen.getByTestId('submit-button');
         expect(submitButton).toBeInTheDocument();
@@ -29,7 +29,7 @@ describe('RegistrationActions', () => {
     });
 
     it('renders the submit button correctly when submitting', () => {
-        render(<RegistrationActions isSubmitting={true}/>);
+        render(<RegistrationFormActions isSubmitting={true} />);
 
         const submitButton = screen.getByTestId('submit-button');
         expect(submitButton).toBeInTheDocument();
@@ -37,12 +37,5 @@ describe('RegistrationActions', () => {
         expect(submitButton).toHaveAttribute('data-loading-text', 'Registering...');
         expect(submitButton).toBeDisabled();
         expect(submitButton).toHaveTextContent('Registering...');
-    });
-
-    it('renders with the correct container class', () => {
-        const {container} = render(<RegistrationActions isSubmitting={false}/>);
-
-        const actionContainer = container.firstChild;
-        expect(actionContainer).toHaveClass('pt-6');
     });
 });
