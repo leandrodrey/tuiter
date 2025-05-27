@@ -250,3 +250,27 @@ Una de las principales mejoras a implementar es la internacionalización complet
   * Se podría agregar desde el frontend, calculando el número de respuestas basado en los datos disponibles
   * Dicho esto, lo mas apropiado sería incluir un endpoint a tal fin.
 * **Nota:** Esta funcionalidad no fue incluida en la versión inicial debido a una priorización de tareas, pero representa una oportunidad de mejora significativa para futuras versiones.
+
+### Mejoras de Accesibilidad
+
+La accesibilidad web es fundamental para garantizar que todas las personas, independientemente de sus capacidades, puedan utilizar nuestra aplicación. 
+
+Estas son las mejoras de accesibilidad planificadas:
+
+* **Cumplimiento de WCAG 2.1:** Implementar las pautas de accesibilidad de contenido web para alcanzar al menos el nivel AA.
+
+* **Mejoras específicas:**
+  * **Navegación por teclado:** Mejorar la navegación completa de la aplicación sin necesidad de ratón.
+  * **Compatibilidad con lectores de pantalla:** Optimizar la estructura semántica y los atributos ARIA.
+  * **Contraste y tamaño de texto ajustables:** Permitir a los usuarios personalizar la visualización según sus necesidades.
+  * **Subtítulos y transcripciones:** Añadir soporte para contenido multimedia.
+
+* **Beneficios:**
+  * Ampliar la base de usuarios incluyendo personas con discapacidades.
+  * Mejorar la experiencia general para todos los usuarios.
+
+* **Implementación técnica:**
+  * Auditoría inicial de accesibilidad para identificar problemas actuales.
+  * Integración de pruebas automatizadas de accesibilidad en el flujo de CI/CD.
+  * Desarrollo de componentes accesibles reutilizables.
+  * Documentación de mejores prácticas de accesibilidad para el equipo de desarrollo.
