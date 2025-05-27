@@ -2,16 +2,34 @@ import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import Layout from './Layout';
 
+// Mock the useAuthContext hook to prevent the error
+vi.mock('../hooks/context/useAuthContext.ts', () => ({
+  useAuthContext: vi.fn(() => ({
+    isAuthenticated: true,
+    logout: vi.fn()
+  }))
+}));
+
+// Mock the useUser hook to prevent the error
+vi.mock('../hooks/context/useUser.ts', () => ({
+  useUser: vi.fn(() => ({
+    userInformation: {
+      name: 'Test User',
+      avatar_url: 'https://example.com/avatar.jpg'
+    }
+  }))
+}));
+
 // Mock the components used in Layout
-vi.mock('./components/Header/Header.tsx', () => ({
+vi.mock('../components/Header/Header.tsx', () => ({
   default: () => <div data-testid="header-mock">Header Mock</div>
 }));
 
-vi.mock('./components/Main/Main.tsx', () => ({
+vi.mock('../components/Main/Main.tsx', () => ({
   default: ({ children }) => <div data-testid="main-mock">{children}</div>
 }));
 
-vi.mock('./components/Footer/Footer.tsx', () => ({
+vi.mock('../components/Footer/Footer.tsx', () => ({
   default: () => <div data-testid="footer-mock">Footer Mock</div>
 }));
 

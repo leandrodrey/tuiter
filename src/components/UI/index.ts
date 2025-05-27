@@ -19,5 +19,6 @@ export {
     UserIcon,
     CreatePostIcon,
     FavoritesIcon,
-    EditProfileIcon
+    EditProfileIcon,
+    MenuIcon
 } from './Icons';
