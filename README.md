@@ -207,9 +207,46 @@ Ejemplo de Reporte
 
 ![image](https://github.com/user-attachments/assets/ab60bf11-529a-452b-865a-00b83bc75f0a)
 
-
 ### Consideraciones Adicionales
 
 * **Seguridad:** Además de la gestión segura de variables de entorno y HTTPS por defecto, Vercel ofrece protección contra ataques comunes.
 * **Monitorización:** Vercel proporciona un dashboard con logs en tiempo real, análisis de uso y monitorización del estado de los despliegues y funciones serverless.
 * **Rollbacks:** Gracias a los despliegues atómicos e inmutables de Vercel, es muy sencillo revertir a una versión anterior del despliegue si se detecta algún problema.
+
+## 🔄 Mejoras Futuras
+
+Esta sección describe las mejoras planificadas para futuras versiones de Tuiter:
+
+### Internacionalización (i18n)
+
+Una de las principales mejoras a implementar es la internacionalización completa de la aplicación:
+
+* **¿Qué es i18n?** La internacionalización (i18n) es el proceso de diseñar y preparar la aplicación para que pueda adaptarse a diferentes idiomas y regiones sin cambios de ingeniería.
+
+* **Beneficios de implementar i18n:**
+  * Ampliar el alcance global de la aplicación
+  * Mejorar la experiencia de usuario para hablantes no nativos de español
+  * Cumplir con requisitos de accesibilidad en diferentes regiones
+
+* **Implementación propuesta:**
+  * Crear archivos de traducción JSON para cada idioma soportado
+  * Implementar un selector de idioma en la interfaz de usuario
+  * Extraer todos los textos estáticos a claves de traducción
+  * Adaptar formatos de fecha, hora y números según las convenciones locales
+
+* **Consideraciones técnicas:**
+  * Detección automática del idioma preferido del navegador
+  * Persistencia de la preferencia de idioma del usuario
+  * Pruebas automatizadas para verificar la correcta visualización en diferentes idiomas
+
+### Contador de Respuestas para Tuits
+
+* **Situación actual:** La API actualmente no devuelve la cantidad de respuestas que tiene un tuit.
+* **Mejora propuesta:** Implementar la visualización del número de respuestas para cada publicación.
+* **Beneficios:**
+  * Mejorar la experiencia de usuario al proporcionar información sobre la popularidad o relevancia de un tuit
+  * Permitir a los usuarios identificar rápidamente las conversaciones más activas
+* **Implementación técnica:**
+  * Se podría agregar desde el frontend, calculando el número de respuestas basado en los datos disponibles
+  * Dicho esto, lo mas apropiado sería incluir un endpoint a tal fin.
+* **Nota:** Esta funcionalidad no fue incluida en la versión inicial debido a una priorización de tareas, pero representa una oportunidad de mejora significativa para futuras versiones.
