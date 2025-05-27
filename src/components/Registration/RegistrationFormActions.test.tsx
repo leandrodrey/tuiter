@@ -1,7 +1,6 @@
 import {render, screen} from '@testing-library/react';
 import {describe, it, expect, vi} from 'vitest';
-import UserEditActions from './UserEditActions';
-
+import RegistrationFormActions from './RegistrationFormActions';
 
 // Mock the SubmitButton component
 vi.mock('../UI', () => ({
@@ -17,33 +16,26 @@ vi.mock('../UI', () => ({
     )
 }));
 
-describe('UserEditActions', () => {
+describe('RegistrationFormActions', () => {
     it('renders the submit button correctly when not submitting', () => {
-        render(<UserEditActions isSubmitting={false} />);
+        render(<RegistrationFormActions isSubmitting={false} />);
 
         const submitButton = screen.getByTestId('submit-button');
         expect(submitButton).toBeInTheDocument();
         expect(submitButton).toHaveAttribute('data-is-submitting', 'false');
-        expect(submitButton).toHaveAttribute('data-loading-text', 'Updating...');
+        expect(submitButton).toHaveAttribute('data-loading-text', 'Registering...');
         expect(submitButton).not.toBeDisabled();
-        expect(submitButton).toHaveTextContent('Update Profile');
+        expect(submitButton).toHaveTextContent('Register');
     });
 
     it('renders the submit button correctly when submitting', () => {
-        render(<UserEditActions isSubmitting={true} />);
+        render(<RegistrationFormActions isSubmitting={true} />);
 
         const submitButton = screen.getByTestId('submit-button');
         expect(submitButton).toBeInTheDocument();
         expect(submitButton).toHaveAttribute('data-is-submitting', 'true');
-        expect(submitButton).toHaveAttribute('data-loading-text', 'Updating...');
+        expect(submitButton).toHaveAttribute('data-loading-text', 'Registering...');
         expect(submitButton).toBeDisabled();
-        expect(submitButton).toHaveTextContent('Updating...');
-    });
-
-    it('renders with the correct container class', () => {
-        const {container} = render(<UserEditActions isSubmitting={false} />);
-
-        const actionContainer = container.firstChild;
-        expect(actionContainer).toHaveClass('pt-6');
+        expect(submitButton).toHaveTextContent('Registering...');
     });
 });

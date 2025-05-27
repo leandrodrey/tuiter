@@ -1,6 +1,6 @@
 import {type JSX} from 'react';
 import type {Post} from '../../../types/postTypes.ts';
-import PostHeader from './PostHeader.tsx';
+import PostCardHeader from '../PostCardHeader/PostCardHeader.tsx';
 import PostContent from '../../PostContent/PostContent.tsx';
 import {usePostContext} from "../../../pages/FeedPage/hooks/usePostContext.ts";
 import PostActions from "../../PostActions/PostActions.tsx";
@@ -22,7 +22,7 @@ const PostCard = ({post}: PostCardProps): JSX.Element => {
 
     return (
         <article className="hover:bg-gray-800 transition duration-350 ease-in-out border-b border-gray-800">
-            <PostHeader
+            <PostCardHeader
                 post={post}
                 onAddToFavorites={handleAddToFavorites}
             />

@@ -8,7 +8,16 @@ interface PostHeaderProps {
     onAddToFavorites: (author: string, avatarUrl: string) => void;
 }
 
-const PostHeader = ({post, onAddToFavorites}: PostHeaderProps): JSX.Element => {
+/**
+ * PostCardHeader component that displays the header section of a post card.
+ * Shows the author's avatar, name, username, post date, and a favorite button.
+ *
+ * @param {Object} props - Component props
+ * @param {Post} props.post - The post data containing author information and content
+ * @param {Function} props.onAddToFavorites - Function to call when the favorite button is clicked
+ * @returns {JSX.Element} The post card header component
+ */
+const PostCardHeader = ({post, onAddToFavorites}: PostHeaderProps): JSX.Element => {
     return (
         <div className="flex flex-shrink-0 p-2 sm:p-4 pb-0">
             <Link to="#" className="flex-shrink-0 group block">
@@ -37,4 +46,4 @@ const PostHeader = ({post, onAddToFavorites}: PostHeaderProps): JSX.Element => {
     );
 };
 
-export default PostHeader;
+export default PostCardHeader;

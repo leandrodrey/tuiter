@@ -26,7 +26,7 @@ export const useUserEdit = (
     navigate: NavigateFunction,
     toast: ToastContextType
 ): UserEditHookResult => {
-    const { updateUserInformation } = useUser();
+    const {updateUserInformation} = useUser();
     const [initialValues, setInitialValues] = useState<UserFormData>({
         name: '',
         email: '',

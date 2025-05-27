@@ -7,7 +7,16 @@ interface PostHeaderReplyProps {
     post: Post;
 }
 
-const PostHeaderReply = ({post}: PostHeaderReplyProps): JSX.Element => {
+/**
+ * PostCardHeaderReply component that displays the header section of a reply post card.
+ * Shows the author's avatar, name, username, post date, and a "Reply" label.
+ * Used specifically for reply posts to distinguish them from regular posts.
+ *
+ * @param {Object} props - Component props
+ * @param {Post} props.post - The reply post data containing author information and content
+ * @returns {JSX.Element} The reply post card header component
+ */
+const PostCardHeaderReply = ({post}: PostHeaderReplyProps): JSX.Element => {
     return (
         <div className="flex flex-shrink-0 p-3 pb-0">
             <Link to="#" className="flex-shrink-0 group block">
@@ -32,4 +41,4 @@ const PostHeaderReply = ({post}: PostHeaderReplyProps): JSX.Element => {
     );
 };
 
-export default PostHeaderReply;
+export default PostCardHeaderReply;

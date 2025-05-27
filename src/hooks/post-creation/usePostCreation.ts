@@ -24,7 +24,7 @@ export const usePostCreation = () => {
     const [initialValues, setInitialValues] = useState<PostFormData>(emptyValues);
     const navigate = useNavigate();
     const toast = useToast();
-    const { userInformation } = useUser();
+    const {userInformation} = useUser();
 
     // Load draft on hook initialization
     useEffect(() => {

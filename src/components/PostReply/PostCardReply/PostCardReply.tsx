@@ -1,6 +1,6 @@
 import {type JSX} from 'react';
 import type {Post} from '../../../types/postTypes.ts';
-import PostHeaderReply from './PostHeaderReply.tsx';
+import PostCardHeaderReply from '../PostCardHeaderReply/PostCardHeaderReply.tsx';
 import PostContent from '../../PostContent/PostContent.tsx';
 import PostActions from '../../PostActions/PostActions.tsx';
 
@@ -12,7 +12,7 @@ interface PostCardReplyProps {
 const PostCardReply = ({post, onLike}: PostCardReplyProps): JSX.Element => {
     return (
         <div className="border border-gray-200 dark:border-gray-800 rounded-lg p-3 hover:bg-gray-50 dark:hover:bg-gray-900">
-            <PostHeaderReply
+            <PostCardHeaderReply
                 post={post}
             />
             <PostContent message={post.message}/>
