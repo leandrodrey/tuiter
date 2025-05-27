@@ -2,6 +2,11 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import Header from './Header';
 
+// Mock the useOnClickOutside hook
+vi.mock('../../hooks/useOnClickOutside', () => ({
+  useOnClickOutside: vi.fn()
+}));
+
 // Mock the ToggleMenu component
 vi.mock('../SideNav', () => ({
   ToggleMenu: vi.fn(({ collapsed }) => (
@@ -76,4 +81,5 @@ describe('Header', () => {
     expect(toggleMenu).toHaveAttribute('data-collapsed', 'false');
     expect(toggleButton).toHaveAttribute('aria-label', 'Collapse menu');
   });
+
 });

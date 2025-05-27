@@ -1,7 +1,8 @@
 import type {JSX} from 'react';
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import {ToggleMenu} from '../SideNav';
 import { MenuIcon } from '../UI';
+import { useOnClickOutside } from '../../hooks/useOnClickOutside';
 
 /**
  * Header component that displays the application header.
@@ -12,10 +13,20 @@ import { MenuIcon } from '../UI';
  */
 const Header = (): JSX.Element => {
     const [collapsed, setCollapsed] = useState(false);
+    const menuRef = useRef<HTMLDivElement>(null);
 
     const handleToggle = () => {
         setCollapsed(!collapsed);
     };
+
+    const handleClickOutside = useCallback(() => {
+        if (!collapsed) {
+            setCollapsed(true);
+        }
+    }, [collapsed]);
+
+    // Use the hook to detect clicks outside the menu
+    useOnClickOutside(menuRef, handleClickOutside);
 
     return (
         <header className="text-white h-auto z-50">
@@ -27,7 +38,7 @@ const Header = (): JSX.Element => {
                 >
                     <MenuIcon className="h-6 w-6 text-white" />
                 </button>
-                <div className={`${collapsed ? 'w-0' : 'w-14 sm:w-16 lg:w-64'} transition-all duration-200`}>
+                <div className={`${collapsed ? 'w-0' : 'w-14 sm:w-16 lg:w-64'} transition-all duration-200`} ref={menuRef}>
                     <div className={`${collapsed ? 'w-0' : 'lg:w-64'} fixed h-[100dvh] transition-all duration-200`}>
                         <ToggleMenu collapsed={collapsed} />
                     </div>
