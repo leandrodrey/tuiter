@@ -106,6 +106,62 @@ export async function apiGetFeed(params?: FeedParams) {
 }
 ```
 
+## 💻 Instalación y Ejecución Local
+
+Para ejecutar Tuiter en tu entorno local, sigue estos pasos:
+
+### Requisitos Previos
+
+Asegúrate de tener instalado:
+
+* **Node.js**: Versión 18 o superior (recomendado v22)
+* **Yarn**: Como gestor de paquetes (recomendado sobre npm)
+
+### Pasos de Instalación
+
+1. **Clonar el repositorio**:
+   ```bash
+   git clone https://github.com/leandrodrey/tuiter.git
+   cd tuiter
+   ```
+
+2. **Instalar dependencias**:
+   ```bash
+   yarn install
+   ```
+
+3. **Variables de entorno**:
+   Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
+   ```
+   VITE_API_URL=https://api.example.com
+   VITE_APP_TOKEN=your_app_token
+   ```
+   
+### Comandos Disponibles
+
+* **Iniciar servidor de desarrollo**:
+  ```bash
+  yarn dev
+  ```
+  Esto iniciará el servidor de desarrollo en `http://localhost:5173`
+
+* **Compilar para producción**:
+  ```bash
+  yarn build
+  ```
+  Los archivos compilados se generarán en la carpeta `dist/`
+
+* **Ejecutar linter**:
+  ```bash
+  yarn lint
+  ```
+  Verifica el código según las reglas de estilo definidas
+
+* **Ejecutar tests**:
+  ```bash
+  yarn test
+  ```
+
 ## 🧪 Pruebas (Testing)
 
 [![codecov](https://codecov.io/gh/leandrodrey/tuiter/graph/badge.svg?token=HE90Y9GXHQ)](https://codecov.io/gh/leandrodrey/tuiter) Cobertura actual del proyecto
