@@ -51,7 +51,7 @@ describe('PostActions', () => {
     vi.clearAllMocks();
   });
 
-  it('renders all action buttons', () => {
+  it('renders all action buttons by default', () => {
     render(
       <MemoryRouter>
         <PostActions
@@ -63,6 +63,23 @@ describe('PostActions', () => {
 
     // Check if all buttons are rendered
     expect(screen.getByTestId('mock-comment-button')).toBeInTheDocument();
+    expect(screen.getByTestId('mock-like-button')).toBeInTheDocument();
+  });
+
+  it('hides comment button when hideCommentButton is true', () => {
+    render(
+      <MemoryRouter>
+        <PostActions
+          post={mockPost}
+          onLike={mockOnLike}
+          hideCommentButton={true}
+        />
+      </MemoryRouter>
+    );
+
+    // Check that comment button is not rendered
+    expect(screen.queryByTestId('mock-comment-button')).not.toBeInTheDocument();
+    // Check that like button is still rendered
     expect(screen.getByTestId('mock-like-button')).toBeInTheDocument();
   });
 
