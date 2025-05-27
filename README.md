@@ -2,7 +2,9 @@
 
 ## 📱 Acerca de Tuiter
 
-Tuiter es una aplicación web moderna inspirada en Twitter que permite a los usuarios compartir mensajes cortos, interactuar con publicaciones de otros usuarios y gestionar su perfil personal. Diseñada con un enfoque en la experiencia de usuario, Tuiter ofrece una interfaz intuitiva y responsive para la comunicación social.
+Tuiter es una aplicación web moderna inspirada en Twitter que permite a los usuarios compartir mensajes cortos, interactuar con publicaciones de otros usuarios y gestionar su perfil personal. Diseñada con un enfoque en la experiencia de usuario, Tuiter ofrece una interfaz intuitiva y responsive para la comunicación social. 
+
+Para más detalles sobre el proyecto, consulta el [documento del desafío](docs/Challenge_Frontend_Tuiter.pdf).
 
 ## ✨ Características Principales
 
@@ -136,7 +138,7 @@ Asegúrate de tener instalado:
    VITE_API_URL=https://api.example.com
    VITE_APP_TOKEN=your_app_token
    ```
-   
+
 ### Comandos Disponibles
 
 * **Iniciar servidor de desarrollo**:
